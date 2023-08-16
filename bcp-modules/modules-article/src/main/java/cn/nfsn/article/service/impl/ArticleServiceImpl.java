@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
-* @author huanghuiyuan
-* @description 针对表【article】的数据库操作Service实现
-* @createDate 2023-08-16 15:15:05
-*/
+ * @author huanghuiyuan
+ * @description 针对表【article】的数据库操作Service实现
+ * @createDate 2023-08-16 15:15:05
+ */
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
-    implements ArticleService {
+        implements ArticleService {
 
     @Resource
     private ArticleMapper articleMapper;
