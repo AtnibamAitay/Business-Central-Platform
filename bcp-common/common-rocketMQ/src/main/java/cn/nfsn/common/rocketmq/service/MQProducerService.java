@@ -18,10 +18,10 @@ import java.util.UUID;
 @Component
 public class MQProducerService {
 
-    @Value("${rocketmq.producer.send-message-timeout}")
-    public Integer messageTimeOut;
-
-    // 直接注入使用，用于发送消息到broker服务器
+	@Value("${rocketmq.producer.send-message-timeout}")
+    private Integer messageTimeOut;
+    
+	// 直接注入使用，用于发送消息到broker服务器
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
 
