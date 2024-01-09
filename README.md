@@ -1,4 +1,39 @@
-# NFSN-Business-Central-Platform
-南方少年社业务中台
+# Business-Central-Platform
 
-swagger:http://host:port/swagger-ui/
+## 1.项目结构
+
+```
+Business-Central-Platform
+├── bcp-api                 - API服务接口层，定义与外界交互的端点
+│   ├── api-article         - 文章相关API定义
+│   ├── api-chat            - 聊天相关API定义
+│   ├── api-system          - 系统相关API定义
+│   ├── api-transaction     - 交易相关API定义
+│   └── api-user            - 用户相关API定义
+│   └── pom.xml             - Maven项目管理配置文件，用于bcp-api模块
+├── bcp-auth                - 认证模块，处理用户登录验证和授权
+├── bcp-common              - 共享资源和通用库模块
+│   ├── common-core         - 核心公共功能，如工具类、基础代码
+│   ├── common-datasource   - 数据源配置和数据库交互
+│   ├── common-log          - 日志处理的公共配置和实现
+│   ├── common-Minio        - 公共的MinIO对象存储模块
+│   ├── common-rabbitmq     - RabbitMQ消息队列的集成和配置
+│   ├── common-redis        - Redis缓存的集成和配置
+│   ├── common-rocketmq     - RocketMQ消息队列的集成和配置
+│   ├── common-security     - 安全性公共库
+│   ├── common-service-aop  - 面向切面编程的公共服务
+│   └── common-swagger      - API文档自动生成工具Swagger的集成
+│   └── pom.xml             - Maven项目管理配置文件，用于bcp-common模块
+├── bcp-gateway             - API网关，管理请求路由、负载均衡等
+│   └── pom.xml             - Maven项目管理配置文件，用于bcp-gateway模块
+├── bcp-modules             - 应用程序核心业务模块
+│   ├── modules-article     - 文章业务逻辑模块
+│   ├── modules-chat        - 聊天业务逻辑模块
+│   ├── modules-system      - 系统核心业务逻辑模块
+│   ├── modules-transaction - 交易处理业务逻辑模块
+│   └── modules-user        - 用户业务逻辑模块
+│   └── pom.xml             - Maven项目管理配置文件，用于bcp-modules模块
+├── .gitignore              - Git忽略文件列表，指示Git跳过版本控制的文件和目录
+├── pom.xml                 - Maven父项目管理配置文件，用于整个项目
+└── README.md
+```
