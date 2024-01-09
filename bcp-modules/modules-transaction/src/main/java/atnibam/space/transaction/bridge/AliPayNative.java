@@ -1,12 +1,8 @@
 package atnibam.space.transaction.bridge;
 
 import atnibam.space.common.core.enums.ResultCode;
-import atnibam.space.transaction.config.AlipayClientConfig;
-import atnibam.space.transaction.constant.AliPayConstant;
-import atnibam.space.transaction.constant.OrderConstant;
-import atnibam.space.transaction.service.OrderInfoService;
-import atnibam.space.transaction.service.PaymentInfoService;
 import atnibam.space.common.core.exception.AliPayException;
+import atnibam.space.transaction.config.AlipayClientConfig;
 import atnibam.space.transaction.enums.AliPayTradeState;
 import atnibam.space.transaction.enums.OrderStatus;
 import atnibam.space.transaction.enums.PayType;
@@ -15,6 +11,8 @@ import atnibam.space.transaction.model.dto.ProductDTO;
 import atnibam.space.transaction.model.dto.ResponsePayNotifyDTO;
 import atnibam.space.transaction.model.entity.OrderInfo;
 import atnibam.space.transaction.model.entity.RefundInfo;
+import atnibam.space.transaction.service.OrderInfoService;
+import atnibam.space.transaction.service.PaymentInfoService;
 import atnibam.space.transaction.service.RefundInfoService;
 import atnibam.space.transaction.utils.AliPayUtils;
 import com.alibaba.fastjson.JSONObject;
@@ -41,6 +39,9 @@ import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
+
+import static atnibam.space.transaction.constant.AliPayConstant.*;
+import static atnibam.space.transaction.constant.OrderConstant.APP_ID;
 
 /**
  * @ClassName: AliPayNative
@@ -111,7 +112,7 @@ public class AliPayNative implements IPayMode {
                     .outTradeNo(orderInfo.getOrderNo())
                     .totalAmount(new BigDecimal(orderInfo.getTotalFee().toString()).divide(new BigDecimal(100)))
                     .subject(orderInfo.getTitle())
-                    .productCode(AliPayConstant.PRODUCT_CODE)
+                    .productCode(PRODUCT_CODE)
                     .build();
 
             ObjectMapper objectMapper = new ObjectMapper();
@@ -158,7 +159,7 @@ public class AliPayNative implements IPayMode {
         validateSign(params);
 
         // 获取并存储订单号
-        String outTradeNo = AliPayUtils.getStringParam(params, AliPayConstant.OUT_TRADE_NO);
+        String outTradeNo = AliPayUtils.getStringParam(params, OUT_TRADE_NO);
 
         // 获取并验证订单信息
         OrderInfo order = getAndValidateOrder(outTradeNo);
@@ -228,7 +229,7 @@ public class AliPayNative implements IPayMode {
      * @param order  订单信息
      */
     private void validateAmount(Map<String, String> params, OrderInfo order) {
-        String totalAmount = AliPayUtils.getStringParam(params, AliPayConstant.TOTAL_AMOUNT);
+        String totalAmount = AliPayUtils.getStringParam(params, TOTAL_AMOUNT);
         int totalAmountInt = new BigDecimal(totalAmount).multiply(new BigDecimal("100")).intValue();
         int totalFeeInt = order.getTotalFee().intValue();
         if (totalAmountInt != totalFeeInt) {
@@ -242,7 +243,7 @@ public class AliPayNative implements IPayMode {
      * @param params 包含了所有需要验证的参数
      */
     private void validateSellerId(Map<String, String> params) {
-        String sellerId = AliPayUtils.getStringParam(params, AliPayConstant.SELLER_ID);
+        String sellerId = AliPayUtils.getStringParam(params, SELLER_ID);
         if (!sellerId.equals(config.getSellerId())) {
             throw new AliPayException(ResultCode.INSERT_ORDER_FAIL);
         }
@@ -254,7 +255,7 @@ public class AliPayNative implements IPayMode {
      * @param params 包含了所有需要验证的参数
      */
     private void validateAppId(Map<String, String> params) {
-        String appId = AliPayUtils.getStringParam(params, OrderConstant.APP_ID);
+        String appId = AliPayUtils.getStringParam(params, APP_ID);
         if (!appId.equals(config.getAppId())) {
             throw new AliPayException(ResultCode.PRODUCT_OR_PAY_TYPE_NULL);
         }
@@ -266,7 +267,7 @@ public class AliPayNative implements IPayMode {
      * @param params 包含了所有需要验证的参数
      */
     private void validateTradeStatus(Map<String, String> params) {
-        String tradeStatus = AliPayUtils.getStringParam(params, AliPayConstant.TRADE_STATUS);
+        String tradeStatus = AliPayUtils.getStringParam(params, TRADE_STATUS);
         if (!"TRADE_SUCCESS".equals(tradeStatus)) {
             throw new AliPayException(ResultCode.ORDER_PAYING);
         }
@@ -281,13 +282,13 @@ public class AliPayNative implements IPayMode {
     private void processOrder(Map<String, Object> bodyMap, OrderStatus successStatus) throws GeneralSecurityException {
         log.info("开始处理订单");
 
-        Object orderNoObj = bodyMap.get(AliPayConstant.OUT_TRADE_NO);
+        Object orderNoObj = bodyMap.get(OUT_TRADE_NO);
         if (!(orderNoObj instanceof String)) {
             throw new RuntimeException("Unexpected type for 'out_trade_no': " + (orderNoObj == null ? "null" : orderNoObj.getClass()));
         }
 
         // 从参数中获取订单号
-        String orderNo = bodyMap.get(AliPayConstant.OUT_TRADE_NO).toString();
+        String orderNo = bodyMap.get(OUT_TRADE_NO).toString();
 
         /*
          * 尝试获取锁：
@@ -352,7 +353,7 @@ public class AliPayNative implements IPayMode {
             JSONObject bizContent = new JSONObject();
 
             // 设置业务请求参数：订单号
-            bizContent.put(AliPayConstant.OUT_TRADE_NO, orderNo);
+            bizContent.put(OUT_TRADE_NO, orderNo);
 
             // 将业务请求参数设置到请求对象中
             request.setBizContent(bizContent.toString());
@@ -399,14 +400,14 @@ public class AliPayNative implements IPayMode {
             JSONObject bizContent = new JSONObject();
 
             // 订单编号
-            bizContent.put(AliPayConstant.OUT_TRADE_NO, orderNo);
+            bizContent.put(OUT_TRADE_NO, orderNo);
             BigDecimal refund = new BigDecimal(refundInfo.getRefund().toString()).divide(new BigDecimal("100"));
 
             // 退款金额：不能大于支付金额
-            bizContent.put(AliPayConstant.REFUND_AMOUNT, refund);
+            bizContent.put(REFUND_AMOUNT, refund);
 
             // 退款原因(可选)
-            bizContent.put(AliPayConstant.REFUND_REASON, reason);
+            bizContent.put(REFUND_REASON, reason);
 
             request.setBizContent(bizContent.toString());
 

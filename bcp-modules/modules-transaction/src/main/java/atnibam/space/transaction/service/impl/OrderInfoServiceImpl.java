@@ -1,7 +1,5 @@
 package atnibam.space.transaction.service.impl;
 
-import atnibam.space.common.core.enums.ResultCode;
-import atnibam.space.transaction.constant.RabbitConstant;
 import atnibam.space.common.core.exception.WxPayException;
 import atnibam.space.transaction.enums.OrderStatus;
 import atnibam.space.transaction.mapper.OrderInfoMapper;
@@ -24,7 +22,10 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
+import static atnibam.space.common.core.enums.ResultCode.*;
 import static atnibam.space.transaction.constant.OrderConstant.*;
+import static atnibam.space.transaction.constant.RabbitConstant.ORDER_EXCHANGE;
+import static atnibam.space.transaction.constant.RabbitConstant.ORDER_QUEUE_ROUTING_KEY;
 
 
 /**
@@ -62,7 +63,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         // 校验参数
         if (productDTO == null || StringUtils.isEmpty(paymentType)) {
-            throw new WxPayException(ResultCode.PRODUCT_OR_PAY_TYPE_NULL);
+            throw new WxPayException(PRODUCT_OR_PAY_TYPE_NULL);
         }
 
         // 校验 App
@@ -115,14 +116,14 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                 //插入数据
                 int insertResult = baseMapper.insert(orderInfo);
                 if (insertResult <= 0) {
-                    throw new WxPayException(ResultCode.INSERT_ORDER_FAIL);
+                    throw new WxPayException(INSERT_ORDER_FAIL);
                 }
 
                 // 使用MQ设置订单超时时间，如果30分钟内，订单状态没有变成OrderStatus.SUCCESS，则30分钟超时后将订单状态设置为OrderStatus.CLOSED
                 // 发送延迟消息到RabbitMQ
                 rabbitTemplate.convertAndSend(
-                        RabbitConstant.ORDER_EXCHANGE,
-                        RabbitConstant.ORDER_QUEUE_ROUTING_KEY,
+                        ORDER_EXCHANGE,
+                        ORDER_QUEUE_ROUTING_KEY,
                         orderInfo.getOrderNo()
                 );
                 log.info("订单创建成功，并已发送延迟消息，订单号：{}", orderInfo.getOrderNo());
@@ -133,7 +134,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
                     lock.unlock();
                     log.info("锁释放成功: {}", lockName);
                 } else {
-                    throw new WxPayException(ResultCode.CREATE_ORDER_CONTRAST_LOCK_FAIL);
+                    throw new WxPayException(CREATE_ORDER_CONTRAST_LOCK_FAIL);
                 }
             }
             return orderInfo;
@@ -141,7 +142,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         log.warn("未获得锁，订单创建失败: {}", lockName);
 
         // 未获取到锁，抛出异常
-        throw new WxPayException(ResultCode.CREATE_ORDER_FAIL);
+        throw new WxPayException(CREATE_ORDER_FAIL);
     }
 
     /**
@@ -157,7 +158,7 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         // 参数校验
         if (appId == null || userId == null || paymentType == null || paymentType.isEmpty()) {
-            throw new WxPayException(ResultCode.PARAM_IS_BLANK);
+            throw new WxPayException(PARAM_IS_BLANK);
         }
 
         QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
