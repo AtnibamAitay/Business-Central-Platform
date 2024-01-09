@@ -19,13 +19,13 @@ import java.security.GeneralSecurityException;
 @Component("aliPay")
 public class AliPay extends AbstractPay {
 
-   /**
-    * 构造函数，初始化支付模式
-    *
-    * @param payMode 支付模式接口
-    */
+    /**
+     * 构造函数，初始化支付模式
+     *
+     * @param payMode 支付模式接口
+     */
     public AliPay(@Qualifier("aliPayNative") IPayMode payMode) {
-      super(payMode);
+        super(payMode);
     }
 
     /**
@@ -37,7 +37,7 @@ public class AliPay extends AbstractPay {
      */
     @Override
     public Object createOrder(ProductDTO productDTO) throws Exception {
-      return payMode.createOrder(productDTO);
+        return payMode.createOrder(productDTO);
     }
 
     /**

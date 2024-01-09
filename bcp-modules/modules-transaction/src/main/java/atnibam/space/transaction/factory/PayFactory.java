@@ -1,7 +1,6 @@
 package atnibam.space.transaction.factory;
 
 import atnibam.space.transaction.bridge.*;
-import cn.nfsn.transaction.bridge.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +32,7 @@ public class PayFactory {
     * 微信NATIVE支付类型常量
     */
    public static final int WX_PAY_NATIVE = 3;
- 
+
    /**
     * 根据支付类型创建对应的支付实例
     * @param type 支付类型，可以是支付宝APP支付、微信APP支付或者微信H5支付
@@ -50,5 +49,5 @@ public class PayFactory {
          default:
             return null;
       }
-   } 
+   }
 }
