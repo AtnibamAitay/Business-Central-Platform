@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.nfsn.user.mapper.UserInfoMapper">
+<mapper namespace="atnibam.space.user.mapper.UserInfoMapper">
 
-    <resultMap id="UserResultMap" type="cn.nfsn.common.core.domain.UserInfo">
+    <resultMap id="UserResultMap" type="atnibam.space.common.core.domain.UserInfo">
         <id property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="userName" column="user_name" jdbcType="VARCHAR"/>
         <result property="userRole" column="user_role" jdbcType="TINYINT"/>

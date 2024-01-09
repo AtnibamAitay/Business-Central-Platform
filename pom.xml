@@ -10,7 +10,7 @@
         <version>2.6.13</version>
     </parent>
 
-    <groupId>cn.nfsn</groupId>
+    <groupId>atnibam.space</groupId>
     <artifactId>business-central-platform</artifactId>
     <version>0.0.1</version>
     <packaging>pom</packaging>
@@ -226,72 +226,72 @@
             </dependency>
 
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-swagger</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-security</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-core</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-rabbitmq</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-redis</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-datasource</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>api-user</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>api-chat</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>api-article</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-MinIO</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-rocketMQ</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>modules-system</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>api-system</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.nfsn</groupId>
+                <groupId>atnibam.space</groupId>
                 <artifactId>common-service-aop</artifactId>
                 <version>${BCP.version}</version>
             </dependency>

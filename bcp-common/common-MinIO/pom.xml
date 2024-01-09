@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cn.nfsn</groupId>
+        <groupId>atnibam.space</groupId>
         <artifactId>bcp-common</artifactId>
         <version>0.0.1</version>
     </parent>
@@ -27,7 +27,7 @@
             <artifactId>minio</artifactId>
         </dependency>
         <dependency>
-            <groupId>cn.nfsn</groupId>
+            <groupId>atnibam.space</groupId>
             <artifactId>common-core</artifactId>
         </dependency>
         <dependency>

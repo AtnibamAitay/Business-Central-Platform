@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.nfsn.article.mapper.ArticleMapper">
+<mapper namespace="atnibam.space.article.mapper.ArticleMapper">
 
-    <resultMap id="BaseResultMap" type="cn.nfsn.article.model.entity.Article">
+    <resultMap id="BaseResultMap" type="atnibam.space.article.model.entity.Article">
             <id property="articleId" column="article_id" jdbcType="INTEGER"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
