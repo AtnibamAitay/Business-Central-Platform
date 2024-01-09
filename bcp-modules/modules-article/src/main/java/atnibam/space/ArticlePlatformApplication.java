@@ -12,7 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("cn.nfsn.article.mapper")
+@MapperScan("atnibam.space.article.mapper")
 public class ArticlePlatformApplication {
     public static void main(String[] args) {
         SpringApplication.run(ArticlePlatformApplication.class,args);

@@ -7,11 +7,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("cn.nfsn.transaction.mapper")
+@MapperScan("atnibam.space.transaction.mapper")
 public class TransactionPlatformApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TransactionPlatformApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TransactionPlatformApplication.class, args);
+    }
 
 }

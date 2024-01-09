@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("cn.nfsn.system.mapper")
+@MapperScan("atnibam.space.system.mapper")
 @EnableScheduling
 @EnableAsync
 public class SystemApplication {

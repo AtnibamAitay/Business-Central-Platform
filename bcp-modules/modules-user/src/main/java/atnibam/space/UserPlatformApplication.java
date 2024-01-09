@@ -12,7 +12,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
  * @Description 用户模块启动类
  * @date 2023/8/10 16:09
  */
-@MapperScan("cn.nfsn.user.mapper")
+@MapperScan("atnibam.space.user.mapper")
 @SpringBootApplication
 @EnableOpenApi
 @EnableFeignClients
