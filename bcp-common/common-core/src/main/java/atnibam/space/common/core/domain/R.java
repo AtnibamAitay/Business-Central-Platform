@@ -2,28 +2,33 @@ package atnibam.space.common.core.domain;
 
 import atnibam.space.common.core.constant.Constants;
 import atnibam.space.common.core.enums.ResultCode;
+import lombok.Data;
 
 import java.io.Serializable;
+
+import static atnibam.space.common.core.constant.Constants.FAIL_OPERA;
+import static atnibam.space.common.core.constant.Constants.SUCCESS_OPERA;
 
 /**
  * @ClassName: R
  * @Description: 通用响应结果类，包含状态码、消息和数据信息
- * @Author: ruoyi
- * @CreateTime: 2023-09-08 14:04
+ * @Author: AtnibamAitay
+ * @CreateTime: 2024-01-10 09:04
  **/
+@Data
 public class R<T> implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     /**
      * 成功的状态码，来自于常量类Constants
      */
     public static final int SUCCESS = Constants.SUCCESS;
-
     /**
      * 失败的状态码，来自于常量类Constants
      */
     public static final int FAIL = Constants.FAIL;
-
+    /**
+     * 序列化
+     */
+    private static final long serialVersionUID = 1L;
     /**
      * 响应状态码
      */
@@ -43,14 +48,14 @@ public class R<T> implements Serializable {
      * 创建成功状态的响应结果，不包含数据
      */
     public static <T> R<T> ok() {
-        return restResult(null, SUCCESS, Constants.SUCCESS_OPERA);
+        return restResult(null, SUCCESS, SUCCESS_OPERA);
     }
 
     /**
      * 创建成功状态的响应结果，包含数据
      */
     public static <T> R<T> ok(T data) {
-        return restResult(data, SUCCESS, Constants.SUCCESS_OPERA);
+        return restResult(data, SUCCESS, SUCCESS_OPERA);
     }
 
     /**
@@ -64,7 +69,7 @@ public class R<T> implements Serializable {
      * 创建失败状态的响应结果，不包含数据
      */
     public static <T> R<T> fail() {
-        return restResult(null, FAIL, Constants.FAIL_OPERA);
+        return restResult(null, FAIL, FAIL_OPERA);
     }
 
     /**
@@ -78,7 +83,7 @@ public class R<T> implements Serializable {
      * 创建失败状态的响应结果，包含数据
      */
     public static <T> R<T> fail(T data) {
-        return restResult(data, FAIL, Constants.FAIL_OPERA);
+        return restResult(data, FAIL, FAIL_OPERA);
     }
 
     /**
@@ -111,48 +116,6 @@ public class R<T> implements Serializable {
      */
     public static R fail(ResultCode resultCode) {
         return restResult(null, resultCode.getCode(), resultCode.getMessage());
-    }
-
-    /**
-     * 获取响应状态码
-     */
-    public int getCode() {
-        return code;
-    }
-
-    /**
-     * 设置响应状态码
-     */
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    /**
-     * 获取响应消息
-     */
-    public String getMsg() {
-        return msg;
-    }
-
-    /**
-     * 设置响应消息
-     */
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    /**
-     * 获取响应数据
-     */
-    public T getData() {
-        return data;
-    }
-
-    /**
-     * 设置响应数据
-     */
-    public void setData(T data) {
-        this.data = data;
     }
 
     /**
