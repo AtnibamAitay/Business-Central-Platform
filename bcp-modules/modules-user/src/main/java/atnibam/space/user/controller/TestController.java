@@ -1,15 +1,15 @@
 package atnibam.space.user.controller;
 
-import cn.dev33.satoken.config.SaSsoConfig;
-import cn.dev33.satoken.sso.SaSsoProcessor;
-import cn.dev33.satoken.sso.SaSsoUtil;
-import cn.dev33.satoken.stp.StpUtil;
 import atnibam.space.api.article.TestRemoteService;
 import atnibam.space.api.system.RemoteMsgRecordService;
 import atnibam.space.common.core.constant.Constants;
 import atnibam.space.common.core.domain.LocalMessageRecord;
 import atnibam.space.common.rocketmq.constant.RocketMQConstants;
 import atnibam.space.common.rocketmq.service.MQProducerService;
+import cn.dev33.satoken.config.SaSsoConfig;
+import cn.dev33.satoken.sso.SaSsoProcessor;
+import cn.dev33.satoken.sso.SaSsoUtil;
+import cn.dev33.satoken.stp.StpUtil;
 import com.dtflys.forest.Forest;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
@@ -28,9 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author: gaojianjie
- * @Description 测试
- * @date 2023/8/10 16:29
+ * 测试
  */
 //@Api("测试案例")
 @RestController
@@ -49,35 +47,51 @@ public class TestController {
     @Value("${redis.password}")
     private String host;
 
-//    @ApiOperation("Feign测试接口")
+
+    /**
+     * 获取测试方法
+     */
+    //@ApiOperation("Feign测试接口")
     @GetMapping("/test")
-    public void test(){
+    public void test() {
         System.out.println(remoteMsgRecordService.queryFileStateMsgRecord().getData().toString());
-//        return testRemoteService.testRemoteService();
+        //return testRemoteService.testRemoteService();
     }
 
+    /**
+     * 获取配置信息
+     */
     @RequestMapping("/config/get")
     public String get() {
-        return title+" "+host;
+        return title + " " + host;
     }
 
+    /**
+     * 测试本地消息记录
+     */
     @GetMapping("/testLocalMsgRecord")
-    @Transactional
-    public void testLocalMsgRecord(){
-        LocalMessageRecord messageRecord = mqProducerService.getMsgRecord(RocketMQConstants.DELAY_TOPIC, RocketMQConstants.LOGOUT_DELAY_TAG,"i am body", Constants.USER_SERVICE, Constants.DELAY_LOGOUT);
+    @Transactional(rollbackFor = Exception.class)
+    public void testLocalMsgRecord() {
+        // 获取本地消息记录
+        LocalMessageRecord messageRecord = mqProducerService.getMsgRecord(RocketMQConstants.DELAY_TOPIC, RocketMQConstants.LOGOUT_DELAY_TAG, "i am body", Constants.USER_SERVICE, Constants.DELAY_LOGOUT);
+        // 保存远程消息记录
         remoteMsgRecordService.saveMsgRecord(messageRecord);
         System.out.println("something todo....");
+        // 注册事务同步
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
             @Override
             public void afterCommit() {
-                rocketMQTemplate.asyncSend(messageRecord.getTopic() + ":"+messageRecord.getTags(), MessageBuilder.withPayload(messageRecord.getBody()).build(), new SendCallback() {
+                // 异步发送消息
+                rocketMQTemplate.asyncSend(messageRecord.getTopic() + ":" + messageRecord.getTags(), MessageBuilder.withPayload(messageRecord.getBody()).build(), new SendCallback() {
                     @Override
                     public void onSuccess(SendResult sendResult) {
-                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnSuccessHandler(messageRecord,sendResult));
+                        // 更新远程消息记录
+                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnSuccessHandler(messageRecord, sendResult));
                     }
+
                     @Override
                     public void onException(Throwable throwable) {
-                        //log.error
+                        // 更新远程消息记录
                         remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnFailHandler(messageRecord));
                     }
                 });
@@ -85,7 +99,9 @@ public class TestController {
         });
     }
 
-    // SSO-Client端：首页
+    /**
+     * SSOS客户端端：首页
+     */
     @RequestMapping("/")
     public String index() {
         String str = "<h2>Sa-Token SSO-Client 应用端</h2>" +
@@ -95,18 +111,20 @@ public class TestController {
         return str;
     }
 
-    /*
-     * SSO-Client端：处理所有SSO相关请求
-     * 		http://{host}:{port}/sso/login			-- Client端登录地址，接受参数：back=登录后的跳转地址
-     * 		http://{host}:{port}/sso/logout			-- Client端单点注销地址（isSlo=true时打开），接受参数：back=注销后的跳转地址
-     * 		http://{host}:{port}/sso/logoutCall		-- Client端单点注销回调地址（isSlo=true时打开），此接口为框架回调，开发者无需关心
+    /**
+     * 处理所有SSO相关请求
+     * http://{host}:{port}/sso/login			-- Client端登录地址，接受参数：back=登录后的跳转地址
+     * http://{host}:{port}/sso/logout			-- Client端单点注销地址（isSlo=true时打开），接受参数：back=注销后的跳转地址
+     * http://{host}:{port}/sso/logoutCall		-- Client端单点注销回调地址（isSlo=true时打开），此接口为框架回调，开发者无需关心
      */
     @RequestMapping("/sso/*")
     public Object ssoRequest() {
         return SaSsoProcessor.instance.clientDister();
     }
 
-    // 配置SSO相关参数
+    /**
+     * 配置SSO相关参数
+     */
     @Autowired
     private void configSso(SaSsoConfig sso) {
         // 配置Http请求处理器
@@ -115,17 +133,17 @@ public class TestController {
         });
     }
 
-    // 查询我的账号信息
+    /**
+     * 查询我的账号信息
+     */
     @RequestMapping("/sso/myInfo")
     public Object myInfo() {
         // 组织请求参数
         Map<String, Object> map = new HashMap<>();
         map.put("loginId", StpUtil.getLoginId());
-        map.put("appCode",2);
+        map.put("appCode", 2);
         // 发起请求
         return SaSsoUtil.getData(map);
     }
-
-
 
 }

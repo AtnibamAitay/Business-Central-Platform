@@ -12,33 +12,84 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.io.IOException;
 
 /**
- * @Author: gaojianjie
- * @Description 用户信息远程调用接口
- * @date 2023/9/12 08:31
+ * 用户信息远程调用接口
  */
-@FeignClient(value = "modules-user",contextId = "userInfo")
+@FeignClient(value = "modules-user", contextId = "userInfo")
 public interface RemoteUserInfoService {
-    @RequestMapping(method = RequestMethod.GET,value = "/userInfo/{userId}")
+
+    /**
+     * 查询用户信息
+     *
+     * @param userId 用户ID
+     * @return 用户信息实体类
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/userInfo/{userId}")
     public R<UserInfo> queryUserInfo(@PathVariable(value = "userId") String userId);
 
-    @RequestMapping(method = RequestMethod.DELETE,value = "/userInfo/{userId}")
+    /**
+     * 注销用户
+     *
+     * @param userId 用户ID
+     * @return 注销结果
+     */
+    @RequestMapping(method = RequestMethod.DELETE, value = "/userInfo/{userId}")
     public R logout(@PathVariable(value = "userId") String userId);
 
-    @RequestMapping(method = RequestMethod.POST,value = "/userInfo")
+    /**
+     * 用户注册
+     *
+     * @param userInfo 注册信息
+     * @return 注册结果
+     * @throws IOException
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/userInfo")
     public R<String> registration(@Validated @RequestBody UserInfo userInfo) throws IOException;
 
-    @RequestMapping(method = RequestMethod.PUT,value = "/userInfo")
+    /**
+     * 更新用户信息
+     *
+     * @param userInfo 更新信息
+     * @return 更新结果
+     */
+    @RequestMapping(method = RequestMethod.PUT, value = "/userInfo")
     public R updateUserInfo(@Validated @RequestBody UserInfo userInfo);
 
-    @RequestMapping(method = RequestMethod.GET,value = "/userInfo/phone-numbers/{phoneNumber}/exists")
+    /**
+     * 检查手机号是否存在
+     *
+     * @param phoneNumber 手机号
+     * @return 手机号是否存在
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/userInfo/phone-numbers/{phoneNumber}/exists")
     public R<Boolean> checkPhoneNumbExit(@PathVariable(value = "phoneNumber") String phoneNumber);
 
-    @RequestMapping(method = RequestMethod.GET,value = "/userInfo/email/{email}/appcode/{appCode}")
+    /**
+     * 根据邮箱获取用户信息
+     *
+     * @param email   邮箱
+     * @param appCode 应用编码
+     * @return 用户信息
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/userInfo/email/{email}/appcode/{appCode}")
     public R<UserInfo> getUserInfoByEmail(@PathVariable(value = "email") String email, @PathVariable(value = "appCode") String appCode);
 
-    @RequestMapping(method = RequestMethod.GET,value = "/userInfo/phone/{phone}/appcode/{appCode}")
+    /**
+     * 根据手机号获取用户信息
+     *
+     * @param phone   手机号
+     * @param appCode 应用编码
+     * @return 用户信息
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/userInfo/phone/{phone}/appcode/{appCode}")
     public R<UserInfo> getUserInfoByPhone(@PathVariable(value = "phone") String phone, @PathVariable(value = "appCode") String appCode);
 
-    @RequestMapping(method = RequestMethod.GET,value = ("/userInfo/credentialsId/{credentialsId}/appcode/{appCode}"))
+    /**
+     * 根据凭证ID获取用户信息
+     *
+     * @param appCode       应用编码
+     * @param credentialsId 凭证ID
+     * @return 用户信息
+     */
+    @RequestMapping(method = RequestMethod.GET, value = ("/userInfo/credentialsId/{credentialsId}/appcode/{appCode}"))
     public R<UserInfo> getUserInfoByCredentialsId(@PathVariable(value = "appCode") String appCode, @PathVariable(value = "credentialsId") String credentialsId);
 }

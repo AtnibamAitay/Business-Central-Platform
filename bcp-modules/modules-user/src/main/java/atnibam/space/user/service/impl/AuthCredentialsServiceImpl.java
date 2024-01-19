@@ -1,12 +1,12 @@
 package atnibam.space.user.service.impl;
 
-import atnibam.space.common.core.enums.ResultCode;
-import atnibam.space.user.mapper.AuthCredentialsMapper;
 import atnibam.space.common.core.domain.AuthCredentials;
 import atnibam.space.common.core.domain.dto.BindingCertificateDTO;
+import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.redis.constant.CacheConstants;
 import atnibam.space.common.redis.service.RedisCache;
+import atnibam.space.user.mapper.AuthCredentialsMapper;
 import atnibam.space.user.service.AuthCredentialsService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
@@ -19,36 +19,57 @@ import org.springframework.util.StringUtils;
 import java.util.Objects;
 
 /**
-* @author gaojianjie
-* @description 针对表【auth_credentials】的数据库操作Service实现
-* @createDate 2023-09-09 19:46:40
-*/
+ * 针对表【auth_credentials】的数据库操作Service实现
+ */
 @Service
 public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMapper, AuthCredentials>
-    implements AuthCredentialsService {
+        implements AuthCredentialsService {
     @Autowired
     private AuthCredentialsMapper authCredentialsMapper;
     @Autowired
     private RedisCache redisCache;
 
+    /**
+     * 检查手机号是否存在
+     *
+     * @param phoneNumber 手机号
+     * @return AuthCredentials对象
+     */
     @Override
     public AuthCredentials checkPhoneNumbExit(String phoneNumber) {
         LambdaQueryWrapper<AuthCredentials> queryWrapper = new LambdaQueryWrapper<AuthCredentials>().eq(AuthCredentials::getPhoneNumber, phoneNumber);
         return this.getOne(queryWrapper);
     }
 
+    /**
+     * 根据邮箱查询AuthCredentials对象
+     *
+     * @param email 邮箱
+     * @return AuthCredentials对象
+     */
     @Override
     public AuthCredentials queryAuthCredentialsByEmail(String email) {
         LambdaQueryWrapper<AuthCredentials> queryWrapper = new LambdaQueryWrapper<AuthCredentials>().eq(AuthCredentials::getEmail, email);
         return this.getOne(queryWrapper);
     }
 
+    /**
+     * 根据手机号查询AuthCredentials对象
+     *
+     * @param phone 手机号
+     * @return AuthCredentials对象
+     */
     @Override
     public AuthCredentials queryAuthCredentialsByPhone(String phone) {
         LambdaQueryWrapper<AuthCredentials> queryWrapper = new LambdaQueryWrapper<AuthCredentials>().eq(AuthCredentials::getPhoneNumber, phone);
         return this.getOne(queryWrapper);
     }
 
+    /**
+     * 根据证书创建用户AuthCredentials对象
+     *
+     * @param certificate 证书
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void createUserCredentialsByPhone(String certificate) {
@@ -57,6 +78,11 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
         this.save(authCredentials);
     }
 
+    /**
+     * 根据证书创建用户AuthCredentials对象
+     *
+     * @param certificate 证书
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void createUserCredentialsByEmail(String certificate) {
@@ -65,41 +91,68 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
         this.save(authCredentials);
     }
 
+    /**
+     * 绑定手机号
+     *
+     * @param bindingCertificateDTO 绑定证书DTO对象
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void bindingPhoneById(BindingCertificateDTO bindingCertificateDTO) {
+        // 获取绑定证书DTO中的证书信息
         String certificate = bindingCertificateDTO.getCertificate();
-        if(!Objects.isNull(queryAuthCredentialsByPhone(certificate))){
+
+        // 若通过手机号查询到的AuthCredentials对象不为空，则抛出账号已存在的用户操作异常
+        if (!Objects.isNull(queryAuthCredentialsByPhone(certificate))) {
             throw new UserOperateException(ResultCode.ACCOUNT_EXIST);
         }
+
+        // 从缓存中获取与当前证书关联的绑定码
         String code = redisCache.getCacheObject(CacheConstants.BINDING_CODE_KEY + CacheConstants.PHONE_KEY + bindingCertificateDTO.getCertificate());
-        checkVerifyCodeCode(code,bindingCertificateDTO.getVerifyCode());
+
+        // 验证输入的验证码是否与缓存中的绑定码一致
+        checkVerifyCodeCode(code, bindingCertificateDTO.getVerifyCode());
+
+        // 从绑定证书DTO中获取凭证ID
         Integer credentialsId = bindingCertificateDTO.getCredentialsId();
-        LambdaUpdateWrapper<AuthCredentials> updateWrapper = new LambdaUpdateWrapper<AuthCredentials>().eq(AuthCredentials::getCredentialsId, credentialsId).set(AuthCredentials::getPhoneNumber, certificate);
+
+        // 创建LambdaUpdateWrapper对象，用于更新凭证表中凭证ID对应的数据，将手机号设置为当前证书
+        LambdaUpdateWrapper<AuthCredentials> updateWrapper = new LambdaUpdateWrapper<AuthCredentials>()
+                .eq(AuthCredentials::getCredentialsId, credentialsId)
+                .set(AuthCredentials::getPhoneNumber, certificate);
+
+        // 执行数据更新操作
         this.update(updateWrapper);
     }
 
+    /**
+     * 绑定邮箱
+     *
+     * @param bindingCertificateDTO 绑定证书DTO对象
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void bindingEmailById(BindingCertificateDTO bindingCertificateDTO) {
         String certificate = bindingCertificateDTO.getCertificate();
-        if(!Objects.isNull(queryAuthCredentialsByEmail(certificate))){
+        if (!Objects.isNull(queryAuthCredentialsByEmail(certificate))) {
             throw new UserOperateException(ResultCode.ACCOUNT_EXIST);
         }
         String code = redisCache.getCacheObject(CacheConstants.BINDING_CODE_KEY + CacheConstants.EMAIL_KEY + bindingCertificateDTO.getCertificate());
-        checkVerifyCodeCode(code,bindingCertificateDTO.getVerifyCode());
+        checkVerifyCodeCode(code, bindingCertificateDTO.getVerifyCode());
         Integer credentialsId = bindingCertificateDTO.getCredentialsId();
         LambdaUpdateWrapper<AuthCredentials> updateWrapper = new LambdaUpdateWrapper<AuthCredentials>().eq(AuthCredentials::getCredentialsId, credentialsId).set(AuthCredentials::getEmail, certificate);
         this.update(updateWrapper);
     }
 
-    private void checkVerifyCodeCode(String code,String verifyCode){
-        if(!StringUtils.hasText(code)||!verifyCode.equals(code)){
+    /**
+     * 验证码验证
+     *
+     * @param code       验证码
+     * @param verifyCode 输入的验证码
+     */
+    private void checkVerifyCodeCode(String code, String verifyCode) {
+        if (!StringUtils.hasText(code) || !verifyCode.equals(code)) {
             throw new UserOperateException(ResultCode.USER_VERIFY_ERROR);
         }
     }
 }
-
-
-
-
