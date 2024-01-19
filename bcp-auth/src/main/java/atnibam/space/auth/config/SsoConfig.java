@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: gaojianjie
- * @Description 单点配置类
- * @date 2023/9/10 21:19
+ * SSP配置类
  */
 @Configuration
 public class SsoConfig {
@@ -21,7 +19,6 @@ public class SsoConfig {
 //        sso.setNotLoginView(() -> {
 //            return new ModelAndView("sa-login.html");
 //        });
-        // 配置：未登录时返回的View
 
         // 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉）
         sso.setSendHttp(url -> {
