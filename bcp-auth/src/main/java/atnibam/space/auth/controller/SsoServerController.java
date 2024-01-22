@@ -10,7 +10,6 @@ import cn.dev33.satoken.util.SaResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
@@ -25,9 +25,9 @@ import java.io.IOException;
  */
 @Api("认证模块")
 @RestController
-@RequestMapping("/sso")
+@RequestMapping("/api/auth")
 public class SsoServerController {
-    @Autowired
+    @Resource
     private SsoService ssoService;
 
     /**
