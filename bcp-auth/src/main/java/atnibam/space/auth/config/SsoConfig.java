@@ -15,11 +15,6 @@ public class SsoConfig {
      */
     @Autowired
     private void configSso(SaSsoConfig sso) {
-        // 配置：未登录时返回的View
-//        sso.setNotLoginView(() -> {
-//            return new ModelAndView("sa-login.html");
-//        });
-
         // 配置 Http 请求处理器 （在模式三的单点注销功能下用到，如不需要可以注释掉）
         sso.setSendHttp(url -> {
             try {

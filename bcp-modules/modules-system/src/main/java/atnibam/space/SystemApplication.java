@@ -7,11 +7,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-/**
- * @Author: gaojianjie
- * @Description TODO
- * @date 2023/8/28 16:20
- */
 @SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan("atnibam.space.system.mapper")
