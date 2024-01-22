@@ -21,7 +21,7 @@ public interface RemoteUserCredentialsService {
      * @return 用户凭证
      */
     @RequestMapping(method = RequestMethod.GET, value = "/user/email/{email}")
-    public R<AuthCredentials> getAuthCredentialsByEmail(@PathVariable(value = "email") String email);
+    R<AuthCredentials> getAuthCredentialsByEmail(@PathVariable(value = "email") String email);
 
     /**
      * 根据手机号获取用户凭证
@@ -30,7 +30,7 @@ public interface RemoteUserCredentialsService {
      * @return 用户凭证
      */
     @RequestMapping(method = RequestMethod.GET, value = "/user/phone/{phone}")
-    public R<AuthCredentials> getAuthCredentialsByPhone(@PathVariable(value = "phone") String phone);
+    R<AuthCredentials> getAuthCredentialsByPhone(@PathVariable(value = "phone") String phone);
 
     /**
      * 通过手机号创建用户凭证
@@ -39,7 +39,7 @@ public interface RemoteUserCredentialsService {
      * @return 用户凭证
      */
     @RequestMapping(method = RequestMethod.POST, value = "/user/phone")
-    public R createUserCredentialsByPhone(@RequestBody String certificate);
+    R createUserCredentialsByPhone(@RequestBody String certificate);
 
     /**
      * 通过邮箱创建用户凭证
@@ -48,6 +48,5 @@ public interface RemoteUserCredentialsService {
      * @return 用户凭证
      */
     @RequestMapping(method = RequestMethod.POST, value = "/user/email")
-    public R createUserCredentialsByEmail(@RequestBody String certificate);
+    R createUserCredentialsByEmail(@RequestBody String certificate);
 }
-
