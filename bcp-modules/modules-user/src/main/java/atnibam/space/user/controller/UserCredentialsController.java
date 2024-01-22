@@ -10,10 +10,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 用户凭证控制层
- */
+ * @ClassName: UserCredentialsController
+ * @Description: 用户凭证控制层
+ * @Author: AtnibamAitay
+ * @CreateTime: 2024-01-18 15:29
+ **/
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 public class UserCredentialsController implements RemoteUserCredentialsService {
     @Autowired
     private AuthCredentialsService authCredentialsService;
