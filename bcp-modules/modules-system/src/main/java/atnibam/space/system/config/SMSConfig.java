@@ -8,22 +8,32 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @className: SMSConfig
- * @description: 定义SMS短信信息的配置类
- */
 @Configuration
 public class SMSConfig {
 
+    /**
+     * 短信服务器密钥ID
+     */
     @Value("${sms.accessKeyId}")
     private String accessKeyId;
 
+    /**
+     * 短信服务器密钥
+     */
     @Value("${sms.secret}")
     private String secret;
 
+    /**
+     * 短信服务器区域
+     */
     @Value("${sms.regionId}")
-    private String regionId;   // 短信服务器区域
+    private String regionId;
 
+    /**
+     * 配置静态凭证提供者
+     *
+     * @return 静态凭证提供者
+     */
     @Bean
     public StaticCredentialProvider staticCredentialProvider() {
         return StaticCredentialProvider.create(Credential.builder()
@@ -32,6 +42,12 @@ public class SMSConfig {
                 .build());
     }
 
+    /**
+     * 配置异步客户端
+     *
+     * @param provider 静态凭证提供者
+     * @return 异步客户端
+     */
     @Bean
     public AsyncClient asyncClient(StaticCredentialProvider provider) {
         return AsyncClient.builder()
@@ -43,5 +59,4 @@ public class SMSConfig {
                 )
                 .build();
     }
-
 }
