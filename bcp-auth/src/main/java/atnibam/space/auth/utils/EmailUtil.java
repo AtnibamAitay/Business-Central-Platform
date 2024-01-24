@@ -1,5 +1,7 @@
 package atnibam.space.auth.utils;
 
+import atnibam.space.common.core.exception.UserOperateException;
+import atnibam.space.common.core.utils.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -9,18 +11,32 @@ import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import static atnibam.space.common.core.enums.ResultCode.EMAIL_NUM_NON_COMPLIANCE;
+
 /**
- * @ClassName: EmailSenderUtil
+ * @ClassName: EmailUtil
  * @Description: 发送邮件工具类
  * @Author: AtnibamAitay
  * @CreateTime: 2024-01-23 19:58
  **/
 @Component
-public class EmailSenderUtil {
+public class EmailUtil {
     @Value("${spring.mail.username}")
     public String EMAIL_FROM;
     @Resource
     private JavaMailSender javaMailSender;
+
+    /**
+     * 判断邮箱是否为合法邮箱格式
+     *
+     * @param email 邮箱
+     * @throws UserOperateException 若不是合法邮箱格式，则抛出用户操作异常
+     */
+    public void isValidEmailFormat(String email) {
+        if (!ValidatorUtil.isEmail(email)) {
+            throw new UserOperateException(EMAIL_NUM_NON_COMPLIANCE);
+        }
+    }
 
     /**
      * 发送邮件

@@ -2,10 +2,8 @@ package atnibam.space.auth.strategy.impl;
 
 import atnibam.space.auth.model.dto.AccountVerificationDTO;
 import atnibam.space.auth.service.AuthCredentialsService;
-import atnibam.space.auth.strategy.sendCodeStrategy;
+import atnibam.space.auth.strategy.SendCodeStrategy;
 import atnibam.space.auth.utils.SmsUtil;
-import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.core.utils.ValidatorUtil;
 import atnibam.space.common.redis.utils.CacheClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,10 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 import static atnibam.space.auth.constant.AuthConstants.CODE_TTL;
 import static atnibam.space.auth.constant.AuthConstants.LOGIN_PHONE_CODE_KEY;
-import static atnibam.space.common.core.enums.ResultCode.PHONE_NUM_NON_COMPLIANCE;
 
 @Component
-public class PhoneSendCodeStrategy implements sendCodeStrategy {
+public class PhoneSendCodeStrategy implements SendCodeStrategy {
     @Autowired
     private SmsUtil smsUtil;
     @Resource
@@ -35,22 +32,12 @@ public class PhoneSendCodeStrategy implements sendCodeStrategy {
     @Override
     public void sendCodeHandler(AccountVerificationDTO accountVerificationDTO, String code) {
         String phoneNumber = accountVerificationDTO.getAccountNumber();
-        isValidPhoneNumberFormat(phoneNumber);
+        // 判断手机号格式是否正确
+        smsUtil.isValidPhoneNumberFormat(phoneNumber);
         // 判断用户是否存在
         authCredentialsService.checkPhoneExist(phoneNumber);
         // TODO:实现线程池异步发送
         smsUtil.sendMsg(phoneNumber, code, accountVerificationDTO.getContent());
-    }
-
-    /**
-     * 校验手机号是否符合规范
-     *
-     * @param phoneNumber 手机号
-     */
-    private void isValidPhoneNumberFormat(String phoneNumber) {
-        if (!ValidatorUtil.isMobile(phoneNumber)) {
-            throw new UserOperateException(PHONE_NUM_NON_COMPLIANCE);
-        }
     }
 
     /**

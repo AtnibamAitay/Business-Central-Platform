@@ -57,12 +57,6 @@ public class CacheConstants {
     public static final String LOCK_KEY = "lock:";
 
     /**
-     * 登陆注册验证码前缀
-     */
-    public static final String LOGIN_CODE_KEY = "login:code:";
-
-
-    /**
      * 绑定验证码前缀
      */
     public static final String BINDING_CODE_KEY = "binding:code:";

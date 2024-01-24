@@ -5,7 +5,7 @@ import atnibam.space.auth.model.dto.AccountVerificationDTO;
 /**
  * 证书策略接口
  */
-public interface sendCodeStrategy {
+public interface SendCodeStrategy {
     /**
      * 发送验证码处理方法
      *

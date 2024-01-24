@@ -3,18 +3,19 @@ package atnibam.space.auth.strategy.impl;
 import atnibam.space.api.user.RemoteUserCredentialsService;
 import atnibam.space.api.user.RemoteUserInfoService;
 import atnibam.space.auth.strategy.CertificateStrategy;
+import atnibam.space.auth.utils.EmailUtil;
 import atnibam.space.common.core.domain.AuthCredentials;
 import atnibam.space.common.core.domain.UserInfo;
 import atnibam.space.common.core.domain.dto.LoginRequestDTO;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.core.utils.StringUtils;
-import atnibam.space.common.core.utils.ValidatorUtil;
-import atnibam.space.common.redis.constant.CacheConstants;
 import atnibam.space.common.redis.service.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static atnibam.space.common.core.enums.ResultCode.EMAIL_NUM_NON_COMPLIANCE;
+import javax.annotation.Resource;
+
+import static atnibam.space.auth.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
 import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 
 /**
@@ -28,6 +29,8 @@ public class EmailCertificateStrategy implements CertificateStrategy {
     private RemoteUserCredentialsService remoteUserCredentialsService;
     @Autowired
     private RemoteUserInfoService remoteUserInfoService;
+    @Resource
+    private EmailUtil emailUtil;
 
     /**
      * 从Redis中获取邮箱的验证码
@@ -38,8 +41,9 @@ public class EmailCertificateStrategy implements CertificateStrategy {
      */
     @Override
     public String getCodeFromRedis(String email) {
-        checkCertificate(email);
-        String emailCode = redisCache.getCacheObject(CacheConstants.LOGIN_CODE_KEY + CacheConstants.EMAIL_KEY + email);
+        // 检查邮箱是否合法
+        emailUtil.isValidEmailFormat(email);
+        String emailCode = redisCache.getCacheObject(LOGIN_EMAIL_CODE_KEY + email);
         if (!StringUtils.hasText(emailCode)) {
             //todo log
             throw new UserOperateException(USER_VERIFY_ERROR);
@@ -55,7 +59,8 @@ public class EmailCertificateStrategy implements CertificateStrategy {
      */
     @Override
     public AuthCredentials getAuthCredentialsByCertificate(String email) {
-        checkCertificate(email);
+        // 检查邮箱是否合法
+        emailUtil.isValidEmailFormat(email);
         return remoteUserCredentialsService.getAuthCredentialsByEmail(email).getData();
     }
 
@@ -67,7 +72,8 @@ public class EmailCertificateStrategy implements CertificateStrategy {
      */
     @Override
     public UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO) {
-        checkCertificate(loginRequestDTO.getCertificate());
+        // 检查邮箱是否合法
+        emailUtil.isValidEmailFormat(loginRequestDTO.getCertificate());
         return remoteUserInfoService.getUserInfoByEmail(loginRequestDTO.getCertificate(), loginRequestDTO.getAppCode()).getData();
     }
 
@@ -78,19 +84,8 @@ public class EmailCertificateStrategy implements CertificateStrategy {
      */
     @Override
     public void createCredentialsByCertificate(String email) {
-        checkCertificate(email);
+        // 检查邮箱是否合法
+        emailUtil.isValidEmailFormat(email);
         remoteUserCredentialsService.createUserCredentialsByEmail(email);
-    }
-
-    /**
-     * 检查邮箱地址是否合法
-     *
-     * @param email 邮箱地址
-     * @throws UserOperateException 用户操作异常
-     */
-    private void checkCertificate(String email) {
-        if (!ValidatorUtil.isEmail(email)) {
-            throw new UserOperateException(EMAIL_NUM_NON_COMPLIANCE);
-        }
     }
 }

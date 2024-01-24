@@ -2,10 +2,8 @@ package atnibam.space.auth.strategy.impl;
 
 import atnibam.space.auth.model.dto.AccountVerificationDTO;
 import atnibam.space.auth.service.AuthCredentialsService;
-import atnibam.space.auth.strategy.sendCodeStrategy;
-import atnibam.space.auth.utils.EmailSenderUtil;
-import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.core.utils.ValidatorUtil;
+import atnibam.space.auth.strategy.SendCodeStrategy;
+import atnibam.space.auth.utils.EmailUtil;
 import atnibam.space.common.redis.utils.CacheClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,17 +13,16 @@ import java.util.concurrent.TimeUnit;
 
 import static atnibam.space.auth.constant.AuthConstants.CODE_TTL;
 import static atnibam.space.auth.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
-import static atnibam.space.common.core.enums.ResultCode.EMAIL_NUM_NON_COMPLIANCE;
 
 /**
  * 邮箱证书策略类
  */
 @Component
-public class EmailSendCodeStrategy implements sendCodeStrategy {
+public class EmailSendCodeStrategy implements SendCodeStrategy {
     @Autowired
     private CacheClient redisCache;
     @Resource
-    private EmailSenderUtil emailSenderUtil;
+    private EmailUtil emailUtil;
     @Resource
     private AuthCredentialsService authCredentialsService;
 
@@ -39,12 +36,12 @@ public class EmailSendCodeStrategy implements sendCodeStrategy {
     public void sendCodeHandler(AccountVerificationDTO accountVerificationDTO, String code) {
         String email = accountVerificationDTO.getAccountNumber();
         // 检查邮箱是否合法
-        isValidEmailFormat(email);
+        emailUtil.isValidEmailFormat(email);
         // 判断用户是否存在
         authCredentialsService.checkEmailExist(email);
         // 发送邮件
         // TODO:实现线程池异步发送
-        emailSenderUtil.sendSimpleMail(email, accountVerificationDTO.getTitle(), accountVerificationDTO.getContent());
+        emailUtil.sendSimpleMail(email, accountVerificationDTO.getTitle(), accountVerificationDTO.getContent());
     }
 
     /**
@@ -56,17 +53,5 @@ public class EmailSendCodeStrategy implements sendCodeStrategy {
     @Override
     public void saveVerificationCodeToRedis(String email, String code) {
         redisCache.setWithLogicalExpire(LOGIN_EMAIL_CODE_KEY + email, code, CODE_TTL, TimeUnit.MINUTES);
-    }
-
-    /**
-     * 判断邮箱是否为合法邮箱格式
-     *
-     * @param email 邮箱
-     * @throws UserOperateException 若不是合法邮箱格式，则抛出用户操作异常
-     */
-    private void isValidEmailFormat(String email) {
-        if (!ValidatorUtil.isEmail(email)) {
-            throw new UserOperateException(EMAIL_NUM_NON_COMPLIANCE);
-        }
     }
 }
