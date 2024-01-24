@@ -4,12 +4,12 @@ import atnibam.space.article.constant.CommonCacheContant;
 import atnibam.space.article.mapper.CommentMapper;
 import atnibam.space.article.model.dto.CommentNodeDTO;
 import atnibam.space.article.model.entity.Comment;
-import atnibam.space.common.redis.constant.CacheConstants;
-import atnibam.space.common.redis.utils.CacheUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import atnibam.space.article.service.CommentService;
 import atnibam.space.common.core.domain.R;
+import atnibam.space.common.redis.constant.CacheConstants;
+import atnibam.space.common.redis.utils.CacheClient;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     @Resource
     private CommentMapper commentMapper;
     @Resource
-    private CacheUtil cacheUtil;
+    private CacheClient cacheClient;
 
     public CommentServiceImpl(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
@@ -79,7 +79,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         while (true) {
             try {
                 // 尝试获取互斥锁，防止缓存击穿
-                boolean isLock = cacheUtil.tryLock(lockKey, CommonCacheContant.COMMENT_REBUILD_LOCK_TTL, TimeUnit.SECONDS);
+                boolean isLock = cacheClient.tryLock(lockKey, CommonCacheContant.COMMENT_REBUILD_LOCK_TTL, TimeUnit.SECONDS);
 
                 // 成功获取锁
                 if (isLock) {
@@ -87,7 +87,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
                     commentNodeDTOList = buildCommentTree(objectId, pageNum, pageSize);
 
                     // 增添到缓存
-                    cacheUtil.set(cacheKey, commentNodeDTOList,
+                    cacheClient.set(cacheKey, commentNodeDTOList,
                             CommonCacheContant.COMMENT_CACHE_TTL, TimeUnit.HOURS);
 
                     // 成功获取数据后跳出循环
@@ -100,7 +100,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
                 log.error("尝试获取锁时发生中断异常", e);
             } finally {
                 // 无论是否获取成功，最后都需要释放锁
-                cacheUtil.unlock(lockKey);
+                cacheClient.unlock(lockKey);
             }
         }
 

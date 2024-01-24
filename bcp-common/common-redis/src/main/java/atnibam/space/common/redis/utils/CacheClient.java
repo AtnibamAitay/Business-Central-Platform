@@ -327,11 +327,24 @@ public class CacheClient {
     }
 
     /**
+     * 尝试加锁
+     *
+     * @param key     锁
+     * @param timeout 超时时间
+     * @param unit    时间单位
+     * @return true=加锁成功；false=加锁失败
+     */
+    public boolean tryLock(String key, long timeout, TimeUnit unit) {
+        Boolean flag = stringRedisTemplate.opsForValue().setIfAbsent(key, "1", timeout, unit);
+        return BooleanUtil.isTrue(flag);
+    }
+
+    /**
      * 释放互斥锁
      *
      * @param key 锁的key
      */
-    private void unlock(String key) {
+    public void unlock(String key) {
         stringRedisTemplate.delete(key);
     }
 
