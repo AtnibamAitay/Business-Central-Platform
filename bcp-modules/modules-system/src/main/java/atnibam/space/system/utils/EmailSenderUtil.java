@@ -1,5 +1,6 @@
 package atnibam.space.system.utils;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -7,8 +8,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
-import static atnibam.space.system.constant.SystemConstants.EMAIL_FROM;
 
 /**
  * @ClassName: EmailSenderUtil
@@ -18,6 +17,8 @@ import static atnibam.space.system.constant.SystemConstants.EMAIL_FROM;
  **/
 @Component
 public class EmailSenderUtil {
+    @Value("${spring.mail.username}")
+    public String EMAIL_FROM;
     @Resource
     private JavaMailSender javaMailSender;
 
