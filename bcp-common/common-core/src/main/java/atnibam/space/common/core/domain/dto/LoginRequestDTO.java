@@ -38,12 +38,12 @@ public class LoginRequestDTO implements Serializable {
      */
     @ApiModelProperty("登录方式 1-手机号+验证码 2-邮箱+验证码")
     @NotNull(message = "登录方式不能为空")
-    private Integer loginMethod = 0;
+    private Integer loginMethod;
 
     /**
      * 应用码
      */
-    @ApiModelProperty("应用ID 1 STEAM课堂 2 北极星宠 3万象课堂")
+    @ApiModelProperty("应用码")
     @NotNull(message = "应用码不能为空")
     @NotBlank(message = "应用码不能为空")
     private String appCode;
