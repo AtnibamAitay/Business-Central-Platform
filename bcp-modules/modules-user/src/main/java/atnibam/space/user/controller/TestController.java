@@ -1,25 +1,24 @@
 package atnibam.space.user.controller;
 
-import atnibam.space.api.article.TestRemoteService;
-import atnibam.space.api.system.RemoteMsgRecordService;
-import atnibam.space.common.core.constant.Constants;
-import atnibam.space.common.core.domain.LocalMessageRecord;
-import atnibam.space.common.rocketmq.constant.RocketMQConstants;
-import atnibam.space.common.rocketmq.service.MQProducerService;
+//import atnibam.space.api.system.RemoteMsgRecordService;
+//import atnibam.space.common.core.constant.Constants;
+//import atnibam.space.common.core.domain.LocalMessageRecord;
+//import atnibam.space.common.rocketmq.constant.RocketMQConstants;
+//import atnibam.space.common.rocketmq.service.MQProducerService;
 import cn.dev33.satoken.config.SaSsoConfig;
 import cn.dev33.satoken.sso.SaSsoProcessor;
 import cn.dev33.satoken.sso.SaSsoUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import com.dtflys.forest.Forest;
-import org.apache.rocketmq.client.producer.SendCallback;
-import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
+//import org.apache.rocketmq.client.producer.SendCallback;
+//import org.apache.rocketmq.client.producer.SendResult;
+//import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.support.MessageBuilder;
+//import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
+//import org.springframework.transaction.support.TransactionSynchronization;
+//import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,23 +29,19 @@ import java.util.Map;
 /**
  * 测试
  */
-//@Api("测试案例")
 @RestController
 public class TestController {
-    @Autowired
-    private TestRemoteService testRemoteService;
-    @Autowired
-    private MQProducerService mqProducerService;
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
-    @Autowired
-    private RemoteMsgRecordService remoteMsgRecordService;
+//    @Autowired
+//    private MQProducerService mqProducerService;
+//    @Autowired
+//    private RocketMQTemplate rocketMQTemplate;
+//    @Autowired
+//    private RemoteMsgRecordService remoteMsgRecordService;
 
     @Value("${swagger.title}")
     private String title;
     @Value("${redis.password}")
     private String host;
-
 
     /**
      * 获取测试方法
@@ -54,7 +49,7 @@ public class TestController {
     //@ApiOperation("Feign测试接口")
     @GetMapping("/test")
     public void test() {
-        System.out.println(remoteMsgRecordService.queryFileStateMsgRecord().getData().toString());
+//        System.out.println(remoteMsgRecordService.queryFileStateMsgRecord().getData().toString());
         //return testRemoteService.testRemoteService();
     }
 
@@ -73,30 +68,30 @@ public class TestController {
     @Transactional(rollbackFor = Exception.class)
     public void testLocalMsgRecord() {
         // 获取本地消息记录
-        LocalMessageRecord messageRecord = mqProducerService.getMsgRecord(RocketMQConstants.DELAY_TOPIC, RocketMQConstants.LOGOUT_DELAY_TAG, "i am body", Constants.USER_SERVICE, Constants.DELAY_LOGOUT);
+//        LocalMessageRecord messageRecord = mqProducerService.getMsgRecord(RocketMQConstants.DELAY_TOPIC, RocketMQConstants.LOGOUT_DELAY_TAG, "i am body", Constants.USER_SERVICE, Constants.DELAY_LOGOUT);
         // 保存远程消息记录
-        remoteMsgRecordService.saveMsgRecord(messageRecord);
+//        remoteMsgRecordService.saveMsgRecord(messageRecord);
         System.out.println("something todo....");
         // 注册事务同步
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
-            @Override
-            public void afterCommit() {
-                // 异步发送消息
-                rocketMQTemplate.asyncSend(messageRecord.getTopic() + ":" + messageRecord.getTags(), MessageBuilder.withPayload(messageRecord.getBody()).build(), new SendCallback() {
-                    @Override
-                    public void onSuccess(SendResult sendResult) {
-                        // 更新远程消息记录
-                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnSuccessHandler(messageRecord, sendResult));
-                    }
-
-                    @Override
-                    public void onException(Throwable throwable) {
-                        // 更新远程消息记录
-                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnFailHandler(messageRecord));
-                    }
-                });
-            }
-        });
+//        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+//            @Override
+//            public void afterCommit() {
+//                // 异步发送消息
+//                rocketMQTemplate.asyncSend(messageRecord.getTopic() + ":" + messageRecord.getTags(), MessageBuilder.withPayload(messageRecord.getBody()).build(), new SendCallback() {
+//                    @Override
+//                    public void onSuccess(SendResult sendResult) {
+//                        // 更新远程消息记录
+//                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnSuccessHandler(messageRecord, sendResult));
+//                    }
+//
+//                    @Override
+//                    public void onException(Throwable throwable) {
+//                        // 更新远程消息记录
+//                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnFailHandler(messageRecord));
+//                    }
+//                });
+//            }
+//        });
     }
 
     /**

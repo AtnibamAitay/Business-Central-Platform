@@ -1,10 +1,10 @@
 package atnibam.space.user.service.impl;
 
-import atnibam.space.api.system.RemoteMsgRecordService;
-import atnibam.space.common.core.constant.Constants;
+//import atnibam.space.api.system.RemoteMsgRecordService;
+//import atnibam.space.common.core.constant.Constants;
 import atnibam.space.common.core.constant.UserConstants;
-import atnibam.space.common.core.domain.LocalMessageRecord;
-import atnibam.space.common.core.domain.MqMessage;
+//import atnibam.space.common.core.domain.LocalMessageRecord;
+//import atnibam.space.common.core.domain.MqMessage;
 import atnibam.space.common.core.domain.UserInfo;
 import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.SystemServiceException;
@@ -14,28 +14,28 @@ import atnibam.space.common.core.utils.Base64ToMultipartFileUtils;
 import atnibam.space.common.core.utils.DateUtils;
 import atnibam.space.common.core.utils.RandomNameUtils;
 import atnibam.space.common.minio.service.MinioSysFileService;
-import atnibam.space.common.rocketmq.constant.RocketMQConstants;
-import atnibam.space.common.rocketmq.service.MQProducerService;
+//import atnibam.space.common.rocketmq.constant.RocketMQConstants;
+//import atnibam.space.common.rocketmq.service.MQProducerService;
 import atnibam.space.user.mapper.UserInfoMapper;
 import atnibam.space.user.service.UserInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+//import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.rocketmq.client.producer.SendCallback;
-import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
+//import org.apache.rocketmq.client.producer.SendCallback;
+//import org.apache.rocketmq.client.producer.SendResult;
+//import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.messaging.support.MessageBuilder;
+//import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
+//import org.springframework.transaction.support.TransactionSynchronization;
+//import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.UUID;
+//import java.util.UUID;
 
 /**
  * 针对表【user_info】的数据库操作Service实现
@@ -49,14 +49,14 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
     @Autowired
     private MinioSysFileService minioSysFileService;
 
-    @Autowired
-    private MQProducerService mqProducerService;
-
-    @Autowired
-    private RemoteMsgRecordService remoteMsgRecordService;
-
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
+//    @Autowired
+//    private MQProducerService mqProducerService;
+//
+//    @Autowired
+//    private RemoteMsgRecordService remoteMsgRecordService;
+//
+//    @Autowired
+//    private RocketMQTemplate rocketMQTemplate;
 
     @Autowired
     private ResourceLoader resourceLoader;
@@ -83,34 +83,34 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
     @Override
     public void logout(String userId) {
         // 将注销状态标记为确认注销,实际上没有注销
-        LambdaUpdateWrapper<UserInfo> updateWrapper = new LambdaUpdateWrapper<UserInfo>().eq(UserInfo::getUserId, userId).set(UserInfo::getLogoutStatus, UserConstants.LOGOUT);
-        this.update(updateWrapper);
+//        LambdaUpdateWrapper<UserInfo> updateWrapper = new LambdaUpdateWrapper<UserInfo>().eq(UserInfo::getUserId, userId).set(UserInfo::getLogoutStatus, UserConstants.LOGOUT);
+//        this.update(updateWrapper);
 
         // 15天后进行注销逻辑
-        MqMessage mqMessage = new MqMessage(UUID.randomUUID().toString(), userId);
-        LocalMessageRecord messageRecord = mqProducerService.getMsgRecord(RocketMQConstants.DELAY_TOPIC, RocketMQConstants.LOGOUT_DELAY_TAG, mqMessage.getMessageBody(), Constants.USER_SERVICE, Constants.DELAY_LOGOUT);
-        messageRecord.setScheduledTime(DateUtils.addDaysToDate(DateUtils.getNowDate(), 15));
-        remoteMsgRecordService.saveMsgRecord(messageRecord);
+//        MqMessage mqMessage = new MqMessage(UUID.randomUUID().toString(), userId);
+//        LocalMessageRecord messageRecord = mqProducerService.getMsgRecord(RocketMQConstants.DELAY_TOPIC, RocketMQConstants.LOGOUT_DELAY_TAG, mqMessage.getMessageBody(), Constants.USER_SERVICE, Constants.DELAY_LOGOUT);
+//        messageRecord.setScheduledTime(DateUtils.addDaysToDate(DateUtils.getNowDate(), 15));
+//        remoteMsgRecordService.saveMsgRecord(messageRecord);
 
         // 注册事务同步
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
-            @Override
-            public void afterCommit() {
-                // 异步延迟发送
-                rocketMQTemplate.asyncSend(messageRecord.getTopic() + ":" + messageRecord.getTags(), MessageBuilder.withPayload(mqMessage).build(), new SendCallback() {
-                    @Override
-                    public void onSuccess(SendResult sendResult) {
-                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnSuccessHandler(messageRecord, sendResult));
-                    }
-
-                    @Override
-                    public void onException(Throwable throwable) {
-                        // log.error
-                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnFailHandler(messageRecord));
-                    }
-                }, mqProducerService.messageTimeOut, 18);
-            }
-        });
+//        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+//            @Override
+//            public void afterCommit() {
+//                // 异步延迟发送
+//                rocketMQTemplate.asyncSend(messageRecord.getTopic() + ":" + messageRecord.getTags(), MessageBuilder.withPayload(mqMessage).build(), new SendCallback() {
+//                    @Override
+//                    public void onSuccess(SendResult sendResult) {
+//                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnSuccessHandler(messageRecord, sendResult));
+//                    }
+//
+//                    @Override
+//                    public void onException(Throwable throwable) {
+//                        // log.error
+//                        remoteMsgRecordService.updateMsgRecord(mqProducerService.asyncMsgRecordOnFailHandler(messageRecord));
+//                    }
+//                }, mqProducerService.messageTimeOut, 18);
+//            }
+//        });
 
     }
 
