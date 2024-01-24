@@ -1,8 +1,8 @@
-package atnibam.space.system.controller;
+package atnibam.space.auth.controller;
 
+import atnibam.space.auth.model.dto.AccountVerificationDTO;
+import atnibam.space.auth.service.CodeService;
 import atnibam.space.common.core.domain.R;
-import atnibam.space.system.model.dto.AccountVerificationDTO;
-import atnibam.space.system.service.CodeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

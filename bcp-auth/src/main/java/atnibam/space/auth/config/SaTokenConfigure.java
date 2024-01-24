@@ -1,4 +1,4 @@
-package atnibam.space.system.config;
+package atnibam.space.auth.config;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.filter.SaServletFilter;
@@ -12,20 +12,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
-    // 注册 Sa-Token 全局过滤器
-//    @Bean
+    /**
+     * 注册 Sa-Token 全局过滤器
+     *
+     * @return Sa-Token 全局过滤器
+     */
     public SaServletFilter getSaServletFilter() {
         return new SaServletFilter()
                 .addInclude("/**")
                 .addExclude("/favicon.ico")
-//                .addExclude("/stomp/websocket/**")
                 .setAuth(obj -> {
                     // 校验 Same-Token 身份凭证     —— 以下两句代码可简化为：SaSameUtil.checkCurrentRequestToken();
                     String token = SaHolder.getRequest().getHeader(SaSameUtil.SAME_TOKEN);
                     SaSameUtil.checkToken(token);
                 })
-                .setError(e -> {
-                    return SaResult.error(e.getMessage());
-                });
+                .setError(e -> SaResult.error(e.getMessage()));
     }
 }

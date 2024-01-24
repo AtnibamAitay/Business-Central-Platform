@@ -1,7 +1,7 @@
-package atnibam.space.system.service;
+package atnibam.space.auth.service;
 
+import atnibam.space.auth.model.dto.AccountVerificationDTO;
 import atnibam.space.common.core.domain.R;
-import atnibam.space.system.model.dto.AccountVerificationDTO;
 
 public interface CodeService {
 

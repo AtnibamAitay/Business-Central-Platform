@@ -1,9 +1,9 @@
-package atnibam.space.system.factory;
+package atnibam.space.auth.factory;
 
+import atnibam.space.auth.strategy.impl.EmailSendCodeStrategy;
+import atnibam.space.auth.strategy.impl.PhoneSendCodeStrategy;
+import atnibam.space.auth.strategy.sendCodeStrategy;
 import atnibam.space.common.core.enums.CertificateMethodEnum;
-import atnibam.space.system.strategy.CertificateStrategy;
-import atnibam.space.system.strategy.impl.EmailCertificateStrategy;
-import atnibam.space.system.strategy.impl.PhoneCertificateStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
  * 证书策略工厂
  */
 @Component
-public class CertificateStrategyFactory {
+public class SendCodeStrategyFactory {
     @Autowired
-    private PhoneCertificateStrategy phoneCertificateStrategy;
+    private PhoneSendCodeStrategy phoneCertificateStrategy;
     @Autowired
-    private EmailCertificateStrategy emailCertificateStrategy;
+    private EmailSendCodeStrategy emailCertificateStrategy;
 
     /**
      * 获取证书策略
@@ -23,7 +23,7 @@ public class CertificateStrategyFactory {
      * @param certificateMethodEnum 证书方法
      * @return 证书策略
      */
-    public CertificateStrategy getStrategy(CertificateMethodEnum certificateMethodEnum) {
+    public sendCodeStrategy getStrategy(CertificateMethodEnum certificateMethodEnum) {
         return createCodeHandlerStrategy(certificateMethodEnum);
     }
 
@@ -33,8 +33,7 @@ public class CertificateStrategyFactory {
      * @param certificateMethodEnum 证书方法
      * @return 证书策略
      */
-    private CertificateStrategy createCodeHandlerStrategy(CertificateMethodEnum certificateMethodEnum) {
-
+    private sendCodeStrategy createCodeHandlerStrategy(CertificateMethodEnum certificateMethodEnum) {
         switch (certificateMethodEnum) {
             case EMAIL_CODE:
                 return emailCertificateStrategy;

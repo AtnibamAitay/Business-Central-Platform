@@ -1,4 +1,4 @@
-package atnibam.space.system.enums;
+package atnibam.space.auth.enums;
 
 /**
  * @ClassName: LoginMethodEnum

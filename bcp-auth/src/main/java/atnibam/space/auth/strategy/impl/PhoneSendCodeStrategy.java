@@ -1,24 +1,24 @@
-package atnibam.space.system.strategy.impl;
+package atnibam.space.auth.strategy.impl;
 
+import atnibam.space.auth.model.dto.AccountVerificationDTO;
+import atnibam.space.auth.service.AuthCredentialsService;
+import atnibam.space.auth.strategy.sendCodeStrategy;
+import atnibam.space.auth.utils.SmsUtil;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.core.utils.ValidatorUtil;
 import atnibam.space.common.redis.utils.CacheClient;
-import atnibam.space.system.model.dto.AccountVerificationDTO;
-import atnibam.space.system.service.AuthCredentialsService;
-import atnibam.space.system.strategy.CertificateStrategy;
-import atnibam.space.system.utils.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
+import static atnibam.space.auth.constant.AuthConstants.CODE_TTL;
+import static atnibam.space.auth.constant.AuthConstants.LOGIN_PHONE_CODE_KEY;
 import static atnibam.space.common.core.enums.ResultCode.PHONE_NUM_NON_COMPLIANCE;
-import static atnibam.space.system.constant.AuthConstants.CODE_TTL;
-import static atnibam.space.system.constant.AuthConstants.LOGIN_PHONE_CODE_KEY;
 
 @Component
-public class PhoneCertificateStrategy implements CertificateStrategy {
+public class PhoneSendCodeStrategy implements sendCodeStrategy {
     @Autowired
     private SmsUtil smsUtil;
     @Resource

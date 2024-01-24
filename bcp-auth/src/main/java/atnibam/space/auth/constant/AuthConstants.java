@@ -1,4 +1,4 @@
-package atnibam.space.system.constant;
+package atnibam.space.auth.constant;
 
 /**
  * @ClassName: AuthConstants

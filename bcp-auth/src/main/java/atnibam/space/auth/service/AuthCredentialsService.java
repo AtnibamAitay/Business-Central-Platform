@@ -1,6 +1,6 @@
-package atnibam.space.system.service;
+package atnibam.space.auth.service;
 
-import atnibam.space.system.model.entity.AuthCredentials;
+import atnibam.space.auth.model.entity.AuthCredentials;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

@@ -1,4 +1,4 @@
-package atnibam.space.system.exception;
+package atnibam.space.auth.exception;
 
 import atnibam.space.common.core.enums.ResultCode;
 import lombok.Data;

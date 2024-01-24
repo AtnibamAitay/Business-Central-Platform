@@ -1,9 +1,9 @@
-package atnibam.space.system.service.impl;
+package atnibam.space.auth.service.impl;
 
-import atnibam.space.system.exception.UserLoginException;
-import atnibam.space.system.mapper.AuthCredentialsMapper;
-import atnibam.space.system.model.entity.AuthCredentials;
-import atnibam.space.system.service.AuthCredentialsService;
+import atnibam.space.auth.exception.UserLoginException;
+import atnibam.space.auth.mapper.AuthCredentialsMapper;
+import atnibam.space.auth.model.entity.AuthCredentials;
+import atnibam.space.auth.service.AuthCredentialsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

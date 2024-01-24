@@ -1,11 +1,11 @@
-package atnibam.space.system.service.impl;
+package atnibam.space.auth.service.impl;
 
+import atnibam.space.auth.factory.SendCodeStrategyFactory;
+import atnibam.space.auth.model.dto.AccountVerificationDTO;
+import atnibam.space.auth.service.CodeService;
+import atnibam.space.auth.strategy.sendCodeStrategy;
 import atnibam.space.common.core.domain.R;
 import atnibam.space.common.core.enums.CertificateMethodEnum;
-import atnibam.space.system.factory.CertificateStrategyFactory;
-import atnibam.space.system.model.dto.AccountVerificationDTO;
-import atnibam.space.system.service.CodeService;
-import atnibam.space.system.strategy.CertificateStrategy;
 import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static atnibam.space.common.core.constant.Constants.RANDOM_LENGTH;
 @Service
 public class CodeServiceImpl implements CodeService {
     @Autowired
-    private CertificateStrategyFactory certificateStrategyFactory;
+    private SendCodeStrategyFactory sendCodeStrategyFactory;
 
     /**
      * 发送验证码
@@ -33,7 +33,7 @@ public class CodeServiceImpl implements CodeService {
         // 生成验证码
         String code = RandomUtil.randomNumbers(RANDOM_LENGTH);
         // 根据登录方式决定策略
-        CertificateStrategy strategy = certificateStrategyFactory.getStrategy(CertificateMethodEnum.fromCode(accountVerificationDTO.getCodeType()));
+        sendCodeStrategy strategy = sendCodeStrategyFactory.getStrategy(CertificateMethodEnum.fromCode(accountVerificationDTO.getCodeType()));
         // 发送验证码
         strategy.sendCodeHandler(accountVerificationDTO, code);
         // 把验证码加入到缓存中

@@ -1,4 +1,4 @@
-package atnibam.space.system.config;
+package atnibam.space.auth.config;
 
 import com.aliyun.auth.credentials.Credential;
 import com.aliyun.auth.credentials.provider.StaticCredentialProvider;

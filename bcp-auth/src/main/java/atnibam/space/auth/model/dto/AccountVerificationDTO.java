@@ -1,4 +1,4 @@
-package atnibam.space.system.model.dto;
+package atnibam.space.auth.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

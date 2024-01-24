@@ -1,4 +1,4 @@
-package atnibam.space.system.utils;
+package atnibam.space.auth.utils;
 
 import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.SystemServiceException;

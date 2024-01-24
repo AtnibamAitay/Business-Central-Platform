@@ -1,11 +1,11 @@
-package atnibam.space.system.strategy;
+package atnibam.space.auth.strategy;
 
-import atnibam.space.system.model.dto.AccountVerificationDTO;
+import atnibam.space.auth.model.dto.AccountVerificationDTO;
 
 /**
  * 证书策略接口
  */
-public interface CertificateStrategy {
+public interface sendCodeStrategy {
     /**
      * 发送验证码处理方法
      *

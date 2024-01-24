@@ -22,10 +22,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
@@ -43,14 +39,6 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>alibabacloud-dysmsapi20170525</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-ui</artifactId>
         </dependency>
@@ -65,14 +53,6 @@
         <dependency>
             <groupId>atnibam.space</groupId>
             <artifactId>api-system</artifactId>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>atnibam.space</groupId>-->
-<!--            <artifactId>common-rocketMQ</artifactId>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>atnibam.space</groupId>
-            <artifactId>common-redis</artifactId>
         </dependency>
     </dependencies>
 

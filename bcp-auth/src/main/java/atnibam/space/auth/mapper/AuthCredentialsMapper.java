@@ -1,6 +1,6 @@
-package atnibam.space.system.mapper;
+package atnibam.space.auth.mapper;
 
-import atnibam.space.system.model.entity.AuthCredentials;
+import atnibam.space.auth.model.entity.AuthCredentials;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Select;
 
