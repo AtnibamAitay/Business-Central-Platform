@@ -77,7 +77,14 @@ public class CacheConstants {
      */
     public static final String PHONE_KEY = "phone:";
 
-    //验证码失效时间15分钟
-    public static final Integer MESSAGE_CODE_TIME_OUT = 999999;
+    /**
+     * 线程休眠的时间（50毫秒）
+     */
+    public static final long SLEEP_TIME_IN_MILLIS = 50L;
+
+    /**
+     * 获取互斥锁的超时时间（10秒）
+     */
+    public static final long LOCK_TIMEOUT = 10L;
 
 }

@@ -1,8 +1,10 @@
 package atnibam.space.system.controller;
 
 import atnibam.space.common.core.domain.R;
-import atnibam.space.common.core.domain.dto.VerifyCodeDTO;
+import atnibam.space.system.model.dto.AccountVerificationDTO;
 import atnibam.space.system.service.CodeService;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 短信控制层
+ * 验证码控制层
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 public class MessageCodeController {
@@ -22,12 +25,13 @@ public class MessageCodeController {
     /**
      * 发送验证码
      *
-     * @param verifyCodeDTO 验证码验证DTO对象
-     * @return 返回结果对象
+     * @param accountVerificationDTO 包含账号、验证码类型等信息的数据传输对象
+     * @return Result 发送结果，成功发送则返回成功信息，否则返回失败原因
      */
+    @ApiOperation(value = "发送验证码")
     @PostMapping("/verification-codes")
-    public R sendCodeByAccount(@RequestBody @Validated VerifyCodeDTO verifyCodeDTO) {
-        codeService.sendCode(verifyCodeDTO);
-        return R.ok();
+    public R sendCodeByAccount(@RequestBody @Validated AccountVerificationDTO accountVerificationDTO) {
+        log.info("发送验证码接口的入参为：" + accountVerificationDTO);
+        return codeService.sendCode(accountVerificationDTO);
     }
 }

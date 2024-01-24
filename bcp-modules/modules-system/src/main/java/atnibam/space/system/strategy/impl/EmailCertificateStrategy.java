@@ -1,17 +1,21 @@
 package atnibam.space.system.strategy.impl;
 
-import atnibam.space.common.core.domain.dto.VerifyCodeDTO;
-import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.core.utils.ValidatorUtil;
-import atnibam.space.common.redis.constant.CacheConstants;
-import atnibam.space.common.redis.service.RedisCache;
+import atnibam.space.common.redis.utils.CacheClient;
+import atnibam.space.system.model.dto.AccountVerificationDTO;
+import atnibam.space.system.service.AuthCredentialsService;
 import atnibam.space.system.strategy.CertificateStrategy;
-import atnibam.space.system.utils.SendEmailUtil;
+import atnibam.space.system.utils.EmailSenderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
+
+import static atnibam.space.common.core.enums.ResultCode.EMAIL_NUM_NON_COMPLIANCE;
+import static atnibam.space.system.constant.AuthConstants.CODE_TTL;
+import static atnibam.space.system.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
 
 /**
  * 邮箱证书策略类
@@ -19,50 +23,50 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class EmailCertificateStrategy implements CertificateStrategy {
     @Autowired
-    private RedisCache redisCache;
-    @Autowired
-    private SendEmailUtil sendEmailUtil;
+    private CacheClient redisCache;
+    @Resource
+    private EmailSenderUtil emailSenderUtil;
+    @Resource
+    private AuthCredentialsService authCredentialsService;
 
     /**
      * 发送验证码处理方法
      *
-     * @param account 邮箱账号
-     * @param code    验证码
-     * @param subject 主题
+     * @param accountVerificationDTO 包含邮箱、邮箱内容等信息的数据传输对象
+     * @param code                   验证码
      */
     @Override
-    public void sendCodeHandler(String account, String code, String subject) {
-        // 检查证书
-        checkCertificate(account);
+    public void sendCodeHandler(AccountVerificationDTO accountVerificationDTO, String code) {
+        String email = accountVerificationDTO.getAccountNumber();
+        // 检查邮箱是否合法
+        isValidEmailFormat(email);
+        // 判断用户是否存在
+        authCredentialsService.checkEmailExist(email);
         // 发送邮件
-        sendEmailUtil.sendSimpleMail(account, subject, code);
+        // TODO:实现线程池异步发送
+        emailSenderUtil.sendSimpleMail(email, accountVerificationDTO.getTitle(), accountVerificationDTO.getContent());
     }
 
     /**
-     * 将验证码保存到Redis中
+     * 保存验证码到Redis中
      *
-     * @param verifyCodeDTO 验证码信息
-     * @param code          验证码
+     * @param email 邮箱
+     * @param code  验证码
      */
     @Override
-    public void saveVerificationCodeToRedis(VerifyCodeDTO verifyCodeDTO, String code) {
-        // 获取前缀
-        String prefix = CertificateStrategy.getPrefixByType(verifyCodeDTO.getFunctionType());
-        // 检查证书
-        checkCertificate(verifyCodeDTO.getAccount());
-        // 保存验证码到Redis缓存中
-        redisCache.setCacheObject(prefix + CacheConstants.EMAIL_KEY + verifyCodeDTO.getAccount(), code, CacheConstants.MESSAGE_CODE_TIME_OUT, TimeUnit.MINUTES);
+    public void saveVerificationCodeToRedis(String email, String code) {
+        redisCache.setWithLogicalExpire(LOGIN_EMAIL_CODE_KEY + email, code, CODE_TTL, TimeUnit.MINUTES);
     }
 
     /**
-     * 检查证书方法，判断是否为合法邮箱格式
+     * 判断邮箱是否为合法邮箱格式
      *
-     * @param certificate 证书（邮箱）
+     * @param email 邮箱
      * @throws UserOperateException 若不是合法邮箱格式，则抛出用户操作异常
      */
-    private void checkCertificate(String certificate) {
-        if (!ValidatorUtil.isEmail(certificate)) {
-            throw new UserOperateException(ResultCode.EMAIL_NUM_NON_COMPLIANCE);
+    private void isValidEmailFormat(String email) {
+        if (!ValidatorUtil.isEmail(email)) {
+            throw new UserOperateException(EMAIL_NUM_NON_COMPLIANCE);
         }
     }
 }
