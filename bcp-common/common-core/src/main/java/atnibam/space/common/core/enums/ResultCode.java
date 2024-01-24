@@ -29,6 +29,7 @@ public enum ResultCode {
     USER_ACCOUNT_INCONSISTENT(2015, "注册账号与发送验证码账号不一致", HttpStatus.BAD_REQUEST),
     USER_UPDATE_ERROR(2010, "用户数据更新异常", HttpStatus.CONFLICT),
     USER_LOGOUT_FAIL(2017, "用户注销失败", HttpStatus.CONFLICT),
+    LOGIN_METHOD_INVALID(2018, "登录方法无效", HttpStatus.BAD_REQUEST),
     HTTP_METHOD_ERROR(3001, "Http请求方法错误", HttpStatus.BAD_REQUEST),
     PHONE_CODE_OOT(3002, "当天手机号发送验证码次数以达到上限，请24小时后重试", HttpStatus.TOO_MANY_REQUESTS),
     SMS_INTERRUPTED_OR_EXECUTION_ERROR(4001, "阿里云服务被中断或执行错误", HttpStatus.BAD_REQUEST),
