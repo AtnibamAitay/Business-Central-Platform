@@ -41,7 +41,7 @@ public class CertificateStrategyFactory {
             case PHONE_CODE:
                 return phoneCertificateStrategy;
             default:
-                throw new IllegalArgumentException("Unsupported account type: " + certificateMethodEnum);
+                throw new IllegalArgumentException("不支持的认证类型: " + certificateMethodEnum);
         }
     }
 }
