@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author: gaojianjie
- * @Description
- * @date 2023/9/11 08:29
+ * 证书策略工厂
  */
 @Component
 public class CertificateStrategyFactory {
@@ -19,9 +17,22 @@ public class CertificateStrategyFactory {
     @Autowired
     private EmailCertificateStrategy emailCertificateStrategy;
 
+    /**
+     * 获取证书策略
+     *
+     * @param certificateMethodEnum 证书方法
+     * @return 证书策略
+     */
     public CertificateStrategy getStrategy(CertificateMethodEnum certificateMethodEnum) {
         return createCodeHandlerStrategy(certificateMethodEnum);
     }
+
+    /**
+     * 根据证书方法创建证书策略
+     *
+     * @param certificateMethodEnum 证书方法
+     * @return 证书策略
+     */
     private CertificateStrategy createCodeHandlerStrategy(CertificateMethodEnum certificateMethodEnum) {
 
         switch (certificateMethodEnum) {
