@@ -9,15 +9,15 @@ import atnibam.space.common.core.domain.dto.LoginRequestDTO;
  */
 public interface CertificateStrategy {
     /**
-     * 从Redis获取证书代码
+     * 从Redis获取账号的验证码
      *
-     * @param certificate 证书
-     * @return 证书代码
+     * @param accountNumber 账号
+     * @return 验证码
      */
-    String getCodeFromRedis(String certificate);
+    String getCodeFromRedis(String accountNumber);
 
     /**
-     * 根据证书获取用户信息
+     * 根据账号信息获取用户信息
      *
      * @param loginRequestDTO 登录请求数据
      * @return 用户信息
@@ -25,17 +25,17 @@ public interface CertificateStrategy {
     UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO);
 
     /**
-     * 根据证书获取认证凭证
+     * 根据账号获取认证凭证
      *
-     * @param certificate 证书
+     * @param accountNumber 账号
      * @return 认证凭证
      */
-    AuthCredentials getAuthCredentialsByCertificate(String certificate);
+    AuthCredentials getAuthCredentialsByCertificate(String accountNumber);
 
     /**
-     * 创建通过证书生成的认证凭证
+     * 创建通过账号生成的认证凭证
      *
-     * @param certificate 证书
+     * @param accountNumber 账号
      */
-    void createCredentialsByCertificate(String certificate);
+    void createCredentialsByCertificate(String accountNumber);
 }
