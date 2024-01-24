@@ -37,7 +37,7 @@ public enum CertificateMethodEnum {
                 return method;
             }
         }
-        throw new IllegalArgumentException("Invalid login method code: " + code);
+        throw new IllegalArgumentException("无效的登录方式: " + code);
     }
 
     /**
