@@ -1,6 +1,8 @@
 package atnibam.space.auth.controller;
 
+import atnibam.space.auth.model.dto.AccountVerificationDTO;
 import atnibam.space.auth.service.SsoService;
+import atnibam.space.common.core.domain.R;
 import atnibam.space.common.core.domain.dto.LoginRequestDTO;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sign.SaSignUtil;
@@ -10,11 +12,9 @@ import cn.dev33.satoken.util.SaResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
@@ -23,12 +23,26 @@ import java.io.IOException;
 /**
  * SSO Server端 Controller
  */
+@Slf4j
 @Api("认证模块")
 @RestController
 @RequestMapping("/api/auth")
 public class SsoServerController {
     @Resource
     private SsoService ssoService;
+
+    /**
+     * 发送验证码
+     *
+     * @param accountVerificationDTO 包含账号、验证码类型等信息的数据传输对象
+     * @return Result 发送结果，成功发送则返回成功信息，否则返回失败原因
+     */
+    @ApiOperation(value = "发送验证码")
+    @PostMapping("/verification-codes")
+    public R sendCodeByAccount(@RequestBody @Validated AccountVerificationDTO accountVerificationDTO) {
+        log.info("发送验证码接口的入参为：" + accountVerificationDTO);
+        return ssoService.sendCode(accountVerificationDTO);
+    }
 
     /**
      * 访问sso请求的默认接口

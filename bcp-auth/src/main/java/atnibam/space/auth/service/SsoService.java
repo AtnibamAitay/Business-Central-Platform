@@ -1,5 +1,7 @@
 package atnibam.space.auth.service;
 
+import atnibam.space.auth.model.dto.AccountVerificationDTO;
+import atnibam.space.common.core.domain.R;
 import atnibam.space.common.core.domain.dto.LoginRequestDTO;
 import atnibam.space.common.core.domain.vo.UserInfoVO;
 import atnibam.space.common.core.exception.SystemServiceException;
@@ -10,6 +12,13 @@ import java.io.IOException;
  * 用户单点登录服务接口
  */
 public interface SsoService {
+    /**
+     * 发送验证码
+     *
+     * @param accountVerificationDTO 包含账号、验证码类型等信息的数据传输对象
+     * @return 返回验证码发送结果
+     */
+    R sendCode(AccountVerificationDTO accountVerificationDTO);
 
     /**
      * 通过邮箱/手机号、验证码和应用ID进行单点登录
