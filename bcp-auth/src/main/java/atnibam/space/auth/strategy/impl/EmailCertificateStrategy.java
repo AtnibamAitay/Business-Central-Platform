@@ -95,7 +95,7 @@ public class EmailCertificateStrategy implements CertificateStrategy {
     public UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO) {
         // 检查邮箱是否合法
         emailUtil.isValidEmailFormat(loginRequestDTO.getCertificate());
-        return remoteUserInfoService.getUserInfoByEmail(loginRequestDTO.getCertificate(), loginRequestDTO.getAppCode()).getData();
+        return remoteUserInfoService.getUserInfoByEmail(loginRequestDTO.getCertificate(), loginRequestDTO.getAppId()).getData();
     }
 
     /**

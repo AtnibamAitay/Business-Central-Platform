@@ -71,7 +71,7 @@ public class SsoServiceImpl implements SsoService {
     public void SsoLoginByCodeHandler(LoginRequestDTO loginRequestDTO) throws IOException {
         CertificateStrategy certificateStrategy = certificateStrategyFactory.getLoginStrategy(CertificateMethodEnum.fromCode(loginRequestDTO.getLoginMethod()));
 
-        String code = certificateStrategy.getCodeFromRedis(loginRequestDTO.getCertificate(), loginRequestDTO.getAppCode());
+        String code = certificateStrategy.getCodeFromRedis(loginRequestDTO.getCertificate(), loginRequestDTO.getAppId());
         if (!loginRequestDTO.getVerifyCode().equals(code)) {
             // 验证码校验失败
             throw new UserOperateException(ResultCode.USER_VERIFY_ERROR);
@@ -108,7 +108,7 @@ public class SsoServiceImpl implements SsoService {
             // 设置用户信息的凭证ID为刚刚创建的认证凭证的凭证ID
             userInfo.setCredentialsId(certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getCertificate()).getCredentialsId());
             // 设置用户信息的应用代码
-            userInfo.setAppCode(loginRequestDTO.getAppCode());
+            userInfo.setAppCode(loginRequestDTO.getAppId());
             // 注册用户信息
             remoteUserInfoService.registration(userInfo);
             // 返回空值
@@ -123,7 +123,7 @@ public class SsoServiceImpl implements SsoService {
             // 设置用户信息的凭证ID为刚刚获取的认证凭证的凭证ID
             userInfo.setCredentialsId(credentials.getCredentialsId());
             // 设置用户信息的应用代码
-            userInfo.setAppCode(loginRequestDTO.getAppCode());
+            userInfo.setAppCode(loginRequestDTO.getAppId());
             // 注册用户信息
             remoteUserInfoService.registration(userInfo);
             // 返回空值

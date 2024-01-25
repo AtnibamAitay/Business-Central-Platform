@@ -43,8 +43,8 @@ public class LoginRequestDTO implements Serializable {
     /**
      * 应用码
      */
-    @ApiModelProperty("应用码")
-    @NotNull(message = "应用码不能为空")
-    @NotBlank(message = "应用码不能为空")
-    private String appCode;
+    @ApiModelProperty("应用ID")
+    @NotNull(message = "应用ID不能为空")
+    @NotBlank(message = "应用ID不能为空")
+    private String appId;
 }

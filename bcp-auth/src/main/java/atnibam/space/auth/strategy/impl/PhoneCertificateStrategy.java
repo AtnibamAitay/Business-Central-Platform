@@ -54,7 +54,7 @@ public class PhoneCertificateStrategy implements CertificateStrategy {
     public UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO) {
         // 判断手机号格式是否正确
         smsUtil.isValidPhoneNumberFormat(loginRequestDTO.getCertificate());
-        return remoteUserInfoService.getUserInfoByPhone(loginRequestDTO.getCertificate(), loginRequestDTO.getAppCode()).getData();
+        return remoteUserInfoService.getUserInfoByPhone(loginRequestDTO.getCertificate(), loginRequestDTO.getAppId()).getData();
     }
 
     /**
