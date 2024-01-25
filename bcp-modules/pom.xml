@@ -11,7 +11,7 @@
     <modules>
         <module>modules-user</module>
         <module>modules-chat</module>
-        <module>modules-article</module>
+        <module>modules-cms</module>
         <module>modules-system</module>
         <module>modules-transaction</module>
     </modules>

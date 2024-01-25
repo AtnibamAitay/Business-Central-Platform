@@ -66,23 +66,39 @@ public class SsoServiceImpl implements SsoService {
      * @throws IOException 输入输出异常
      */
     private UserInfo registrationHandler(CertificateStrategy certificateStrategy, LoginRequestDTO loginRequestDTO) throws IOException {
+        // 根据证书获取认证凭证
         AuthCredentials credentials = certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getCertificate());
+        // 如果认证凭证为空
         if (Objects.isNull(credentials)) {
+            // 根据证书创建认证凭证
             certificateStrategy.createCredentialsByCertificate(loginRequestDTO.getCertificate());
+            // 创建用户信息对象
             UserInfo userInfo = new UserInfo();
+            // 设置用户信息的凭证ID为刚刚创建的认证凭证的凭证ID
             userInfo.setCredentialsId(certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getCertificate()).getCredentialsId());
+            // 设置用户信息的应用代码
             userInfo.setAppCode(loginRequestDTO.getAppCode());
+            // 注册用户信息
             remoteUserInfoService.registration(userInfo);
+            // 返回空值
             return null;
         }
+        // 根据证书获取用户信息
         UserInfo userInfo = certificateStrategy.getUserInfoByCertificate(loginRequestDTO);
+        // 如果用户信息为空
         if (Objects.isNull(userInfo)) {
+            // 创建用户信息对象
             userInfo = new UserInfo();
+            // 设置用户信息的凭证ID为刚刚获取的认证凭证的凭证ID
             userInfo.setCredentialsId(credentials.getCredentialsId());
+            // 设置用户信息的应用代码
             userInfo.setAppCode(loginRequestDTO.getAppCode());
+            // 注册用户信息
             remoteUserInfoService.registration(userInfo);
+            // 返回空值
             return null;
         }
+        // 返回用户信息
         return userInfo;
     }
 

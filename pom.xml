@@ -267,7 +267,7 @@
             </dependency>
             <dependency>
                 <groupId>atnibam.space</groupId>
-                <artifactId>api-article</artifactId>
+                <artifactId>api-cms</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>

@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>atnibam.space</groupId>
-            <artifactId>api-article</artifactId>
+            <artifactId>api-cms</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
