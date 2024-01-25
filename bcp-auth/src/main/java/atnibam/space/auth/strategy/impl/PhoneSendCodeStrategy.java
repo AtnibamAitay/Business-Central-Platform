@@ -36,8 +36,6 @@ public class PhoneSendCodeStrategy implements SendCodeStrategy {
         String phoneNumber = accountVerificationDTO.getAccountNumber();
         // 判断手机号格式是否正确
         smsUtil.isValidPhoneNumberFormat(phoneNumber);
-        // 判断用户是否存在
-        authCredentialsService.checkPhoneExist(phoneNumber);
         // TODO:实现线程池异步发送
         smsUtil.sendMsg(phoneNumber, code, accountVerificationDTO.getContent());
     }

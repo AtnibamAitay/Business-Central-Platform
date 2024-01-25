@@ -44,8 +44,6 @@ public class EmailSendCodeStrategy implements SendCodeStrategy {
         String email = accountVerificationDTO.getAccountNumber();
         // 检查邮箱是否合法
         emailUtil.isValidEmailFormat(email);
-        // 判断用户是否存在
-        authCredentialsService.checkEmailExist(email);
         // 发送邮件
         // TODO:实现线程池异步发送
         emailUtil.sendSimpleMail(email, accountVerificationDTO.getTitle(), buildEmailContent(accountVerificationDTO, code));
