@@ -50,7 +50,7 @@ public class SsoServiceImpl implements SsoService {
     public R sendCode(AccountVerificationDTO accountVerificationDTO) {
         // 生成验证码
         String code = RandomUtil.randomNumbers(RANDOM_LENGTH);
-        // TODO:临时强制设定验证码为123456，生成环境注意删除此段代码
+        // TODO:临时强制设定验证码为123456，生产环境注意删除此段代码
         code = "123456";
         // 根据登录方式决定策略
         SendCodeStrategy strategy = sendCodeStrategyFactory.getStrategy(CertificateMethodEnum.fromCode(accountVerificationDTO.getCodeType()));
