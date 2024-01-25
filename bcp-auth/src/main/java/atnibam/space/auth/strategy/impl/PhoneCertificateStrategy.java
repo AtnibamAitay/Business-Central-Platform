@@ -7,14 +7,15 @@ import atnibam.space.auth.utils.SmsUtil;
 import atnibam.space.common.core.domain.AuthCredentials;
 import atnibam.space.common.core.domain.UserInfo;
 import atnibam.space.common.core.domain.dto.LoginRequestDTO;
-import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.core.utils.StringUtils;
 import atnibam.space.common.redis.service.RedisCache;
+import com.alibaba.fastjson2.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static atnibam.space.auth.constant.AuthConstants.LOGIN_PHONE_CODE_KEY;
+import static atnibam.space.auth.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
+import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 
 /**
  * 手机验证码认证策略类
@@ -76,11 +77,30 @@ public class PhoneCertificateStrategy implements CertificateStrategy {
      * @throws UserOperateException 用户操作异常
      */
     @Override
-    public String getCodeFromRedis(String phoneNumber) {
-        String phoneCode = redisCache.getCacheObject(LOGIN_PHONE_CODE_KEY + phoneNumber);
-        if (!StringUtils.hasText(phoneCode)) {
-            throw new UserOperateException(ResultCode.USER_VERIFY_ERROR);
+    public String getCodeFromRedis(String phoneNumber, String appId) {
+        JSONObject cacheResult = redisCache.getCacheObject(LOGIN_EMAIL_CODE_KEY + phoneNumber);
+        // 检查结果是否存在且数据部分不为空
+        if (cacheResult != null && !cacheResult.isEmpty()) {
+            // 获取结果中的数据部分并转换为JSONObject对象
+            JSONObject dataObject = cacheResult.getJSONObject("data");
+            // 检查数据部分是否为空
+            if (dataObject != null && dataObject.getString("code") != null) {
+                // 获取数据部分中的appId字段值
+                String appIdCache = dataObject.getString("appId");
+                // 检查appId字段值是否与传入的appId相等
+                if (!appId.equals(appIdCache)) {
+                    throw new UserOperateException(USER_VERIFY_ERROR);
+                }
+                // 获取数据部分中的code字段值
+                String code = dataObject.getString("code");
+                // 检查code字段值是否包含文本
+                if (StringUtils.hasText(code)) {
+                    return code;
+                }
+            }
         }
-        return phoneCode;
+
+        //todo log
+        throw new UserOperateException(USER_VERIFY_ERROR);
     }
 }

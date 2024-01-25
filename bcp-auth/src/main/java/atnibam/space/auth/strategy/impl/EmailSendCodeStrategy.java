@@ -12,6 +12,8 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static atnibam.space.auth.constant.AuthConstants.CODE_TTL;
@@ -56,8 +58,11 @@ public class EmailSendCodeStrategy implements SendCodeStrategy {
      * @param code  验证码
      */
     @Override
-    public void saveVerificationCodeToRedis(String email, String code) {
-        redisCache.setWithLogicalExpire(LOGIN_EMAIL_CODE_KEY + email, code, CODE_TTL, TimeUnit.MINUTES);
+    public void saveVerificationCodeToRedis(String email, String code, String appId) {
+        Map<String, String> verificationData = new HashMap<>();
+        verificationData.put("appId", appId);
+        verificationData.put("code", code);
+        redisCache.setWithLogicalExpire(LOGIN_EMAIL_CODE_KEY + email, verificationData, CODE_TTL, TimeUnit.MINUTES);
     }
 
     /**

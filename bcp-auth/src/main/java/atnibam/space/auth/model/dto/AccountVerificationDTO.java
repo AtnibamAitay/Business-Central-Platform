@@ -25,4 +25,8 @@ public class AccountVerificationDTO {
     @NotNull(message = "验证码短信/邮件内容不能为空")
     @ApiModelProperty("验证码短信/邮件内容")
     private String content;
+
+    @NotNull(message = "应用ID不能为空")
+    @ApiModelProperty("应用ID")
+    private String appId;
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static atnibam.space.auth.constant.AuthConstants.CODE_TTL;
@@ -43,11 +45,14 @@ public class PhoneSendCodeStrategy implements SendCodeStrategy {
     /**
      * 保存验证码到Redis中
      *
-     * @param email 邮箱
-     * @param code  验证码
+     * @param phoneNumber 手机号
+     * @param code        验证码
      */
     @Override
-    public void saveVerificationCodeToRedis(String email, String code) {
-        cacheClient.setWithLogicalExpire(LOGIN_PHONE_CODE_KEY + email, code, CODE_TTL, TimeUnit.MINUTES);
+    public void saveVerificationCodeToRedis(String phoneNumber, String code, String appId) {
+        Map<String, String> verificationData = new HashMap<>();
+        verificationData.put("appId", appId);
+        verificationData.put("code", code);
+        cacheClient.setWithLogicalExpire(LOGIN_PHONE_CODE_KEY + phoneNumber, verificationData, CODE_TTL, TimeUnit.MINUTES);
     }
 }

@@ -43,17 +43,33 @@ public class EmailCertificateStrategy implements CertificateStrategy {
      * @throws UserOperateException 用户操作异常
      */
     @Override
-    public String getCodeFromRedis(String email) {
-        String emailCode;
+    public String getCodeFromRedis(String email, String appId) {
         // 检查邮箱是否合法
         emailUtil.isValidEmailFormat(email);
         JSONObject cacheResult = redisCache.getCacheObject(LOGIN_EMAIL_CODE_KEY + email);
-        emailCode = cacheResult.getString("data");
-        if (!StringUtils.hasText(emailCode)) {
-            //todo log
-            throw new UserOperateException(USER_VERIFY_ERROR);
+        // 检查结果是否存在且数据部分不为空
+        if (cacheResult != null && !cacheResult.isEmpty()) {
+            // 获取结果中的数据部分并转换为JSONObject对象
+            JSONObject dataObject = cacheResult.getJSONObject("data");
+            // 检查数据部分是否为空
+            if (dataObject != null && dataObject.getString("code") != null) {
+                // 获取数据部分中的appId字段值
+                String appIdCache = dataObject.getString("appId");
+                // 检查appId字段值是否与传入的appId相等
+                if (!appId.equals(appIdCache)) {
+                    throw new UserOperateException(USER_VERIFY_ERROR);
+                }
+                // 获取数据部分中的code字段值
+                String code = dataObject.getString("code");
+                // 检查code字段值是否包含文本
+                if (StringUtils.hasText(code)) {
+                    return code;
+                }
+            }
         }
-        return emailCode;
+
+        //todo log
+        throw new UserOperateException(USER_VERIFY_ERROR);
     }
 
     /**

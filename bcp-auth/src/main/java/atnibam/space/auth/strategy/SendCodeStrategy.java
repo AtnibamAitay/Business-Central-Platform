@@ -20,5 +20,5 @@ public interface SendCodeStrategy {
      * @param account 账号
      * @param code    验证码
      */
-    void saveVerificationCodeToRedis(String account, String code);
+    void saveVerificationCodeToRedis(String account, String code, String appId);
 }

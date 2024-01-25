@@ -57,7 +57,7 @@ public class SsoServiceImpl implements SsoService {
         // 发送验证码
         strategy.sendCodeHandler(accountVerificationDTO, code);
         // 把验证码加入到缓存中
-        strategy.saveVerificationCodeToRedis(accountVerificationDTO.getAccountNumber(), code);
+        strategy.saveVerificationCodeToRedis(accountVerificationDTO.getAccountNumber(), code, accountVerificationDTO.getAppId());
         return R.ok();
     }
 
@@ -71,7 +71,7 @@ public class SsoServiceImpl implements SsoService {
     public void SsoLoginByCodeHandler(LoginRequestDTO loginRequestDTO) throws IOException {
         CertificateStrategy certificateStrategy = certificateStrategyFactory.getLoginStrategy(CertificateMethodEnum.fromCode(loginRequestDTO.getLoginMethod()));
 
-        String code = certificateStrategy.getCodeFromRedis(loginRequestDTO.getCertificate());
+        String code = certificateStrategy.getCodeFromRedis(loginRequestDTO.getCertificate(), loginRequestDTO.getAppCode());
         if (!loginRequestDTO.getVerifyCode().equals(code)) {
             // 验证码校验失败
             throw new UserOperateException(ResultCode.USER_VERIFY_ERROR);

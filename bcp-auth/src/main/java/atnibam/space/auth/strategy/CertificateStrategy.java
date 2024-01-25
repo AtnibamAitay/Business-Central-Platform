@@ -14,7 +14,7 @@ public interface CertificateStrategy {
      * @param accountNumber 账号
      * @return 验证码
      */
-    String getCodeFromRedis(String accountNumber);
+    String getCodeFromRedis(String accountNumber, String appId);
 
     /**
      * 根据账号信息获取用户信息
