@@ -1,7 +1,6 @@
 package atnibam.space.auth.strategy.impl;
 
 import atnibam.space.auth.model.dto.AccountVerificationDTO;
-import atnibam.space.auth.service.AuthCredentialsService;
 import atnibam.space.auth.strategy.SendCodeStrategy;
 import atnibam.space.auth.utils.EmailUtil;
 import atnibam.space.common.redis.utils.CacheClient;
@@ -11,6 +10,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,14 +24,27 @@ import static atnibam.space.auth.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
  */
 @Component
 public class EmailSendCodeStrategy implements SendCodeStrategy {
+    /**
+     * 确保StringTemplateResolver仅初始化一次
+     */
+    private final StringTemplateResolver stringTemplateResolver = new StringTemplateResolver();
     @Autowired
     private CacheClient redisCache;
     @Resource
     private EmailUtil emailUtil;
     @Resource
     private TemplateEngine templateEngine;
-    @Resource
-    private AuthCredentialsService authCredentialsService;
+
+    @Autowired
+    public EmailSendCodeStrategy(TemplateEngine templateEngine) {
+        this.templateEngine = templateEngine;
+    }
+
+    @PostConstruct
+    public void init() {
+        stringTemplateResolver.setTemplateMode("HTML");
+        templateEngine.addTemplateResolver(stringTemplateResolver);
+    }
 
     /**
      * 发送验证码处理方法
@@ -76,18 +89,10 @@ public class EmailSendCodeStrategy implements SendCodeStrategy {
         context.setVariable("verifyCode", code);
         context.setVariable("ttl", CODE_TTL);
 
-        // 创建并配置StringTemplateResolver
-        StringTemplateResolver stringTemplateResolver = new StringTemplateResolver();
-        // 设置模板模式为HTML
-        stringTemplateResolver.setTemplateMode("HTML");
-
-        // 将StringTemplateResolver临时添加到TemplateEngine的模板解析器链中
-        templateEngine.addTemplateResolver(stringTemplateResolver);
-
         // 使用字符串形式的HTML模板内容
         String emailTemplateContent = accountVerificationDTO.getContent();
 
-        // 处理字符串模板并公会
+        // 处理字符串模板并返回结果
         return templateEngine.process(emailTemplateContent, context);
     }
 }
