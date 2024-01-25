@@ -2,6 +2,7 @@ package atnibam.space.common.core.domain;
 
 import atnibam.space.common.core.constant.Constants;
 import atnibam.space.common.core.enums.ResultCode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -42,6 +43,7 @@ public class R<T> implements Serializable {
     /**
      * 响应数据
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     /**
