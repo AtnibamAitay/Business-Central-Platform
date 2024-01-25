@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * 用户凭证远程服务接口
  */
-@FeignClient(value = "modules-user", contextId = "userCredentials")
+@FeignClient(value = "modules-user", contextId = "userCredentials", url = "http://local.atnibam.space:8085")
 public interface RemoteUserCredentialsService {
 
     /**
