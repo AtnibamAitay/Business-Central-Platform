@@ -59,9 +59,9 @@ public class SsoServerController {
      * @return 认证结果
      */
     @ApiOperation("单点登陆接口")
-    @RequestMapping(method = RequestMethod.POST, value = "/doLogin")
+    @PostMapping("/login")
     public SaResult ssoLogin(@Validated @RequestBody LoginRequestDTO loginRequestDTO) throws IOException {
-        ssoService.SsoLoginByCodeHandler(loginRequestDTO);
+        ssoService.ssoLoginByCodeHandler(loginRequestDTO);
         return SaResult.ok().setData(StpUtil.getTokenValue());
     }
 

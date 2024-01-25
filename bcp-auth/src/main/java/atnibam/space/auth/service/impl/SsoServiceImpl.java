@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static atnibam.space.common.core.constant.Constants.RANDOM_LENGTH;
+import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 
 /**
  * 单点登录服务类
@@ -68,22 +69,28 @@ public class SsoServiceImpl implements SsoService {
      * @throws IOException 输入输出异常
      */
     @Override
-    public void SsoLoginByCodeHandler(LoginRequestDTO loginRequestDTO) throws IOException {
+    public void ssoLoginByCodeHandler(LoginRequestDTO loginRequestDTO) throws IOException {
+        // 根据登录请求DTO中的登录方法创建策略
         CertificateStrategy certificateStrategy = certificateStrategyFactory.getLoginStrategy(CertificateMethodEnum.fromCode(loginRequestDTO.getLoginMethod()));
 
-        String code = certificateStrategy.getCodeFromRedis(loginRequestDTO.getCertificate(), loginRequestDTO.getAppId());
+        // 从Redis中获取验证码，并与登录请求中的验证码进行比较
+        String code = certificateStrategy.getCodeFromRedis(loginRequestDTO.getAccountNumber(), loginRequestDTO.getAppId());
         if (!loginRequestDTO.getVerifyCode().equals(code)) {
             // 验证码校验失败
-            throw new UserOperateException(ResultCode.USER_VERIFY_ERROR);
+            throw new UserOperateException(USER_VERIFY_ERROR);
         }
-        // redisCache.deleteObject(loginRequestDTO.getCertificate());
+        // 删除缓存中的验证码
+        certificateStrategy.deleteCodeFromRedis(loginRequestDTO.getAccountNumber());
         // 1.如未注册进行注册 2.如注销状态取消注销
         checkUserLogoutStatus(registrationHandler(certificateStrategy, loginRequestDTO));
+
+        // 使用证书策略根据登录请求获取用户信息
         UserInfo userInfo = certificateStrategy.getUserInfoByCertificate(loginRequestDTO);
         if (Objects.isNull(userInfo)) {
-            // log.error
+            // 用户信息为空，抛出系统服务异常
             throw new SystemServiceException(ResultCode.USER_NOT_EXIST_BY_CODE);
         }
+        // 登录用户
         StpUtil.login(userInfo.getCredentialsId());
     }
 
@@ -98,15 +105,15 @@ public class SsoServiceImpl implements SsoService {
      */
     private UserInfo registrationHandler(CertificateStrategy certificateStrategy, LoginRequestDTO loginRequestDTO) throws IOException {
         // 根据证书获取认证凭证
-        AuthCredentials credentials = certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getCertificate());
+        AuthCredentials credentials = certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getAccountNumber());
         // 如果认证凭证为空
         if (Objects.isNull(credentials)) {
             // 根据证书创建认证凭证
-            certificateStrategy.createCredentialsByCertificate(loginRequestDTO.getCertificate());
+            certificateStrategy.createCredentialsByCertificate(loginRequestDTO.getAccountNumber());
             // 创建用户信息对象
             UserInfo userInfo = new UserInfo();
             // 设置用户信息的凭证ID为刚刚创建的认证凭证的凭证ID
-            userInfo.setCredentialsId(certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getCertificate()).getCredentialsId());
+            userInfo.setCredentialsId(certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getAccountNumber()).getCredentialsId());
             // 设置用户信息的应用代码
             userInfo.setAppCode(loginRequestDTO.getAppId());
             // 注册用户信息

@@ -21,7 +21,7 @@ public class LoginRequestDTO implements Serializable {
     @ApiModelProperty("邮箱或手机号")
     @NotNull(message = "账号不能为空")
     @NotBlank(message = "账号不能为空")
-    private String certificate;
+    private String accountNumber;
 
     /**
      * 验证码

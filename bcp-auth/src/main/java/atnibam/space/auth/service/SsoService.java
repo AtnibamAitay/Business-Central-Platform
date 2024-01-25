@@ -26,7 +26,7 @@ public interface SsoService {
      * @param loginRequestDTO 登录请求数据传输对象
      * @throws IOException 输入输出异常
      */
-    void SsoLoginByCodeHandler(LoginRequestDTO loginRequestDTO) throws IOException;
+    void ssoLoginByCodeHandler(LoginRequestDTO loginRequestDTO) throws IOException;
 
     /**
      * 根据凭据ID和应用代码查询用户信息

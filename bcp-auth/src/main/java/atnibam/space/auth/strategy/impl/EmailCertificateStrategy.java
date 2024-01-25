@@ -73,6 +73,16 @@ public class EmailCertificateStrategy implements CertificateStrategy {
     }
 
     /**
+     * 删除缓存中的验证码
+     *
+     * @param accountNumber 账号
+     */
+    @Override
+    public void deleteCodeFromRedis(String accountNumber) {
+        redisCache.deleteObject(LOGIN_EMAIL_CODE_KEY + accountNumber);
+    }
+
+    /**
      * 根据邮箱获取认证凭证
      *
      * @param email 邮箱
@@ -94,8 +104,8 @@ public class EmailCertificateStrategy implements CertificateStrategy {
     @Override
     public UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO) {
         // 检查邮箱是否合法
-        emailUtil.isValidEmailFormat(loginRequestDTO.getCertificate());
-        return remoteUserInfoService.getUserInfoByEmail(loginRequestDTO.getCertificate(), loginRequestDTO.getAppId()).getData();
+        emailUtil.isValidEmailFormat(loginRequestDTO.getAccountNumber());
+        return remoteUserInfoService.getUserInfoByEmail(loginRequestDTO.getAccountNumber(), loginRequestDTO.getAppId()).getData();
     }
 
     /**

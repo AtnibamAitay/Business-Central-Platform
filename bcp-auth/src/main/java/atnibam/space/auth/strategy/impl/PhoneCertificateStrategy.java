@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static atnibam.space.auth.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
+import static atnibam.space.auth.constant.AuthConstants.LOGIN_PHONE_CODE_KEY;
 import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 
 /**
@@ -53,8 +54,8 @@ public class PhoneCertificateStrategy implements CertificateStrategy {
     @Override
     public UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO) {
         // 判断手机号格式是否正确
-        smsUtil.isValidPhoneNumberFormat(loginRequestDTO.getCertificate());
-        return remoteUserInfoService.getUserInfoByPhone(loginRequestDTO.getCertificate(), loginRequestDTO.getAppId()).getData();
+        smsUtil.isValidPhoneNumberFormat(loginRequestDTO.getAccountNumber());
+        return remoteUserInfoService.getUserInfoByPhone(loginRequestDTO.getAccountNumber(), loginRequestDTO.getAppId()).getData();
     }
 
     /**
@@ -78,7 +79,7 @@ public class PhoneCertificateStrategy implements CertificateStrategy {
      */
     @Override
     public String getCodeFromRedis(String phoneNumber, String appId) {
-        JSONObject cacheResult = redisCache.getCacheObject(LOGIN_EMAIL_CODE_KEY + phoneNumber);
+        JSONObject cacheResult = redisCache.getCacheObject(LOGIN_PHONE_CODE_KEY + phoneNumber);
         // 检查结果是否存在且数据部分不为空
         if (cacheResult != null && !cacheResult.isEmpty()) {
             // 获取结果中的数据部分并转换为JSONObject对象
@@ -102,5 +103,15 @@ public class PhoneCertificateStrategy implements CertificateStrategy {
 
         //todo log
         throw new UserOperateException(USER_VERIFY_ERROR);
+    }
+
+    /**
+     * 删除缓存中的验证码
+     *
+     * @param accountNumber 账号
+     */
+    @Override
+    public void deleteCodeFromRedis(String accountNumber) {
+        redisCache.deleteObject(LOGIN_PHONE_CODE_KEY + accountNumber);
     }
 }

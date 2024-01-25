@@ -17,6 +17,13 @@ public interface CertificateStrategy {
     String getCodeFromRedis(String accountNumber, String appId);
 
     /**
+     * 删除缓存中的验证码
+     *
+     * @param accountNumber 账号
+     */
+    void deleteCodeFromRedis(String accountNumber);
+
+    /**
      * 根据账号信息获取用户信息
      *
      * @param loginRequestDTO 登录请求数据
