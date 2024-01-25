@@ -10,6 +10,8 @@ import atnibam.space.common.core.domain.dto.LoginRequestDTO;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.core.utils.StringUtils;
 import atnibam.space.common.redis.service.RedisCache;
+import com.alibaba.fastjson2.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,7 @@ import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 /**
  * 邮件证书策略组件
  */
+@Slf4j
 @Component
 public class EmailCertificateStrategy implements CertificateStrategy {
     @Autowired
@@ -41,9 +44,11 @@ public class EmailCertificateStrategy implements CertificateStrategy {
      */
     @Override
     public String getCodeFromRedis(String email) {
+        String emailCode;
         // 检查邮箱是否合法
         emailUtil.isValidEmailFormat(email);
-        String emailCode = redisCache.getCacheObject(LOGIN_EMAIL_CODE_KEY + email);
+        JSONObject cacheResult = redisCache.getCacheObject(LOGIN_EMAIL_CODE_KEY + email);
+        emailCode = cacheResult.getString("data");
         if (!StringUtils.hasText(emailCode)) {
             //todo log
             throw new UserOperateException(USER_VERIFY_ERROR);
