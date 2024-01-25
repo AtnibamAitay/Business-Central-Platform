@@ -20,7 +20,7 @@ public interface RemoteUserCredentialsService {
      * @param email 邮箱
      * @return 用户凭证
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/user/email/{email}")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/users/email/{email}")
     R<AuthCredentials> getAuthCredentialsByEmail(@PathVariable(value = "email") String email);
 
     /**
@@ -29,7 +29,7 @@ public interface RemoteUserCredentialsService {
      * @param phone 手机号
      * @return 用户凭证
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/user/phone/{phone}")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/users/phone/{phone}")
     R<AuthCredentials> getAuthCredentialsByPhone(@PathVariable(value = "phone") String phone);
 
     /**
@@ -38,7 +38,7 @@ public interface RemoteUserCredentialsService {
      * @param certificate 手机号码证书
      * @return 用户凭证
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/user/phone")
+    @RequestMapping(method = RequestMethod.POST, value = "/api/users/phone")
     R createUserCredentialsByPhone(@RequestBody String certificate);
 
     /**
@@ -47,6 +47,6 @@ public interface RemoteUserCredentialsService {
      * @param certificate 邮箱证书
      * @return 用户凭证
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/user/email")
+    @RequestMapping(method = RequestMethod.POST, value = "/api/users/email")
     R createUserCredentialsByEmail(@RequestBody String certificate);
 }
