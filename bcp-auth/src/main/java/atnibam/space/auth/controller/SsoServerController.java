@@ -12,7 +12,6 @@ import cn.dev33.satoken.util.SaResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -23,7 +22,6 @@ import java.io.IOException;
 /**
  * SSO Server端 Controller
  */
-@Slf4j
 @Api("认证模块")
 @RestController
 @RequestMapping("/api/auth")
@@ -40,7 +38,6 @@ public class SsoServerController {
     @ApiOperation(value = "发送验证码")
     @PostMapping("/verification-codes")
     public R sendCodeByAccount(@RequestBody @Validated AccountVerificationDTO accountVerificationDTO) {
-        log.info("发送验证码接口的入参为：" + accountVerificationDTO);
         return ssoService.sendCode(accountVerificationDTO);
     }
 
