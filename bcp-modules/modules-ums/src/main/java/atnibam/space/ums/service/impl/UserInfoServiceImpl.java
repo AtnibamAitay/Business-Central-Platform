@@ -2,6 +2,7 @@ package atnibam.space.ums.service.impl;
 
 //import atnibam.space.api.system.RemoteMsgRecordService;
 //import atnibam.space.common.core.constant.Constants;
+
 import atnibam.space.common.core.constant.UserConstants;
 import atnibam.space.common.core.domain.UserInfo;
 import atnibam.space.common.core.enums.ResultCode;
@@ -13,14 +14,17 @@ import atnibam.space.common.core.utils.DateUtils;
 import atnibam.space.common.core.utils.RandomNameUtils;
 import atnibam.space.common.minio.service.MinioSysFileService;
 import atnibam.space.ums.mapper.UserInfoMapper;
+import atnibam.space.ums.model.dto.UpdateUserNameDTO;
 import atnibam.space.ums.service.UserInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -118,6 +122,34 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
         checkUserStatus(userInfo.getUserStatus().toString());
         userInfo.setUserAvatar(setAvatarToRegistration(userInfo.getUserAvatar()));
         this.updateById(userInfo);
+    }
+
+    /**
+     * 设置用户头像
+     *
+     * @param userAvatar 用户头像
+     */
+    @Override
+    public void setAvatar(MultipartFile userAvatar) {
+        // TODO
+    }
+
+    /**
+     * 设置用户名
+     *
+     * @param updateUserNameDTO 包含账号ID、用户名的传输实体
+     */
+    @Override
+    public void setUserName(UpdateUserNameDTO updateUserNameDTO) {
+        UpdateWrapper<UserInfo> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("credentials_id", updateUserNameDTO.getCredentialsId())
+                .set("user_name", updateUserNameDTO.getUserName());
+
+        boolean result = this.update(updateWrapper);
+        if (!result) {
+            // TODO:更换为自定义异常
+            throw new RuntimeException("更新用户名失败");
+        }
     }
 
     /**

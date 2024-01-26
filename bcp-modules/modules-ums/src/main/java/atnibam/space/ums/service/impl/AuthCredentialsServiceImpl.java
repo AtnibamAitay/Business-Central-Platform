@@ -2,9 +2,7 @@ package atnibam.space.ums.service.impl;
 
 import atnibam.space.common.core.domain.AuthCredentials;
 import atnibam.space.common.core.domain.dto.BindingCertificateDTO;
-import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.redis.constant.CacheConstants;
 import atnibam.space.common.redis.service.RedisCache;
 import atnibam.space.ums.mapper.AuthCredentialsMapper;
 import atnibam.space.ums.service.AuthCredentialsService;
@@ -17,6 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Objects;
+
+import static atnibam.space.common.core.enums.ResultCode.ACCOUNT_EXIST;
+import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
+import static atnibam.space.common.redis.constant.CacheConstants.*;
 
 /**
  * 针对表【auth_credentials】的数据库操作Service实现
@@ -104,11 +106,11 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
 
         // 若通过手机号查询到的AuthCredentials对象不为空，则抛出账号已存在的用户操作异常
         if (!Objects.isNull(queryAuthCredentialsByPhone(certificate))) {
-            throw new UserOperateException(ResultCode.ACCOUNT_EXIST);
+            throw new UserOperateException(ACCOUNT_EXIST);
         }
 
         // 从缓存中获取与当前证书关联的绑定码
-        String code = redisCache.getCacheObject(CacheConstants.BINDING_CODE_KEY + CacheConstants.PHONE_KEY + bindingCertificateDTO.getCertificate());
+        String code = redisCache.getCacheObject(BINDING_CODE_KEY + PHONE_KEY + bindingCertificateDTO.getCertificate());
 
         // 验证输入的验证码是否与缓存中的绑定码一致
         checkVerifyCodeCode(code, bindingCertificateDTO.getVerifyCode());
@@ -135,9 +137,9 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
     public void bindingEmailById(BindingCertificateDTO bindingCertificateDTO) {
         String certificate = bindingCertificateDTO.getCertificate();
         if (!Objects.isNull(queryAuthCredentialsByEmail(certificate))) {
-            throw new UserOperateException(ResultCode.ACCOUNT_EXIST);
+            throw new UserOperateException(ACCOUNT_EXIST);
         }
-        String code = redisCache.getCacheObject(CacheConstants.BINDING_CODE_KEY + CacheConstants.EMAIL_KEY + bindingCertificateDTO.getCertificate());
+        String code = redisCache.getCacheObject(BINDING_CODE_KEY + EMAIL_KEY + bindingCertificateDTO.getCertificate());
         checkVerifyCodeCode(code, bindingCertificateDTO.getVerifyCode());
         Integer credentialsId = bindingCertificateDTO.getCredentialsId();
         LambdaUpdateWrapper<AuthCredentials> updateWrapper = new LambdaUpdateWrapper<AuthCredentials>().eq(AuthCredentials::getCredentialsId, credentialsId).set(AuthCredentials::getEmail, certificate);
@@ -152,7 +154,7 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
      */
     private void checkVerifyCodeCode(String code, String verifyCode) {
         if (!StringUtils.hasText(code) || !verifyCode.equals(code)) {
-            throw new UserOperateException(ResultCode.USER_VERIFY_ERROR);
+            throw new UserOperateException(USER_VERIFY_ERROR);
         }
     }
 }

@@ -7,11 +7,13 @@ import atnibam.space.common.core.domain.UserInfo;
 import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.core.utils.StringUtils;
+import atnibam.space.ums.model.dto.UpdateUserNameDTO;
 import atnibam.space.ums.service.AuthCredentialsService;
 import atnibam.space.ums.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -19,7 +21,6 @@ import java.util.Objects;
 /**
  * 用户基本信息控制层
  */
-//demo
 @RestController
 @RequestMapping("/userInfo")
 public class UserInfoController implements RemoteUserInfoService {
@@ -143,6 +144,27 @@ public class UserInfoController implements RemoteUserInfoService {
     public R<UserInfo> getUserInfoByCredentialsId(@PathVariable(value = "appCode") String appCode, @PathVariable(value = "credentialsId") String credentialsId) {
         UserInfo userInfo = userInfoService.queryUserInfoByCredentialsId(credentialsId, appCode);
         return R.ok(userInfo);
+    }
+
+    /**
+     * 设置用户的用户名
+     *
+     * @param updateUserNameDTO 包含账号ID、用户名的传输实体
+     * @return 设置用户名的结果
+     */
+    @PostMapping("/username")
+    public R updateUserName(@RequestBody UpdateUserNameDTO updateUserNameDTO) {
+        userInfoService.setUserName(updateUserNameDTO);
+        return R.ok();
+    }
+
+    /**
+     * 设置用户头像
+     */
+    @PostMapping("/avatar")
+    public R updateUserAvatar(@RequestBody MultipartFile avatar) {
+        userInfoService.setAvatar(avatar);
+        return R.ok();
     }
 }
 
