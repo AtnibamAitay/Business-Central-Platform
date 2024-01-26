@@ -42,10 +42,10 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
     }
 
     /**
-     * 根据邮箱查询AuthCredentials对象
+     * 根据邮箱获取用户账号数据
      *
      * @param email 邮箱
-     * @return AuthCredentials对象
+     * @return AuthCredentials 用户账号数据
      */
     @Override
     public AuthCredentials queryAuthCredentialsByEmail(String email) {
@@ -79,9 +79,9 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
     }
 
     /**
-     * 根据证书创建用户AuthCredentials对象
+     * 通过邮箱创建用户
      *
-     * @param certificate 证书
+     * @param certificate 邮箱
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

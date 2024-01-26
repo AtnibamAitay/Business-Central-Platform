@@ -3,8 +3,6 @@ package atnibam.space.user.service.impl;
 //import atnibam.space.api.system.RemoteMsgRecordService;
 //import atnibam.space.common.core.constant.Constants;
 import atnibam.space.common.core.constant.UserConstants;
-//import atnibam.space.common.core.domain.LocalMessageRecord;
-//import atnibam.space.common.core.domain.MqMessage;
 import atnibam.space.common.core.domain.UserInfo;
 import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.SystemServiceException;
@@ -14,27 +12,22 @@ import atnibam.space.common.core.utils.Base64ToMultipartFileUtils;
 import atnibam.space.common.core.utils.DateUtils;
 import atnibam.space.common.core.utils.RandomNameUtils;
 import atnibam.space.common.minio.service.MinioSysFileService;
-//import atnibam.space.common.rocketmq.constant.RocketMQConstants;
-//import atnibam.space.common.rocketmq.service.MQProducerService;
 import atnibam.space.user.mapper.UserInfoMapper;
 import atnibam.space.user.service.UserInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-//import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-//import org.apache.rocketmq.client.producer.SendCallback;
-//import org.apache.rocketmq.client.producer.SendResult;
-//import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-//import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.transaction.support.TransactionSynchronization;
-//import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.io.IOException;
 import java.util.Objects;
+
+import static atnibam.space.common.core.constant.UserConstants.DEFAULT_HEAD_PICTURE;
+import static atnibam.space.common.core.constant.UserConstants.LOGOUT;
+import static atnibam.space.common.core.enums.ResultCode.ACCOUNT_LOGOUT;
 //import java.util.UUID;
 
 /**
@@ -128,10 +121,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
     }
 
     /**
-     * 注册操作
+     * 注册
      *
      * @param userInfo 用户信息
-     * @throws IOException
+     * @throws IOException IO异常
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -143,9 +136,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
         // 设置用户注册时间
         userInfo.setUserRegistTime(DateUtils.getNowDate());
         // 获取默认头像资源
-        Resource resource = resourceLoader.getResource(UserConstants.DEFAULT_HEAD_PICTURE);
+        Resource resource = resourceLoader.getResource(DEFAULT_HEAD_PICTURE);
         // 将默认头像设置为用户的头像
-        userInfo.setUserAvatar(setAvatarToRegistration(Base64FileReader.readBase64FromFile(resource.getFile().getPath())));
+        userInfo.setUserAvatar(setAvatarToRegistration(Objects.requireNonNull(Base64FileReader.readBase64FromFile(resource.getFile().getPath()))));
         // 如果用户ID为空，表示用户是新注册的用户
         if (Objects.isNull(userId)) {
             // 将用户信息保存到数据库中
@@ -253,8 +246,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
         switch (status) {
             case UserConstants.USER_DISABLE:
                 throw new SystemServiceException(ResultCode.ACCOUNT_FREEZE);
-            case UserConstants.LOGOUT:
-                throw new SystemServiceException(ResultCode.ACCOUNT_LOGOUT);
+            case LOGOUT:
+                throw new SystemServiceException(ACCOUNT_LOGOUT);
+            default:
         }
     }
 
@@ -269,10 +263,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
      */
     private Integer checkSignupFromLogout(UserInfo userInfoDTO) {
         UserInfo userInfo = this.getOne(new LambdaQueryWrapper<UserInfo>().eq(UserInfo::getCredentialsId, userInfoDTO.getCredentialsId()));
-        if (!Objects.isNull(userInfo) && !userInfo.getUserStatus().toString().equals(UserConstants.LOGOUT)) {
+        if (!Objects.isNull(userInfo) && !userInfo.getUserStatus().toString().equals(LOGOUT)) {
             //账号已注销将信息恢复默认让用户重新重新登陆
+            //TODO:如果这里重置了所有用户信息，那么注销的时候，为什么不直接把整一条用户信息在保护期过后直接清空呢
             userInfoMapper.recoverDefaultInfo(userInfoDTO.getUserId());
-            throw new UserOperateException(ResultCode.ACCOUNT_LOGOUT);
+            //TODO:为什么这里还抛出异常呢
+            throw new UserOperateException(ACCOUNT_LOGOUT);
         }
         return userInfoDTO.getUserId();
     }

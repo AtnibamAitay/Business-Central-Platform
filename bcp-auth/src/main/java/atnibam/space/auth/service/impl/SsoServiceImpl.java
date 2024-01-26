@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static atnibam.space.common.core.constant.Constants.RANDOM_LENGTH;
+import static atnibam.space.common.core.constant.UserConstants.CANCEL_LOGOUT;
+import static atnibam.space.common.core.constant.UserConstants.LOGOUT;
 import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 
 /**
@@ -113,12 +115,15 @@ public class SsoServiceImpl implements SsoService {
             // 创建用户信息对象
             UserInfo userInfo = new UserInfo();
             // 设置用户信息的凭证ID为刚刚创建的认证凭证的凭证ID
+            // TODO:这一步可以改为，在根据账号创建用户的时候，就返回这个CredentialsId
             userInfo.setCredentialsId(certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getAccountNumber()).getCredentialsId());
             // 设置用户信息的应用代码
+            // TODO:对应中台来说，一个账号应该需要能够登录所有前台应用，因此可以考虑去掉为用户信息绑定APPID
             userInfo.setAppCode(loginRequestDTO.getAppId());
             // 注册用户信息
             remoteUserInfoService.registration(userInfo);
             // 返回空值
+            // TODO:为什么返回的是空值呢
             return null;
         }
         // 根据证书获取用户信息
@@ -147,8 +152,8 @@ public class SsoServiceImpl implements SsoService {
      */
     private void checkUserLogoutStatus(UserInfo userInfo) {
         // 取消注销操作
-        if (!Objects.isNull(userInfo) && UserConstants.LOGOUT.equals(userInfo.getLogoutStatus().toString())) {
-            userInfo.setLogoutStatus(Integer.valueOf(UserConstants.CANCEL_LOGOUT));
+        if (!Objects.isNull(userInfo) && LOGOUT.equals(userInfo.getLogoutStatus().toString())) {
+            userInfo.setLogoutStatus(Integer.valueOf(CANCEL_LOGOUT));
             remoteUserInfoService.updateUserInfo(userInfo);
         }
     }

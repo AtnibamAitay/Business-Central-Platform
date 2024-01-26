@@ -4,10 +4,7 @@ import atnibam.space.common.core.domain.R;
 import atnibam.space.common.core.domain.UserInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -24,7 +21,7 @@ public interface RemoteUserInfoService {
      * @return 用户信息实体类
      */
     @RequestMapping(method = RequestMethod.GET, value = "/userInfo/{userId}")
-    public R<UserInfo> queryUserInfo(@PathVariable(value = "userId") String userId);
+    R<UserInfo> queryUserInfo(@PathVariable(value = "userId") String userId);
 
     /**
      * 注销用户
@@ -33,7 +30,7 @@ public interface RemoteUserInfoService {
      * @return 注销结果
      */
     @RequestMapping(method = RequestMethod.DELETE, value = "/userInfo/{userId}")
-    public R logout(@PathVariable(value = "userId") String userId);
+    R logout(@PathVariable(value = "userId") String userId);
 
     /**
      * 用户注册
@@ -42,8 +39,8 @@ public interface RemoteUserInfoService {
      * @return 注册结果
      * @throws IOException
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/userInfo")
-    public R<String> registration(@Validated @RequestBody UserInfo userInfo) throws IOException;
+    @PostMapping("/userInfo")
+    R<String> registration(@Validated @RequestBody UserInfo userInfo) throws IOException;
 
     /**
      * 更新用户信息
@@ -52,7 +49,7 @@ public interface RemoteUserInfoService {
      * @return 更新结果
      */
     @RequestMapping(method = RequestMethod.PUT, value = "/userInfo")
-    public R updateUserInfo(@Validated @RequestBody UserInfo userInfo);
+    R updateUserInfo(@Validated @RequestBody UserInfo userInfo);
 
     /**
      * 检查手机号是否存在
@@ -61,7 +58,7 @@ public interface RemoteUserInfoService {
      * @return 手机号是否存在
      */
     @RequestMapping(method = RequestMethod.GET, value = "/userInfo/phone-numbers/{phoneNumber}/exists")
-    public R<Boolean> checkPhoneNumbExit(@PathVariable(value = "phoneNumber") String phoneNumber);
+    R<Boolean> checkPhoneNumbExit(@PathVariable(value = "phoneNumber") String phoneNumber);
 
     /**
      * 根据邮箱获取用户信息
@@ -71,7 +68,7 @@ public interface RemoteUserInfoService {
      * @return 用户信息
      */
     @RequestMapping(method = RequestMethod.GET, value = "/userInfo/email/{email}/appcode/{appCode}")
-    public R<UserInfo> getUserInfoByEmail(@PathVariable(value = "email") String email, @PathVariable(value = "appCode") String appCode);
+    R<UserInfo> getUserInfoByEmail(@PathVariable(value = "email") String email, @PathVariable(value = "appCode") String appCode);
 
     /**
      * 根据手机号获取用户信息
@@ -81,7 +78,7 @@ public interface RemoteUserInfoService {
      * @return 用户信息
      */
     @RequestMapping(method = RequestMethod.GET, value = "/userInfo/phone/{phone}/appcode/{appCode}")
-    public R<UserInfo> getUserInfoByPhone(@PathVariable(value = "phone") String phone, @PathVariable(value = "appCode") String appCode);
+    R<UserInfo> getUserInfoByPhone(@PathVariable(value = "phone") String phone, @PathVariable(value = "appCode") String appCode);
 
     /**
      * 根据凭证ID获取用户信息
@@ -91,5 +88,5 @@ public interface RemoteUserInfoService {
      * @return 用户信息
      */
     @RequestMapping(method = RequestMethod.GET, value = ("/userInfo/credentialsId/{credentialsId}/appcode/{appCode}"))
-    public R<UserInfo> getUserInfoByCredentialsId(@PathVariable(value = "appCode") String appCode, @PathVariable(value = "credentialsId") String credentialsId);
+    R<UserInfo> getUserInfoByCredentialsId(@PathVariable(value = "appCode") String appCode, @PathVariable(value = "credentialsId") String credentialsId);
 }

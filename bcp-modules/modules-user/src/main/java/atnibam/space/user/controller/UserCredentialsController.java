@@ -22,10 +22,10 @@ public class UserCredentialsController implements RemoteUserCredentialsService {
     private AuthCredentialsService authCredentialsService;
 
     /**
-     * 根据邮箱获取用户凭证
+     * 根据邮箱获取用户账号数据
      *
      * @param email 邮箱
-     * @return 用户凭证
+     * @return 用户账号数据
      */
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/email/{email}")
@@ -61,10 +61,10 @@ public class UserCredentialsController implements RemoteUserCredentialsService {
     }
 
     /**
-     * 通过邮箱创建用户凭证
+     * 通过邮箱创建用户
      *
-     * @param certificate 邮箱证书
-     * @return 用户凭证
+     * @param certificate 邮箱
+     * @return 创建结果
      */
     @Override
     @RequestMapping(method = RequestMethod.POST, value = "/email")

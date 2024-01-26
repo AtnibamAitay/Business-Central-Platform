@@ -42,10 +42,10 @@ public interface RemoteUserCredentialsService {
     R createUserCredentialsByPhone(@RequestBody String certificate);
 
     /**
-     * 通过邮箱创建用户凭证
+     * 通过邮箱创建用户
      *
-     * @param certificate 邮箱证书
-     * @return 用户凭证
+     * @param certificate 邮箱
+     * @return 创建结果
      */
     @RequestMapping(method = RequestMethod.POST, value = "/api/users/email")
     R createUserCredentialsByEmail(@RequestBody String certificate);

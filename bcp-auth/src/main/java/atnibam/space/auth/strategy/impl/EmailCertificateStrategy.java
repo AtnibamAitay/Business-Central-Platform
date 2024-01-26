@@ -109,7 +109,7 @@ public class EmailCertificateStrategy implements CertificateStrategy {
     }
 
     /**
-     * 创建凭证
+     * 通过邮箱创建用户
      *
      * @param email 邮箱地址
      */

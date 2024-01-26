@@ -62,7 +62,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @throws IOException 输入输出异常
      */
     @Override
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public R<String> registration(@Validated @RequestBody UserInfo userInfo) throws IOException {
         userInfoService.registration(userInfo);
         return R.ok();

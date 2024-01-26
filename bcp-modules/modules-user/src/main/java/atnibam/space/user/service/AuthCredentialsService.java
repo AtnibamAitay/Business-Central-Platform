@@ -17,10 +17,10 @@ public interface AuthCredentialsService extends IService<AuthCredentials> {
     AuthCredentials checkPhoneNumbExit(String phoneNumber);
 
     /**
-     * 根据邮箱查询用户认证凭证
+     * 根据邮箱获取用户账号数据
      *
      * @param email 邮箱
-     * @return AuthCredentials 用户认证凭证
+     * @return AuthCredentials 用户账号数据
      */
     AuthCredentials queryAuthCredentialsByEmail(String email);
 
@@ -40,9 +40,9 @@ public interface AuthCredentialsService extends IService<AuthCredentials> {
     void createUserCredentialsByPhone(String certificate);
 
     /**
-     * 根据邮箱创建用户认证凭证
+     * 通过邮箱创建用户
      *
-     * @param certificate 邮箱认证证书
+     * @param certificate 邮箱
      */
     void createUserCredentialsByEmail(String certificate);
 
