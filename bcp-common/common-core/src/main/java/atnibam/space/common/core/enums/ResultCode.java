@@ -41,16 +41,17 @@ public enum ResultCode {
     EMAIL_NUM_NON_COMPLIANCE(4007, "邮箱号不符合规范", HttpStatus.BAD_REQUEST),
     ACCOUNT_EXIST(4008, "账号已存在", HttpStatus.OK),
     USERINFO_NON_EXIST(4008, "账号信息不存在", HttpStatus.OK),
+    EMAIL_NOT_EXIST(4009, "邮箱不存在", HttpStatus.OK),
 
     //重试请求已被处理
     IDEMPOTENCY_ERROR(4006, "请求已处理", HttpStatus.OK),
 
     /*服务器内部错误：5001-5500*/
     INTERNAL_ERROR(5001, "服务器内部错误，请联系开发人员", HttpStatus.INTERNAL_SERVER_ERROR),
-    AUTO_REGISTER_FILE(5002,"自动注册失败,请稍后重试", HttpStatus.INTERNAL_SERVER_ERROR),
-    SERVER_BUSY(5003,"服务器繁忙，请稍后重试", HttpStatus.TOO_MANY_REQUESTS),
-    MESSAGE_SERVICE_ERROR(5004,"短信服务异常，请稍后重试", HttpStatus.INTERNAL_SERVER_ERROR),
-    SERVER_LIMIT(5005,"服务器已限流", HttpStatus.TOO_MANY_REQUESTS),
+    AUTO_REGISTER_FILE(5002, "自动注册失败,请稍后重试", HttpStatus.INTERNAL_SERVER_ERROR),
+    SERVER_BUSY(5003, "服务器繁忙，请稍后重试", HttpStatus.TOO_MANY_REQUESTS),
+    MESSAGE_SERVICE_ERROR(5004, "短信服务异常，请稍后重试", HttpStatus.INTERNAL_SERVER_ERROR),
+    SERVER_LIMIT(5005, "服务器已限流", HttpStatus.TOO_MANY_REQUESTS),
 
     /*订单相关错误：5501-6000*/
     PRODUCT_OR_PAY_TYPE_NULL(5501, "产品和付款类型不能为空或空", HttpStatus.BAD_REQUEST),

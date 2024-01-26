@@ -3,6 +3,7 @@ package atnibam.space.auth.utils;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.core.utils.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import static atnibam.space.common.core.enums.ResultCode.EMAIL_NOT_EXIST;
 import static atnibam.space.common.core.enums.ResultCode.EMAIL_NUM_NON_COMPLIANCE;
 
 /**
@@ -65,6 +67,19 @@ public class EmailUtil {
         }
 
         //通过JavaMailSender类把邮件发送出去
-        javaMailSender.send(mimeMessage);
+        try {
+            javaMailSender.send(mimeMessage);
+        } catch (MailSendException ex) {
+            for (Exception e : ex.getFailedMessages().values()) {
+                if (e instanceof com.sun.mail.smtp.SMTPSendFailedException) {
+                    String errorMessage = e.getMessage();
+                    if (errorMessage.contains("550") && errorMessage.contains("non-existent account")) {
+                        throw new UserOperateException(EMAIL_NOT_EXIST);
+                    }
+                }
+                // 其他类型的异常处理
+                throw new RuntimeException("邮件发送过程中发生错误", e);
+            }
+        }
     }
 }
