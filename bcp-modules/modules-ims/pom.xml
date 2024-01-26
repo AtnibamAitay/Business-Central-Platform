@@ -9,7 +9,7 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>modules-chat</artifactId>
+    <artifactId>modules-ims</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

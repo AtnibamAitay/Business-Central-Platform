@@ -2,7 +2,7 @@ server:
   port: 8090
 spring:
   application:
-    name: modules-chat
+    name: modules-ims
   profiles:
     # 环境配置
     active: dev

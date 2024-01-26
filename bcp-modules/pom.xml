@@ -10,7 +10,7 @@
     </parent>
     <modules>
         <module>modules-ums</module>
-        <module>modules-chat</module>
+        <module>modules-ims</module>
         <module>modules-cms</module>
         <module>modules-system</module>
         <module>modules-transaction</module>

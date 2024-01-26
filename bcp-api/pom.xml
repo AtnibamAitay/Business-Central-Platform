@@ -14,7 +14,7 @@
     <modules>
         <module>api-ums</module>
         <module>api-cms</module>
-        <module>api-chat</module>
+        <module>api-ims</module>
         <module>api-system</module>
         <module>api-transaction</module>
     </modules>
