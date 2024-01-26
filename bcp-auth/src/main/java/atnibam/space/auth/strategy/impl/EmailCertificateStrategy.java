@@ -1,7 +1,7 @@
 package atnibam.space.auth.strategy.impl;
 
-import atnibam.space.api.user.RemoteUserCredentialsService;
-import atnibam.space.api.user.RemoteUserInfoService;
+import atnibam.space.api.ums.RemoteUserCredentialsService;
+import atnibam.space.api.ums.RemoteUserInfoService;
 import atnibam.space.auth.strategy.CertificateStrategy;
 import atnibam.space.auth.utils.EmailUtil;
 import atnibam.space.common.core.domain.AuthCredentials;

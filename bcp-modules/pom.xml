@@ -9,7 +9,7 @@
         <version>0.0.1</version>
     </parent>
     <modules>
-        <module>modules-user</module>
+        <module>modules-ums</module>
         <module>modules-chat</module>
         <module>modules-cms</module>
         <module>modules-system</module>

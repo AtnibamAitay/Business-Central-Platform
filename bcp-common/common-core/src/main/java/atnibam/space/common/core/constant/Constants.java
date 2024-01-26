@@ -12,7 +12,7 @@ public class Constants {
     public static final int FAIL = 500;
     public static final String SUCCESS_OPERA = "success";
     public static final String FAIL_OPERA = "failure";
-    public static final String USER_SERVICE = "user-service";
+    public static final String USER_SERVICE = "ums-service";
     public static final String DELAY_LOGOUT = "delay-logout";
     public static final Integer RANDOM_LENGTH = 6;
 

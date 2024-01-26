@@ -54,7 +54,7 @@
         </dependency>
         <dependency>
             <groupId>atnibam.space</groupId>
-            <artifactId>api-user</artifactId>
+            <artifactId>api-ums</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>

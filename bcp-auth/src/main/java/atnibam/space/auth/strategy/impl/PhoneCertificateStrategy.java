@@ -1,7 +1,7 @@
 package atnibam.space.auth.strategy.impl;
 
-import atnibam.space.api.user.RemoteUserCredentialsService;
-import atnibam.space.api.user.RemoteUserInfoService;
+import atnibam.space.api.ums.RemoteUserCredentialsService;
+import atnibam.space.api.ums.RemoteUserInfoService;
 import atnibam.space.auth.strategy.CertificateStrategy;
 import atnibam.space.auth.utils.SmsUtil;
 import atnibam.space.common.core.domain.AuthCredentials;
@@ -14,7 +14,6 @@ import com.alibaba.fastjson2.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static atnibam.space.auth.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
 import static atnibam.space.auth.constant.AuthConstants.LOGIN_PHONE_CODE_KEY;
 import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 

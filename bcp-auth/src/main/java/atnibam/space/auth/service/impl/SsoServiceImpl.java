@@ -1,13 +1,12 @@
 package atnibam.space.auth.service.impl;
 
-import atnibam.space.api.user.RemoteUserInfoService;
+import atnibam.space.api.ums.RemoteUserInfoService;
 import atnibam.space.auth.factory.CertificateStrategyFactory;
 import atnibam.space.auth.factory.SendCodeStrategyFactory;
 import atnibam.space.auth.model.dto.AccountVerificationDTO;
 import atnibam.space.auth.service.SsoService;
 import atnibam.space.auth.strategy.CertificateStrategy;
 import atnibam.space.auth.strategy.SendCodeStrategy;
-import atnibam.space.common.core.constant.UserConstants;
 import atnibam.space.common.core.domain.AuthCredentials;
 import atnibam.space.common.core.domain.R;
 import atnibam.space.common.core.domain.UserInfo;

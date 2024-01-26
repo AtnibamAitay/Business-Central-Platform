@@ -12,7 +12,7 @@
     <artifactId>bcp-api</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>api-user</module>
+        <module>api-ums</module>
         <module>api-cms</module>
         <module>api-chat</module>
         <module>api-system</module>
