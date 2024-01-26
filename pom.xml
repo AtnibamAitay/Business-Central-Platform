@@ -262,7 +262,7 @@
             </dependency>
             <dependency>
                 <groupId>atnibam.space</groupId>
-                <artifactId>api-chat</artifactId>
+                <artifactId>api-ims</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
