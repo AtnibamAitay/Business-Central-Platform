@@ -50,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>atnibam.space</groupId>
-            <artifactId>common-MinIO</artifactId>
+            <artifactId>common-minio</artifactId>
         </dependency>
         <dependency>
             <groupId>atnibam.space</groupId>

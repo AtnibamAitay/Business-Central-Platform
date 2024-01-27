@@ -272,7 +272,7 @@
             </dependency>
             <dependency>
                 <groupId>atnibam.space</groupId>
-                <artifactId>common-MinIO</artifactId>
+                <artifactId>common-minio</artifactId>
                 <version>${BCP.version}</version>
             </dependency>
             <dependency>
