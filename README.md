@@ -5,11 +5,11 @@
 ```
 Business-Central-Platform
 ├── bcp-api                 - API服务接口层，定义与外界交互的端点
-│   ├── api-article         - 文章相关API定义
-│   ├── api-chat            - 聊天相关API定义
+│   ├── api-cms             - 内容相关API定义
+│   ├── api-ims             - 即时通讯相关API定义
 │   ├── api-system          - 系统相关API定义
 │   ├── api-transaction     - 交易相关API定义
-│   └── api-user            - 用户相关API定义
+│   └── api-ums             - 用户相关API定义
 │   └── pom.xml             - Maven项目管理配置文件，用于bcp-api模块
 ├── bcp-auth                - 认证模块，处理用户登录验证和授权
 ├── bcp-common              - 共享资源和通用库模块
@@ -27,11 +27,11 @@ Business-Central-Platform
 ├── bcp-gateway             - API网关，管理请求路由、负载均衡等
 │   └── pom.xml             - Maven项目管理配置文件，用于bcp-gateway模块
 ├── bcp-modules             - 应用程序核心业务模块
-│   ├── modules-article     - 文章业务逻辑模块
-│   ├── modules-chat        - 聊天业务逻辑模块
+│   ├── modules-cms         - 内容管理系统
+│   ├── modules-ims         - 即时通讯管理系统
 │   ├── modules-system      - 系统核心业务逻辑模块
 │   ├── modules-transaction - 交易处理业务逻辑模块
-│   └── modules-user        - 用户业务逻辑模块
+│   └── modules-ums         - 用户管理系统
 │   └── pom.xml             - Maven项目管理配置文件，用于bcp-modules模块
 ├── .gitignore              - Git忽略文件列表，指示Git跳过版本控制的文件和目录
 ├── pom.xml                 - Maven父项目管理配置文件，用于整个项目
