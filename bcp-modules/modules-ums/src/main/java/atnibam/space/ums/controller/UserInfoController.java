@@ -7,16 +7,18 @@ import atnibam.space.common.core.domain.UserInfo;
 import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.UserOperateException;
 import atnibam.space.common.core.utils.StringUtils;
+import atnibam.space.ums.model.dto.UpdateAvatarDTO;
 import atnibam.space.ums.model.dto.UpdateUserNameDTO;
 import atnibam.space.ums.service.AuthCredentialsService;
 import atnibam.space.ums.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
+
+import static atnibam.space.common.core.enums.ResultCode.USER_AVATAR_UPLOAD_FAILED;
 
 /**
  * 用户基本信息控制层
@@ -162,9 +164,11 @@ public class UserInfoController implements RemoteUserInfoService {
      * 设置用户头像
      */
     @PostMapping("/avatar")
-    public R updateUserAvatar(@RequestBody MultipartFile avatar) {
-        userInfoService.setAvatar(avatar);
-        return R.ok();
+    public R updateUserAvatar(@RequestBody UpdateAvatarDTO updateAvatarDTO) {
+        if (userInfoService.setAvatar(updateAvatarDTO)) {
+            return R.ok();
+        }
+        return R.fail(USER_AVATAR_UPLOAD_FAILED);
     }
 }
 

@@ -42,6 +42,7 @@ public enum ResultCode {
     ACCOUNT_EXIST(4008, "账号已存在", HttpStatus.OK),
     USERINFO_NON_EXIST(4008, "账号信息不存在", HttpStatus.OK),
     EMAIL_NOT_EXIST(4009, "邮箱不存在", HttpStatus.OK),
+    USER_AVATAR_UPLOAD_FAILED(4010, "上传头像失败", HttpStatus.INTERNAL_SERVER_ERROR),
 
     //重试请求已被处理
     IDEMPOTENCY_ERROR(4006, "请求已处理", HttpStatus.OK),

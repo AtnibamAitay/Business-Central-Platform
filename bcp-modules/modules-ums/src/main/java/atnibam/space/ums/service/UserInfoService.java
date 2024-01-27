@@ -1,9 +1,9 @@
 package atnibam.space.ums.service;
 
 import atnibam.space.common.core.domain.UserInfo;
+import atnibam.space.ums.model.dto.UpdateAvatarDTO;
 import atnibam.space.ums.model.dto.UpdateUserNameDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -44,9 +44,9 @@ public interface UserInfoService extends IService<UserInfo> {
     /**
      * 设置用户头像
      *
-     * @param userAvatar 用户头像
+     * @param updateAvatarDTO 包含用户id和用户头像的请求实体
      */
-    void setAvatar(MultipartFile userAvatar);
+    boolean setAvatar(UpdateAvatarDTO updateAvatarDTO);
 
     /**
      * 设置用户名

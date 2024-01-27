@@ -14,6 +14,7 @@ import atnibam.space.common.core.utils.DateUtils;
 import atnibam.space.common.core.utils.RandomNameUtils;
 import atnibam.space.common.minio.service.MinioSysFileService;
 import atnibam.space.ums.mapper.UserInfoMapper;
+import atnibam.space.ums.model.dto.UpdateAvatarDTO;
 import atnibam.space.ums.model.dto.UpdateUserNameDTO;
 import atnibam.space.ums.service.UserInfoService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -24,7 +25,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -32,6 +32,7 @@ import java.util.Objects;
 import static atnibam.space.common.core.constant.UserConstants.DEFAULT_HEAD_PICTURE;
 import static atnibam.space.common.core.constant.UserConstants.LOGOUT;
 import static atnibam.space.common.core.enums.ResultCode.ACCOUNT_LOGOUT;
+import static atnibam.space.ums.constant.UserInfoConstants.USER_AVATAR_FOLDER_PREFIX;
 //import java.util.UUID;
 
 /**
@@ -127,11 +128,17 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
     /**
      * 设置用户头像
      *
-     * @param userAvatar 用户头像
+     * @param updateAvatarDTO 包含用户id和用户头像的请求实体
      */
     @Override
-    public void setAvatar(MultipartFile userAvatar) {
+    public boolean setAvatar(UpdateAvatarDTO updateAvatarDTO) {
+        Integer userId = updateAvatarDTO.getCredentialsId();
+        // 文件夹路径
+        String folder = USER_AVATAR_FOLDER_PREFIX + userId;
         // TODO
+//        String avatarUrl = minioUtils.uploadFile(file, DEFAULT_USER_BUCKET, userId, folder);
+//        return userMapper.updateAvatarById(userId, picUrl + avatarUrl) > 0;
+        return false;
     }
 
     /**
