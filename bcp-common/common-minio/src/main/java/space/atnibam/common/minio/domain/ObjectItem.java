@@ -1,4 +1,4 @@
-package atnibam.space.common.minio.domain;
+package space.atnibam.common.minio.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

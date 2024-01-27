@@ -12,7 +12,7 @@ import atnibam.space.common.core.utils.Base64FileReader;
 import atnibam.space.common.core.utils.Base64ToMultipartFileUtils;
 import atnibam.space.common.core.utils.DateUtils;
 import atnibam.space.common.core.utils.RandomNameUtils;
-import atnibam.space.common.minio.service.MinioSysFileService;
+import space.atnibam.common.minio.service.MinioSysFileService;
 import atnibam.space.ums.mapper.UserInfoMapper;
 import atnibam.space.ums.model.dto.UpdateAvatarDTO;
 import atnibam.space.ums.model.dto.UpdateUserNameDTO;

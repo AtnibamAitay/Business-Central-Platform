@@ -1,2 +1,2 @@
-atnibam.space.common.minio.config.MinioConfig
-atnibam.space.common.minio.service.MinioSysFileService
+space.atnibam.common.minio.config.MinioConfig
+space.atnibam.common.minio.service.MinioSysFileService

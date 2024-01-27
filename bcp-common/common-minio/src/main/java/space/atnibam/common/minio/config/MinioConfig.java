@@ -1,22 +1,31 @@
-package atnibam.space.common.minio.config;
+package space.atnibam.common.minio.config;
 
 import io.minio.MinioClient;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @ClassName: MinioConfig
+ * @Description: MinIO配置类
+ * @Author: AtnibamAitay
+ * @CreateTime: 2023-03-12 15:11
+ **/
 @Configuration
-@Data
 public class MinioConfig {
+
     @Value("${minio.endpoint}")
     private String endpoint;
+
     @Value("${minio.access-key}")
     private String accessKey;
+
     @Value("${minio.secret-key}")
     private String secretKey;
+
     @Value("${minio.bucketName}")
     private String bucketName;
+
     @Bean
     public MinioClient minioClient() {
         return MinioClient.builder()

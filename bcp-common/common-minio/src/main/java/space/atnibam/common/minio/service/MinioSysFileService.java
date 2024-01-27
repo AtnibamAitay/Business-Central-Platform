@@ -1,6 +1,6 @@
-package atnibam.space.common.minio.service;
+package space.atnibam.common.minio.service;
 
-import atnibam.space.common.minio.domain.ObjectItem;
+import space.atnibam.common.minio.domain.ObjectItem;
 import io.minio.*;
 import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
