@@ -52,6 +52,7 @@
         <sa-token-sso.version>1.35.0.RC</sa-token-sso.version>
         <alibabacloud-sms.version>2.0.23</alibabacloud-sms.version>
         <knife4j-spring-ui.version>3.0.3</knife4j-spring-ui.version>
+        <simplemagic.version>1.17</simplemagic.version>
     </properties>
 
     <dependencyManagement>
@@ -223,6 +224,12 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.j256.simplemagic</groupId>
+                <artifactId>simplemagic</artifactId>
+                <version>${simplemagic.version}</version>
             </dependency>
 
             <dependency>
