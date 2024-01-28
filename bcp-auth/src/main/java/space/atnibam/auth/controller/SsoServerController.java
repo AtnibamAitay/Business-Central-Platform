@@ -1,9 +1,5 @@
 package space.atnibam.auth.controller;
 
-import space.atnibam.auth.model.dto.AccountVerificationDTO;
-import space.atnibam.auth.service.SsoService;
-import space.atnibam.common.core.domain.R;
-import space.atnibam.common.core.domain.dto.LoginRequestDTO;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sign.SaSignUtil;
 import cn.dev33.satoken.sso.SaSsoProcessor;
@@ -14,6 +10,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import space.atnibam.auth.model.dto.AccountVerificationDTO;
+import space.atnibam.auth.service.SsoService;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.domain.dto.LoginRequestDTO;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
@@ -69,15 +69,15 @@ public class SsoServerController {
      * 根据密钥解析的ID获取用户信息接口
      *
      * @param loginId 密钥解析的ID
-     * @param appCode 应用ID
+     * @param appId   应用ID
      * @return 用户信息
      */
     @ApiOperation("根据密钥解析的ID获取用户信息接口")
     @RequestMapping(value = "/getData", method = RequestMethod.GET)
-    public SaResult getData(@ApiParam("密钥解析的ID") String loginId, @ApiParam("应用ID") String appCode) {
+    public SaResult getData(@ApiParam("密钥解析的ID") String loginId, @ApiParam("应用ID") String appId) {
         // 校验签名：只有拥有正确秘钥发起的请求才能通过校验
         SaSignUtil.checkRequest(SaHolder.getRequest());
-        return SaResult.ok().setData(ssoService.queryUserInfoByCredentialsId(loginId, appCode));
+        return SaResult.ok().setData(ssoService.queryUserInfoByCredentialsId(loginId, appId));
     }
 
     /**

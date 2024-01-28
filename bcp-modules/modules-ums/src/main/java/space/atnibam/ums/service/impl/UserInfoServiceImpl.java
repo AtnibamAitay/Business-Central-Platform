@@ -139,10 +139,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
         Integer userId = updateAvatarDTO.getCredentialsId();
         // 文件夹路径
         String folder = UserInfoConstants.USER_AVATAR_FOLDER_PREFIX + userId;
-        // TODO
-//        String avatarUrl = minioUtil.upload(updateAvatarDTO.getAvatar(), "bcp", userId, folder);
-//        return userInfoMapper.updateAvatarById(userId, picUrl + avatarUrl) > 0;
-        return false;
+        String avatarUrl = minioUtil.upload(updateAvatarDTO.getAvatar(), "bcp", userId, folder);
+        return userInfoMapper.updateAvatarById(userId, picUrl + avatarUrl) > 0;
     }
 
     /**

@@ -1,7 +1,8 @@
 package space.atnibam.ums.controller;
 
-import space.atnibam.ums.model.dto.UpdateAvatarDTO;
-import space.atnibam.ums.service.AuthCredentialsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import space.atnibam.api.ums.RemoteUserInfoService;
 import space.atnibam.common.core.domain.AuthCredentials;
 import space.atnibam.common.core.domain.R;
@@ -9,11 +10,10 @@ import space.atnibam.common.core.domain.UserInfo;
 import space.atnibam.common.core.enums.ResultCode;
 import space.atnibam.common.core.exception.UserOperateException;
 import space.atnibam.common.core.utils.StringUtils;
+import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
+import space.atnibam.ums.service.AuthCredentialsService;
 import space.atnibam.ums.service.UserInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -39,7 +39,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @return 用户信息
      */
     @Override
-    @GetMapping (value = "/{userId}")
+    @GetMapping(value = "/{userId}")
     public R<UserInfo> queryUserInfo(@PathVariable(value = "userId") String userId) {
         return R.ok(userInfoService.queryUserInfo(userId));
     }
@@ -164,7 +164,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * 设置用户头像
      */
     @PostMapping("/avatar")
-    public R updateUserAvatar(@RequestBody UpdateAvatarDTO updateAvatarDTO) {
+    public R updateUserAvatar(@ModelAttribute UpdateAvatarDTO updateAvatarDTO) {
         if (userInfoService.setAvatar(updateAvatarDTO)) {
             return R.ok();
         }
