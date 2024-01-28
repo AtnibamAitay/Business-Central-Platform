@@ -6,6 +6,8 @@ spring:
   profiles:
     # 环境配置
     active: dev
+  main:
+    banner-mode: "off"
   cloud:
     nacos:
       server-addr: 39.108.67.16:8848

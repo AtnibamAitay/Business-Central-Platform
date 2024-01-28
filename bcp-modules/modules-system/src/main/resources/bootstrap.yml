@@ -6,6 +6,8 @@ spring:
     name: modules-system
   profiles:
     active: dev
+  main:
+    banner-mode: "off"
 
   cloud:
     nacos:

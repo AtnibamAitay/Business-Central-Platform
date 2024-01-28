@@ -6,6 +6,8 @@ spring:
     active: dev
   application:
     name: bcp-auth
+  main:
+    banner-mode: "off"
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
