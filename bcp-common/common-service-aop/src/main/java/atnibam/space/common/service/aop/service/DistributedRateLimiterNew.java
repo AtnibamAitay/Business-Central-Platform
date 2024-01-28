@@ -1,7 +1,7 @@
 package atnibam.space.common.service.aop.service;
 
 import atnibam.space.common.service.aop.constant.RateLimiterConstant;
-import atnibam.space.common.redis.service.RedisCache;
+import space.atnibam.common.redis.service.RedisCache;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;

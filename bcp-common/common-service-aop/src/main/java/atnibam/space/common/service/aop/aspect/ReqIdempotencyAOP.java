@@ -2,9 +2,9 @@ package atnibam.space.common.service.aop.aspect;
 
 import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.core.exception.SystemServiceException;
-import atnibam.space.common.redis.constant.CacheConstants;
-import atnibam.space.common.redis.service.RedisCache;
-import atnibam.space.common.redis.service.RedisLock;
+import space.atnibam.common.redis.constant.CacheConstants;
+import space.atnibam.common.redis.service.RedisCache;
+import space.atnibam.common.redis.service.RedisLock;
 import atnibam.space.common.service.aop.anno.ReqIdempotency;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

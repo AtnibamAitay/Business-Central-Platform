@@ -1,4 +1,4 @@
-atnibam.space.common.redis.config.FastJson2JsonRedisSerializer
-atnibam.space.common.redis.config.RedisConfig
-atnibam.space.common.redis.config.RedissonConfig
-atnibam.space.common.redis.service.RedisCache
+space.atnibam.common.redis.config.FastJson2JsonRedisSerializer
+space.atnibam.common.redis.config.RedisConfig
+space.atnibam.common.redis.config.RedissonConfig
+space.atnibam.common.redis.service.RedisCache

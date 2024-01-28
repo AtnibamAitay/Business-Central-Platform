@@ -3,7 +3,7 @@ package atnibam.space.common.service.aop.aspect;
 import atnibam.space.common.core.enums.ResultCode;
 import atnibam.space.common.service.aop.constant.RateLimiterConstant;
 import atnibam.space.common.service.aop.service.DistributedRateLimiterNew;
-import atnibam.space.common.redis.service.RedisCache;
+import space.atnibam.common.redis.service.RedisCache;
 import atnibam.space.common.service.aop.anno.RateLimit;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
