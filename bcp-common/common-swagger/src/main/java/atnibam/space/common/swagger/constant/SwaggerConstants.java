@@ -23,5 +23,5 @@ public class SwaggerConstants {
     /**
     * 默认包
     */
-    public static String BASE_PACKAGE = "cn.nfsn";
+    public static String BASE_PACKAGE = "space.atnibam";
 }

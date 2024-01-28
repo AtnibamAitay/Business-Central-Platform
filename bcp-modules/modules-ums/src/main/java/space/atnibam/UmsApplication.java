@@ -1,5 +1,6 @@
 package space.atnibam;
 
+import atnibam.space.common.swagger.annotation.EnableCustomSwagger;
 import cn.dev33.satoken.SaManager;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @SpringBootApplication
 @EnableOpenApi
 @EnableFeignClients
+@EnableCustomSwagger
 public class UmsApplication {
     public static void main(String[] args) {
         SpringApplication.run(UmsApplication.class, args);

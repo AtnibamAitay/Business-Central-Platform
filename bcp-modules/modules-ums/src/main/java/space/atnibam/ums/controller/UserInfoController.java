@@ -1,5 +1,7 @@
 package space.atnibam.ums.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ import static space.atnibam.common.core.enums.ResultCode.USER_AVATAR_UPLOAD_FAIL
 /**
  * 用户基本信息控制层
  */
+@Api(value = "用户信息", tags = "用户信息")
 @RestController
 @RequestMapping("/userInfo")
 public class UserInfoController implements RemoteUserInfoService {
@@ -38,6 +41,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param userId 用户ID
      * @return 用户信息
      */
+    @ApiOperation(value = "查询用户信息")
     @Override
     @GetMapping(value = "/{userId}")
     public R<UserInfo> queryUserInfo(@PathVariable(value = "userId") String userId) {
@@ -50,8 +54,9 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param userId 用户ID
      * @return 注销结果
      */
+    @ApiOperation(value = "用户注销")
     @Override
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}")
+    @DeleteMapping("/{userId}")
     public R logout(@PathVariable(value = "userId") String userId) {
         userInfoService.logout(userId);
         return R.ok();
@@ -64,6 +69,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @return 注册结果
      * @throws IOException 输入输出异常
      */
+    @ApiOperation(value = "用户注册", notes = "处理用户注册请求")
     @Override
     @PostMapping
     public R<String> registration(@Validated @RequestBody UserInfo userInfo) throws IOException {
@@ -77,6 +83,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param userInfo 用户信息
      * @return 更新结果
      */
+    @ApiOperation(value = "更新用户信息", notes = "根据提供的用户信息进行更新")
     @Override
     @RequestMapping(method = RequestMethod.PUT)
     public R updateUserInfo(@Validated @RequestBody UserInfo userInfo) {
@@ -98,6 +105,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param phoneNumber 手机号
      * @return 手机号是否存在
      */
+    @ApiOperation(value = "检查手机号是否存在", notes = "通过手机号查询该手机号是否已存在")
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/phone-numbers/{phoneNumber}/exists")
     public R<Boolean> checkPhoneNumbExit(@PathVariable(value = "phoneNumber") String phoneNumber) {
@@ -113,6 +121,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param appCode 应用编码
      * @return 用户信息
      */
+    @ApiOperation(value = "根据邮箱查询用户信息", notes = "通过邮箱和应用编码查询用户信息")
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/email/{email}/appcode/{appCode}")
     public R<UserInfo> getUserInfoByEmail(@PathVariable(value = "email") String email, @PathVariable(value = "appCode") String appCode) {
@@ -127,6 +136,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param appCode 应用编码
      * @return 用户信息
      */
+    @ApiOperation(value = "根据手机号查询用户信息", notes = "通过手机号和应用编码查询用户信息")
     @Override
     @RequestMapping(method = RequestMethod.GET, value = "/phone/{phone}/appcode/{appCode}")
     public R<UserInfo> getUserInfoByPhone(@PathVariable(value = "phone") String phone, @PathVariable(value = "appCode") String appCode) {
@@ -141,8 +151,9 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param credentialsId 凭证ID
      * @return 用户信息
      */
+    @ApiOperation(value = "根据凭证ID查询用户信息", notes = "通过凭证ID和应用编码查询用户信息")
     @Override
-    @RequestMapping(method = RequestMethod.GET, value = ("/credentialsId/{credentialsId}/appcode/{appCode}"))
+    @RequestMapping(method = RequestMethod.GET, value = "/credentialsId/{credentialsId}/appcode/{appCode}")
     public R<UserInfo> getUserInfoByCredentialsId(@PathVariable(value = "appCode") String appCode, @PathVariable(value = "credentialsId") String credentialsId) {
         UserInfo userInfo = userInfoService.queryUserInfoByCredentialsId(credentialsId, appCode);
         return R.ok(userInfo);
@@ -154,6 +165,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param updateUserNameDTO 包含账号ID、用户名的传输实体
      * @return 设置用户名的结果
      */
+    @ApiOperation(value = "设置用户的用户名", notes = "根据提供的UpdateUserNameDTO对象更新用户用户名")
     @PostMapping("/username")
     public R updateUserName(@RequestBody UpdateUserNameDTO updateUserNameDTO) {
         userInfoService.setUserName(updateUserNameDTO);
@@ -162,7 +174,11 @@ public class UserInfoController implements RemoteUserInfoService {
 
     /**
      * 设置用户头像
+     *
+     * @param updateAvatarDTO 包含头像信息的传输实体
+     * @return 设置头像的结果
      */
+    @ApiOperation(value = "设置用户头像", notes = "根据提供的UpdateAvatarDTO对象更新用户头像")
     @PostMapping("/avatar")
     public R updateUserAvatar(@ModelAttribute UpdateAvatarDTO updateAvatarDTO) {
         if (userInfoService.setAvatar(updateAvatarDTO)) {
