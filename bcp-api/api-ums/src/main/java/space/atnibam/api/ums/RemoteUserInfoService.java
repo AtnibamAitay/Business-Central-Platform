@@ -20,7 +20,7 @@ public interface RemoteUserInfoService {
      * @param userId 用户ID
      * @return 用户信息实体类
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/userInfo/{userId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/userInfo/{userId}")
     R<UserInfo> queryUserInfo(@PathVariable(value = "userId") String userId);
 
     /**
@@ -29,8 +29,8 @@ public interface RemoteUserInfoService {
      * @param userId 用户ID
      * @return 注销结果
      */
-    @RequestMapping(method = RequestMethod.DELETE, value = "/userInfo/{userId}")
-    R logout(@PathVariable(value = "userId") String userId);
+    @DeleteMapping("/api/userInfo/{userId}")
+    R deleteAccount(@PathVariable(value = "userId") String userId);
 
     /**
      * 用户注册
@@ -39,7 +39,7 @@ public interface RemoteUserInfoService {
      * @return 注册结果
      * @throws IOException
      */
-    @PostMapping("/userInfo")
+    @PostMapping("/api/userInfo")
     R<String> registration(@Validated @RequestBody UserInfo userInfo) throws IOException;
 
     /**
@@ -48,7 +48,7 @@ public interface RemoteUserInfoService {
      * @param userInfo 更新信息
      * @return 更新结果
      */
-    @RequestMapping(method = RequestMethod.PUT, value = "/userInfo")
+    @RequestMapping(method = RequestMethod.PUT, value = "/api/userInfo")
     R updateUserInfo(@Validated @RequestBody UserInfo userInfo);
 
     /**
@@ -57,7 +57,7 @@ public interface RemoteUserInfoService {
      * @param phoneNumber 手机号
      * @return 手机号是否存在
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/userInfo/phone-numbers/{phoneNumber}/exists")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/userInfo/phone-numbers/{phoneNumber}/exists")
     R<Boolean> checkPhoneNumbExit(@PathVariable(value = "phoneNumber") String phoneNumber);
 
     /**
@@ -67,7 +67,7 @@ public interface RemoteUserInfoService {
      * @param appCode 应用编码
      * @return 用户信息
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/userInfo/email/{email}/appcode/{appCode}")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/userInfo/email/{email}/appcode/{appCode}")
     R<UserInfo> getUserInfoByEmail(@PathVariable(value = "email") String email, @PathVariable(value = "appCode") String appCode);
 
     /**
@@ -77,7 +77,7 @@ public interface RemoteUserInfoService {
      * @param appCode 应用编码
      * @return 用户信息
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/userInfo/phone/{phone}/appcode/{appCode}")
+    @RequestMapping(method = RequestMethod.GET, value = "/api/userInfo/phone/{phone}/appcode/{appCode}")
     R<UserInfo> getUserInfoByPhone(@PathVariable(value = "phone") String phone, @PathVariable(value = "appCode") String appCode);
 
     /**
@@ -87,6 +87,6 @@ public interface RemoteUserInfoService {
      * @param credentialsId 凭证ID
      * @return 用户信息
      */
-    @RequestMapping(method = RequestMethod.GET, value = ("/userInfo/credentialsId/{credentialsId}/appcode/{appCode}"))
+    @RequestMapping(method = RequestMethod.GET, value = ("/api/userInfo/credentialsId/{credentialsId}/appcode/{appCode}"))
     R<UserInfo> getUserInfoByCredentialsId(@PathVariable(value = "appCode") String appCode, @PathVariable(value = "credentialsId") String credentialsId);
 }

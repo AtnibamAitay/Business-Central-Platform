@@ -27,7 +27,7 @@ import static space.atnibam.common.core.enums.ResultCode.USER_AVATAR_UPLOAD_FAIL
  */
 @Api(value = "用户信息", tags = "用户信息")
 @RestController
-@RequestMapping("/userInfo")
+@RequestMapping("/api/userInfo")
 public class UserInfoController implements RemoteUserInfoService {
 
     @Autowired
@@ -49,15 +49,16 @@ public class UserInfoController implements RemoteUserInfoService {
     }
 
     /**
-     * 用户注销
+     * 注销账号 - 删除账号
+     * 会有15天的保护期
      *
      * @param userId 用户ID
      * @return 注销结果
      */
-    @ApiOperation(value = "用户注销")
+    @ApiOperation(value = "用户注销 - 删除账号")
     @Override
     @DeleteMapping("/{userId}")
-    public R logout(@PathVariable(value = "userId") String userId) {
+    public R deleteAccount(@PathVariable(value = "userId") String userId) {
         userInfoService.logout(userId);
         return R.ok();
     }
@@ -187,4 +188,3 @@ public class UserInfoController implements RemoteUserInfoService {
         return R.fail(USER_AVATAR_UPLOAD_FAILED);
     }
 }
-

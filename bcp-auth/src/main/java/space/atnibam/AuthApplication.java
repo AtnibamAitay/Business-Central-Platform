@@ -2,6 +2,7 @@ package space.atnibam;
 
 import atnibam.space.common.security.config.SecurityRedisConfig;
 import atnibam.space.common.security.handler.GlobalExceptionHandler;
+import atnibam.space.common.swagger.annotation.EnableCustomSwagger;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableAsync
 @EnableFeignClients
+@EnableCustomSwagger
 @Import({SecurityRedisConfig.class, GlobalExceptionHandler.class})
 public class AuthApplication {
     public static void main(String[] args) {
