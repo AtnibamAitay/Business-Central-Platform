@@ -1,7 +1,7 @@
 package space.atnibam.auth.utils;
 
-import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.core.utils.ValidatorUtil;
+import space.atnibam.common.core.exception.UserOperateException;
+import space.atnibam.common.core.utils.ValidatorUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,8 +12,8 @@ import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import static atnibam.space.common.core.enums.ResultCode.EMAIL_NOT_EXIST;
-import static atnibam.space.common.core.enums.ResultCode.EMAIL_NUM_NON_COMPLIANCE;
+import static space.atnibam.common.core.enums.ResultCode.EMAIL_NOT_EXIST;
+import static space.atnibam.common.core.enums.ResultCode.EMAIL_NUM_NON_COMPLIANCE;
 
 /**
  * @ClassName: EmailUtil

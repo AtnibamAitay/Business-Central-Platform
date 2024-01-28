@@ -1,7 +1,7 @@
 package atnibam.space.cms.controller;
 
 import atnibam.space.cms.service.CommentService;
-import atnibam.space.common.core.domain.R;
+import space.atnibam.common.core.domain.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

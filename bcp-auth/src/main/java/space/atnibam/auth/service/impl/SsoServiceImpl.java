@@ -7,15 +7,15 @@ import space.atnibam.auth.model.dto.AccountVerificationDTO;
 import space.atnibam.auth.service.SsoService;
 import space.atnibam.auth.strategy.CertificateStrategy;
 import space.atnibam.auth.strategy.SendCodeStrategy;
-import atnibam.space.common.core.domain.AuthCredentials;
-import atnibam.space.common.core.domain.R;
-import atnibam.space.common.core.domain.UserInfo;
-import atnibam.space.common.core.domain.dto.LoginRequestDTO;
-import atnibam.space.common.core.domain.vo.UserInfoVO;
-import atnibam.space.common.core.enums.CertificateMethodEnum;
-import atnibam.space.common.core.enums.ResultCode;
-import atnibam.space.common.core.exception.SystemServiceException;
-import atnibam.space.common.core.exception.UserOperateException;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.domain.UserInfo;
+import space.atnibam.common.core.domain.dto.LoginRequestDTO;
+import space.atnibam.common.core.domain.vo.UserInfoVO;
+import space.atnibam.common.core.enums.CertificateMethodEnum;
+import space.atnibam.common.core.enums.ResultCode;
+import space.atnibam.common.core.exception.SystemServiceException;
+import space.atnibam.common.core.exception.UserOperateException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.RandomUtil;
 import org.springframework.beans.BeanUtils;
@@ -25,10 +25,10 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.Objects;
 
-import static atnibam.space.common.core.constant.Constants.RANDOM_LENGTH;
-import static atnibam.space.common.core.constant.UserConstants.CANCEL_LOGOUT;
-import static atnibam.space.common.core.constant.UserConstants.LOGOUT;
-import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
+import static space.atnibam.common.core.constant.Constants.RANDOM_LENGTH;
+import static space.atnibam.common.core.constant.UserConstants.CANCEL_LOGOUT;
+import static space.atnibam.common.core.constant.UserConstants.LOGOUT;
+import static space.atnibam.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 
 /**
  * 单点登录服务类

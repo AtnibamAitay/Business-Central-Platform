@@ -1,7 +1,7 @@
 //package atnibam.space.system.task;
 
-//import atnibam.space.common.core.domain.LocalMessageRecord;
-//import atnibam.space.common.core.domain.MqMessage;
+//import domain.space.atnibam.common.core.LocalMessageRecord;
+//import domain.space.atnibam.common.core.MqMessage;
 //import atnibam.space.common.rocketmq.enums.EnumMessageStatus;
 //import atnibam.space.common.rocketmq.service.MQProducerService;
 //import atnibam.space.system.mapper.LocalMessageRecordMapper;

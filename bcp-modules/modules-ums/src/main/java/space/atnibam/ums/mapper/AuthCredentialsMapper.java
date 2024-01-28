@@ -1,6 +1,6 @@
 package space.atnibam.ums.mapper;
 
-import atnibam.space.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.AuthCredentials;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

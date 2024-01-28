@@ -3,7 +3,7 @@ package space.atnibam.auth.factory;
 import space.atnibam.auth.strategy.CertificateStrategy;
 import space.atnibam.auth.strategy.impl.EmailCertificateStrategy;
 import space.atnibam.auth.strategy.impl.PhoneCertificateStrategy;
-import atnibam.space.common.core.enums.CertificateMethodEnum;
+import space.atnibam.common.core.enums.CertificateMethodEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

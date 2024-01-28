@@ -1,6 +1,6 @@
 package atnibam.space.common.service.aop.aspect;
 
-import atnibam.space.common.core.enums.ResultCode;
+import space.atnibam.common.core.enums.ResultCode;
 import atnibam.space.common.service.aop.constant.RateLimiterConstant;
 import atnibam.space.common.service.aop.service.DistributedRateLimiterNew;
 import space.atnibam.common.redis.service.RedisCache;

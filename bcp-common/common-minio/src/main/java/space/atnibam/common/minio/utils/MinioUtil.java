@@ -1,7 +1,7 @@
 package space.atnibam.common.minio.utils;
 
-import atnibam.space.common.core.domain.R;
-import atnibam.space.common.core.exception.MinioException;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.exception.MinioException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,11 +12,11 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Objects;
 
-import static atnibam.space.common.core.enums.ResultCode.MINIO_UPLOAD_ERROR;
+import static space.atnibam.common.core.enums.ResultCode.MINIO_UPLOAD_ERROR;
 
 /**
  * @ClassName: MinioUtil
- * @Description: 对象存储服务控制器
+ * @Description: Minio对象存储工具类
  * @Author: AtnibamAitay
  * @CreateTime: 2023-10-16 16:04
  **/
@@ -125,5 +125,4 @@ public class MinioUtil {
         fileInfoService.mergeChunks(md5, chunkTotal, uploadFileParamsDTO);
         return R.ok();
     }
-
 }

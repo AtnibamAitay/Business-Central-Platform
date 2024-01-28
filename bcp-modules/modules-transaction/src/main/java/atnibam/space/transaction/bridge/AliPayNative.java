@@ -1,7 +1,7 @@
 package atnibam.space.transaction.bridge;
 
-import atnibam.space.common.core.enums.ResultCode;
-import atnibam.space.common.core.exception.AliPayException;
+import space.atnibam.common.core.enums.ResultCode;
+import space.atnibam.common.core.exception.AliPayException;
 import atnibam.space.transaction.config.AlipayClientConfig;
 import atnibam.space.transaction.enums.AliPayTradeState;
 import atnibam.space.transaction.enums.OrderStatus;

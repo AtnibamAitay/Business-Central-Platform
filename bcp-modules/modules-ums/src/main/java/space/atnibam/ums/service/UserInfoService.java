@@ -2,7 +2,7 @@ package space.atnibam.ums.service;
 
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
-import atnibam.space.common.core.domain.UserInfo;
+import space.atnibam.common.core.domain.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.IOException;

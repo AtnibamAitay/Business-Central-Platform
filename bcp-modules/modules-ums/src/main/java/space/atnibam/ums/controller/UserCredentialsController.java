@@ -1,9 +1,9 @@
 package space.atnibam.ums.controller;
 
 import space.atnibam.api.ums.RemoteUserCredentialsService;
-import atnibam.space.common.core.domain.AuthCredentials;
-import atnibam.space.common.core.domain.R;
-import atnibam.space.common.core.domain.dto.BindingCertificateDTO;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.domain.dto.BindingCertificateDTO;
 import space.atnibam.ums.service.AuthCredentialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

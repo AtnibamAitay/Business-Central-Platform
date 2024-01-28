@@ -1,7 +1,7 @@
 package space.atnibam.api.ums;
 
-import atnibam.space.common.core.domain.R;
-import atnibam.space.common.core.domain.UserInfo;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.domain.UserInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

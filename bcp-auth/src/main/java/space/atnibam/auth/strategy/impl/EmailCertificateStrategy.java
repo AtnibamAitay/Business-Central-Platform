@@ -4,11 +4,11 @@ import space.atnibam.api.ums.RemoteUserCredentialsService;
 import space.atnibam.api.ums.RemoteUserInfoService;
 import space.atnibam.auth.strategy.CertificateStrategy;
 import space.atnibam.auth.utils.EmailUtil;
-import atnibam.space.common.core.domain.AuthCredentials;
-import atnibam.space.common.core.domain.UserInfo;
-import atnibam.space.common.core.domain.dto.LoginRequestDTO;
-import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.core.utils.StringUtils;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.UserInfo;
+import space.atnibam.common.core.domain.dto.LoginRequestDTO;
+import space.atnibam.common.core.exception.UserOperateException;
+import space.atnibam.common.core.utils.StringUtils;
 import space.atnibam.common.redis.service.RedisCache;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 import static space.atnibam.auth.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
-import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
+import static space.atnibam.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 
 /**
  * 邮件证书策略组件

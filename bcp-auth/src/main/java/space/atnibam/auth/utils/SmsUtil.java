@@ -1,9 +1,9 @@
 package space.atnibam.auth.utils;
 
-import atnibam.space.common.core.enums.ResultCode;
-import atnibam.space.common.core.exception.SystemServiceException;
-import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.core.utils.ValidatorUtil;
+import space.atnibam.common.core.enums.ResultCode;
+import space.atnibam.common.core.exception.SystemServiceException;
+import space.atnibam.common.core.exception.UserOperateException;
+import space.atnibam.common.core.utils.ValidatorUtil;
 import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static atnibam.space.common.core.enums.ResultCode.PHONE_NUM_NON_COMPLIANCE;
+import static space.atnibam.common.core.enums.ResultCode.PHONE_NUM_NON_COMPLIANCE;
 
 @Slf4j
 @Component

@@ -1,6 +1,6 @@
 package atnibam.space.system.service.impl;
 
-import atnibam.space.common.core.domain.LocalMessageRecord;
+import space.atnibam.common.core.domain.LocalMessageRecord;
 import atnibam.space.system.mapper.LocalMessageRecordMapper;
 import atnibam.space.system.service.LocalMessageRecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

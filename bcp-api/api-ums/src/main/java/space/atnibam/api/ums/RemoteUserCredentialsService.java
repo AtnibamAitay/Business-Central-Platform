@@ -1,7 +1,7 @@
 package space.atnibam.api.ums;
 
-import atnibam.space.common.core.domain.AuthCredentials;
-import atnibam.space.common.core.domain.R;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

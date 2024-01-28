@@ -2,8 +2,8 @@ package space.atnibam.auth.controller;
 
 import space.atnibam.auth.model.dto.AccountVerificationDTO;
 import space.atnibam.auth.service.SsoService;
-import atnibam.space.common.core.domain.R;
-import atnibam.space.common.core.domain.dto.LoginRequestDTO;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.domain.dto.LoginRequestDTO;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.sign.SaSignUtil;
 import cn.dev33.satoken.sso.SaSsoProcessor;

@@ -1,9 +1,9 @@
 package atnibam.space.system.controller;
 
 import atnibam.space.api.system.RemoteMsgRecordService;
-import atnibam.space.common.core.domain.LocalMessageRecord;
+import space.atnibam.common.core.domain.LocalMessageRecord;
 import atnibam.space.system.service.LocalMessageRecordService;
-import atnibam.space.common.core.domain.R;
+import space.atnibam.common.core.domain.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

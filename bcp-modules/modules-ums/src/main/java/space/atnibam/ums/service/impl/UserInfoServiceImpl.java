@@ -1,38 +1,39 @@
 package space.atnibam.ums.service.impl;
 
 //import atnibam.space.api.system.RemoteMsgRecordService;
-//import atnibam.space.common.core.constant.Constants;
+//import constant.space.atnibam.common.core.Constants;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import space.atnibam.common.core.constant.UserConstants;
+import space.atnibam.common.core.domain.UserInfo;
+import space.atnibam.common.core.enums.ResultCode;
+import space.atnibam.common.core.exception.SystemServiceException;
+import space.atnibam.common.core.exception.UserOperateException;
+import space.atnibam.common.core.utils.Base64FileReader;
+import space.atnibam.common.core.utils.Base64ToMultipartFileUtils;
+import space.atnibam.common.core.utils.DateUtils;
+import space.atnibam.common.core.utils.RandomNameUtils;
+import space.atnibam.common.minio.utils.MinioUtil;
 import space.atnibam.ums.constant.UserInfoConstants;
 import space.atnibam.ums.mapper.UserInfoMapper;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
 import space.atnibam.ums.service.UserInfoService;
-import atnibam.space.common.core.constant.UserConstants;
-import atnibam.space.common.core.domain.UserInfo;
-import atnibam.space.common.core.enums.ResultCode;
-import atnibam.space.common.core.exception.SystemServiceException;
-import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.core.utils.Base64FileReader;
-import atnibam.space.common.core.utils.Base64ToMultipartFileUtils;
-import atnibam.space.common.core.utils.DateUtils;
-import atnibam.space.common.core.utils.RandomNameUtils;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import space.atnibam.common.minio.utils.MinioUtil;
 
 import java.io.IOException;
 import java.util.Objects;
 
-import static atnibam.space.common.core.constant.UserConstants.DEFAULT_HEAD_PICTURE;
-import static atnibam.space.common.core.constant.UserConstants.LOGOUT;
-import static atnibam.space.common.core.enums.ResultCode.ACCOUNT_LOGOUT;
+import static space.atnibam.common.core.constant.UserConstants.DEFAULT_HEAD_PICTURE;
+import static space.atnibam.common.core.constant.UserConstants.LOGOUT;
+import static space.atnibam.common.core.enums.ResultCode.ACCOUNT_LOGOUT;
 //import java.util.UUID;
 
 /**
@@ -58,6 +59,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
 
     @Autowired
     private ResourceLoader resourceLoader;
+
+    @Value("${minio.pic-url}")
+    private String picUrl;
 
     /**
      * 根据用户ID查询用户信息
@@ -136,8 +140,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
         // 文件夹路径
         String folder = UserInfoConstants.USER_AVATAR_FOLDER_PREFIX + userId;
         // TODO
-//        String avatarUrl = minioUtils.uploadFile(file, DEFAULT_USER_BUCKET, userId, folder);
-//        return userMapper.updateAvatarById(userId, picUrl + avatarUrl) > 0;
+//        String avatarUrl = minioUtil.upload(updateAvatarDTO.getAvatar(), "bcp", userId, folder);
+//        return userInfoMapper.updateAvatarById(userId, picUrl + avatarUrl) > 0;
         return false;
     }
 
@@ -177,7 +181,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
         // 获取默认头像资源
         Resource resource = resourceLoader.getResource(DEFAULT_HEAD_PICTURE);
         // 将默认头像设置为用户的头像
-        userInfo.setUserAvatar(setAvatarToRegistration(Objects.requireNonNull(Base64FileReader.readBase64FromFile(resource.getFile().getPath())),userId));
+        userInfo.setUserAvatar(setAvatarToRegistration(Objects.requireNonNull(Base64FileReader.readBase64FromFile(resource.getFile().getPath())), userId));
         // 如果用户ID为空，表示用户是新注册的用户
         if (Objects.isNull(userId)) {
             // 将用户信息保存到数据库中

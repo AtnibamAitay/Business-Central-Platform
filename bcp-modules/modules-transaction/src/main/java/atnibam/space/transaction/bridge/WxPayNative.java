@@ -4,7 +4,7 @@ import atnibam.space.transaction.config.WxPayConfig;
 import atnibam.space.transaction.constant.WxPayConstant;
 import atnibam.space.transaction.service.OrderInfoService;
 import atnibam.space.transaction.service.PaymentInfoService;
-import atnibam.space.common.core.utils.ImprovedHttpClientUtil;
+import space.atnibam.common.core.utils.ImprovedHttpClientUtil;
 import atnibam.space.transaction.enums.OrderStatus;
 import atnibam.space.transaction.enums.PayType;
 import atnibam.space.transaction.enums.WxApiType;

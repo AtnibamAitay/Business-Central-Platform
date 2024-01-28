@@ -1,6 +1,6 @@
 package space.atnibam.auth.exception;
 
-import atnibam.space.common.core.enums.ResultCode;
+import space.atnibam.common.core.enums.ResultCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

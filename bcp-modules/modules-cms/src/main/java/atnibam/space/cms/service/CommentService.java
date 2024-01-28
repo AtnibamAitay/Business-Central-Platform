@@ -1,7 +1,7 @@
 package atnibam.space.cms.service;
 
 import atnibam.space.cms.model.entity.Comment;
-import atnibam.space.common.core.domain.R;
+import space.atnibam.common.core.domain.R;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

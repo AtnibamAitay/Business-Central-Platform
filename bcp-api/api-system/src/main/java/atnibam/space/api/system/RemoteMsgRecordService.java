@@ -1,8 +1,8 @@
 package atnibam.space.api.system;
 
 import atnibam.space.api.system.interceptor.SystemFeignInterceptor;
-import atnibam.space.common.core.domain.LocalMessageRecord;
-import atnibam.space.common.core.domain.R;
+import space.atnibam.common.core.domain.LocalMessageRecord;
+import space.atnibam.common.core.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

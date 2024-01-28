@@ -3,12 +3,12 @@ package space.atnibam.ums.controller;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.service.AuthCredentialsService;
 import space.atnibam.api.ums.RemoteUserInfoService;
-import atnibam.space.common.core.domain.AuthCredentials;
-import atnibam.space.common.core.domain.R;
-import atnibam.space.common.core.domain.UserInfo;
-import atnibam.space.common.core.enums.ResultCode;
-import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.core.utils.StringUtils;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.domain.UserInfo;
+import space.atnibam.common.core.enums.ResultCode;
+import space.atnibam.common.core.exception.UserOperateException;
+import space.atnibam.common.core.utils.StringUtils;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
 import space.atnibam.ums.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.Objects;
 
-import static atnibam.space.common.core.enums.ResultCode.USER_AVATAR_UPLOAD_FAILED;
+import static space.atnibam.common.core.enums.ResultCode.USER_AVATAR_UPLOAD_FAILED;
 
 /**
  * 用户基本信息控制层

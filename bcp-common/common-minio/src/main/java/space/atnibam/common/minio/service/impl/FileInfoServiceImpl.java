@@ -1,7 +1,5 @@
 package space.atnibam.common.minio.service.impl;
 
-import atnibam.space.common.core.exception.MinioException;
-import atnibam.space.common.core.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
@@ -12,6 +10,8 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import space.atnibam.common.core.exception.MinioException;
+import space.atnibam.common.core.utils.StringUtils;
 import space.atnibam.common.minio.mapper.FileInfoMapper;
 import space.atnibam.common.minio.model.dto.UploadFileParamsDTO;
 import space.atnibam.common.minio.model.entity.FileInfo;
@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import java.io.*;
 import java.time.LocalDateTime;
 
-import static atnibam.space.common.core.enums.ResultCode.*;
+import static space.atnibam.common.core.enums.ResultCode.*;
 import static space.atnibam.common.minio.constant.FileServiceConstants.*;
 import static space.atnibam.common.minio.utils.FileServiceUtil.getContentType;
 

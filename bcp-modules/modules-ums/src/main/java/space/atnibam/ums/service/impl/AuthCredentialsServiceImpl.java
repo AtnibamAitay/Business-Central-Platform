@@ -1,8 +1,8 @@
 package space.atnibam.ums.service.impl;
 
-import atnibam.space.common.core.domain.AuthCredentials;
-import atnibam.space.common.core.domain.dto.BindingCertificateDTO;
-import atnibam.space.common.core.exception.UserOperateException;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.dto.BindingCertificateDTO;
+import space.atnibam.common.core.exception.UserOperateException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,8 +16,8 @@ import space.atnibam.ums.service.AuthCredentialsService;
 
 import java.util.Objects;
 
-import static atnibam.space.common.core.enums.ResultCode.ACCOUNT_EXIST;
-import static atnibam.space.common.core.enums.ResultCode.USER_VERIFY_ERROR;
+import static space.atnibam.common.core.enums.ResultCode.ACCOUNT_EXIST;
+import static space.atnibam.common.core.enums.ResultCode.USER_VERIFY_ERROR;
 import static space.atnibam.common.redis.constant.CacheConstants.*;
 
 /**

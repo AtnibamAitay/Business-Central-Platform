@@ -1,6 +1,6 @@
 package atnibam.space.transaction.controller;
 
-import atnibam.space.common.core.domain.R;
+import space.atnibam.common.core.domain.R;
 import atnibam.space.transaction.bridge.AbstractPay;
 import atnibam.space.transaction.enums.OrderStatus;
 import atnibam.space.transaction.factory.PayFactory;

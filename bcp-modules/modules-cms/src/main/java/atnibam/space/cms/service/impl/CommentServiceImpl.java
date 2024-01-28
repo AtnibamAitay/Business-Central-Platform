@@ -5,7 +5,7 @@ import atnibam.space.cms.mapper.CommentMapper;
 import atnibam.space.cms.model.dto.CommentNodeDTO;
 import atnibam.space.cms.model.entity.Comment;
 import atnibam.space.cms.service.CommentService;
-import atnibam.space.common.core.domain.R;
+import space.atnibam.common.core.domain.R;
 import space.atnibam.common.redis.constant.CacheConstants;
 import space.atnibam.common.redis.utils.CacheClient;
 import cn.hutool.core.util.StrUtil;

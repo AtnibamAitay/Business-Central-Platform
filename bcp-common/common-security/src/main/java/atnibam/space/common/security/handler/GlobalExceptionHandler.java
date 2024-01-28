@@ -1,12 +1,12 @@
 package atnibam.space.common.security.handler;
 
-import atnibam.space.common.core.enums.ResultCode;
+import space.atnibam.common.core.enums.ResultCode;
 import cn.dev33.satoken.exception.*;
-import atnibam.space.common.core.domain.R;
-import atnibam.space.common.core.exception.RedisException;
-import atnibam.space.common.core.exception.SystemServiceException;
-import atnibam.space.common.core.exception.UserOperateException;
-import atnibam.space.common.core.exception.WxPayException;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.exception.RedisException;
+import space.atnibam.common.core.exception.SystemServiceException;
+import space.atnibam.common.core.exception.UserOperateException;
+import space.atnibam.common.core.exception.WxPayException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package atnibam.space.system.mapper;
 
 
-import atnibam.space.common.core.domain.LocalMessageRecord;
+import space.atnibam.common.core.domain.LocalMessageRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package space.atnibam.auth.strategy;
 
-import atnibam.space.common.core.domain.AuthCredentials;
-import atnibam.space.common.core.domain.UserInfo;
-import atnibam.space.common.core.domain.dto.LoginRequestDTO;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.UserInfo;
+import space.atnibam.common.core.domain.dto.LoginRequestDTO;
 
 /**
  * 证书策略接口

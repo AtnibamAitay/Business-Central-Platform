@@ -1,7 +1,7 @@
 package atnibam.space.system.service;
 
 
-import atnibam.space.common.core.domain.LocalMessageRecord;
+import space.atnibam.common.core.domain.LocalMessageRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

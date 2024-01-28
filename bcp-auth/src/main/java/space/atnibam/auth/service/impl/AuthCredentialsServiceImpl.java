@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-import static atnibam.space.common.core.enums.ResultCode.USER_NOT_EXIST_BY_CODE;
+import static space.atnibam.common.core.enums.ResultCode.USER_NOT_EXIST_BY_CODE;
 
 /**
  * @author Atnibam Aitay

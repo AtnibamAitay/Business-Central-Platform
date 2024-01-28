@@ -1,7 +1,7 @@
 package space.atnibam.ums.service;
 
-import atnibam.space.common.core.domain.AuthCredentials;
-import atnibam.space.common.core.domain.dto.BindingCertificateDTO;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.dto.BindingCertificateDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

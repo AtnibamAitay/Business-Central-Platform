@@ -1,8 +1,8 @@
 package space.atnibam.ums.controller;
 
 //import atnibam.space.api.system.RemoteMsgRecordService;
-//import atnibam.space.common.core.constant.Constants;
-//import atnibam.space.common.core.domain.LocalMessageRecord;
+//import constant.space.atnibam.common.core.Constants;
+//import domain.space.atnibam.common.core.LocalMessageRecord;
 //import atnibam.space.common.rocketmq.constant.RocketMQConstants;
 //import atnibam.space.common.rocketmq.service.MQProducerService;
 import cn.dev33.satoken.config.SaSsoConfig;
