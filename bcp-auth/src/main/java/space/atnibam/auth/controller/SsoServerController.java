@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * SSO Server端 Controller
  */
-@Api("认证模块")
+@Api(value = "认证模块", tags = "认证模块")
 @RestController
 @RequestMapping("/api/auth")
 public class SsoServerController {
@@ -58,7 +58,7 @@ public class SsoServerController {
      * @param loginRequestDTO 登录请求DTO
      * @return 认证结果
      */
-    @ApiOperation("单点登陆接口")
+    @ApiOperation("单点登陆")
     @PostMapping("/login")
     public SaResult ssoLogin(@Validated @RequestBody LoginRequestDTO loginRequestDTO) throws IOException {
         ssoService.ssoLoginByCodeHandler(loginRequestDTO);
@@ -72,8 +72,8 @@ public class SsoServerController {
      * @param appId   应用ID
      * @return 用户信息
      */
-    @ApiOperation("根据密钥解析的ID获取用户信息接口")
-    @RequestMapping(value = "/getData", method = RequestMethod.GET)
+    @ApiOperation("根据密钥解析的ID获取用户信息")
+    @GetMapping("/getData")
     public SaResult getData(@ApiParam("密钥解析的ID") String loginId, @ApiParam("应用ID") String appId) {
         // 校验签名：只有拥有正确秘钥发起的请求才能通过校验
         SaSignUtil.checkRequest(SaHolder.getRequest());
@@ -85,8 +85,8 @@ public class SsoServerController {
      *
      * @return 注销结果
      */
-    @ApiOperation("请求头携带密钥进行单点注销接口")
-    @RequestMapping(value = "/signout", method = RequestMethod.GET)
+    @ApiOperation("单点注销")
+    @GetMapping("/signout")
     public Object ssoSignout() {
         return SaSsoProcessor.instance.ssoSignout();
     }
@@ -118,7 +118,8 @@ public class SsoServerController {
      *
      * @return 是否登录
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/isLogin")
+    @ApiOperation("查询当前是否登录")
+    @GetMapping("/isLogin")
     public Object isLogin() {
         return SaResult.data(StpUtil.isLogin());
     }
