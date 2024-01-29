@@ -1,6 +1,5 @@
 package atnibam.space.transaction.service.impl;
 
-import space.atnibam.common.core.exception.WxPayException;
 import atnibam.space.transaction.enums.OrderStatus;
 import atnibam.space.transaction.mapper.OrderInfoMapper;
 import atnibam.space.transaction.model.dto.ProductDTO;
@@ -19,12 +18,14 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import space.atnibam.common.core.exception.WxPayException;
 
 import javax.annotation.Resource;
 
 import static atnibam.space.transaction.constant.OrderConstant.*;
 import static atnibam.space.transaction.constant.RabbitConstant.ORDER_EXCHANGE;
 import static atnibam.space.transaction.constant.RabbitConstant.ORDER_QUEUE_ROUTING_KEY;
+import static space.atnibam.common.core.enums.ResultCode.*;
 
 
 /**
