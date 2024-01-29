@@ -1,4 +1,4 @@
-package atnibam.space.api.article.interceptor;
+package space.atnibam.api.cms.interceptor;
 
 import cn.dev33.satoken.same.SaSameUtil;
 import feign.RequestInterceptor;
