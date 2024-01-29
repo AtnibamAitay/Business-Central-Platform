@@ -94,13 +94,13 @@ public class UserCredentialsController implements RemoteUserCredentialsService {
     }
 
     /**
-     * 通过邮箱绑定用户凭证
+     * 绑定邮箱
      *
-     * @param bindingCertificateDTO 绑定证书
-     * @return 结果
+     * @param bindingCertificateDTO 包含被绑定的账号、ID、验证码的DTO
+     * @return 绑定结果
      */
     @PostMapping("/email/binding")
-    @ApiOperation(value = "通过邮箱绑定用户凭证", notes = "使用绑定证书DTO对象将邮箱与用户凭证进行绑定")
+    @ApiOperation(value = "绑定邮箱")
     public R bindingEmailById(@Validated @RequestBody BindingCertificateDTO bindingCertificateDTO) {
         authCredentialsService.bindingEmailById(bindingCertificateDTO);
         return R.ok();

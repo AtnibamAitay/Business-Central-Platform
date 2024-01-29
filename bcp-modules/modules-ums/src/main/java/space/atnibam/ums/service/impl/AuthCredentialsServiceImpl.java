@@ -1,19 +1,20 @@
 package space.atnibam.ums.service.impl;
 
-import space.atnibam.common.core.domain.AuthCredentials;
-import space.atnibam.common.core.domain.dto.BindingCertificateDTO;
-import space.atnibam.common.core.exception.UserOperateException;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.dto.BindingCertificateDTO;
+import space.atnibam.common.core.exception.UserOperateException;
 import space.atnibam.common.redis.service.RedisCache;
 import space.atnibam.ums.mapper.AuthCredentialsMapper;
 import space.atnibam.ums.service.AuthCredentialsService;
 
+import javax.annotation.Resource;
 import java.util.Objects;
 
 import static space.atnibam.common.core.enums.ResultCode.ACCOUNT_EXIST;
@@ -26,9 +27,7 @@ import static space.atnibam.common.redis.constant.CacheConstants.*;
 @Service
 public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMapper, AuthCredentials>
         implements AuthCredentialsService {
-    @Autowired
-    private AuthCredentialsMapper authCredentialsMapper;
-    @Autowired
+    @Resource
     private RedisCache redisCache;
 
     /**
@@ -115,10 +114,10 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
         // 验证输入的验证码是否与缓存中的绑定码一致
         checkVerifyCodeCode(code, bindingCertificateDTO.getVerifyCode());
 
-        // 从绑定证书DTO中获取凭证ID
+        // 获取账号ID
         Integer credentialsId = bindingCertificateDTO.getCredentialsId();
 
-        // 创建LambdaUpdateWrapper对象，用于更新凭证表中凭证ID对应的数据，将手机号设置为当前证书
+        // 创建LambdaUpdateWrapper对象，用于更新账号表中凭证ID对应的数据，将手机号设置为当前证书
         LambdaUpdateWrapper<AuthCredentials> updateWrapper = new LambdaUpdateWrapper<AuthCredentials>()
                 .eq(AuthCredentials::getCredentialsId, credentialsId)
                 .set(AuthCredentials::getPhoneNumber, certificate);
@@ -135,14 +134,21 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void bindingEmailById(BindingCertificateDTO bindingCertificateDTO) {
+        // 获取账号
         String certificate = bindingCertificateDTO.getCertificate();
+        // 如果查到账号已经与邮箱绑定则抛出异常
         if (!Objects.isNull(queryAuthCredentialsByEmail(certificate))) {
             throw new UserOperateException(ACCOUNT_EXIST);
         }
-        String code = redisCache.getCacheObject(BINDING_CODE_KEY + EMAIL_KEY + bindingCertificateDTO.getCertificate());
+        // 获取缓存中的绑定验证码
+        String code = getCodeFromRedis(certificate, bindingCertificateDTO.getAppId());
+        // 验证缓存中的绑定验证码和用户传入的验证码是否匹配
         checkVerifyCodeCode(code, bindingCertificateDTO.getVerifyCode());
+        // 获取账号ID
         Integer credentialsId = bindingCertificateDTO.getCredentialsId();
+        // 创建LambdaUpdateWrapper对象，用于更新账号的邮箱
         LambdaUpdateWrapper<AuthCredentials> updateWrapper = new LambdaUpdateWrapper<AuthCredentials>().eq(AuthCredentials::getCredentialsId, credentialsId).set(AuthCredentials::getEmail, certificate);
+        // 更新账号的邮箱
         this.update(updateWrapper);
     }
 
@@ -156,5 +162,40 @@ public class AuthCredentialsServiceImpl extends ServiceImpl<AuthCredentialsMappe
         if (!StringUtils.hasText(code) || !verifyCode.equals(code)) {
             throw new UserOperateException(USER_VERIFY_ERROR);
         }
+    }
+
+    /**
+     * 从Redis中获取邮箱的验证码
+     *
+     * @param email 邮箱
+     * @return 验证码
+     * @throws UserOperateException 用户操作异常
+     */
+    private String getCodeFromRedis(String email, String appId) {
+        // TODO:写成一个通用的方法，auth 也需要调用这个
+        JSONObject cacheResult = redisCache.getCacheObject(BINDING_CODE_KEY + EMAIL_KEY + email);
+        // 检查结果是否存在且数据部分不为空
+        if (cacheResult != null && !cacheResult.isEmpty()) {
+            // 获取结果中的数据部分并转换为JSONObject对象
+            JSONObject dataObject = cacheResult.getJSONObject("data");
+            // 检查数据部分是否为空
+            if (dataObject != null && dataObject.getString("code") != null) {
+                // 获取数据部分中的appId字段值
+                String appIdCache = dataObject.getString("appId");
+                // 检查appId字段值是否与传入的appId相等
+                if (!appId.equals(appIdCache)) {
+                    throw new UserOperateException(USER_VERIFY_ERROR);
+                }
+                // 获取数据部分中的code字段值
+                String code = dataObject.getString("code");
+                // 检查code字段值是否包含文本
+                if (space.atnibam.common.core.utils.StringUtils.hasText(code)) {
+                    return code;
+                }
+            }
+        }
+
+        //todo log
+        throw new UserOperateException(USER_VERIFY_ERROR);
     }
 }

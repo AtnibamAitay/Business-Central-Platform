@@ -11,7 +11,15 @@ public enum CertificateMethodEnum {
     /**
      * 通过邮箱和验证码登录
      */
-    EMAIL_CODE(2);
+    EMAIL_CODE(2),
+    /**
+     * 绑定手机号的验证码
+     */
+    BINDING_PHONE_CODE(3),
+    /**
+     * 绑定邮箱的验证码
+     */
+    BINDING_EMAIL_CODE(4);
 
     private final int code;
 

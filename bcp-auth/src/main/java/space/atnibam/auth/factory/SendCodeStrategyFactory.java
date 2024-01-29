@@ -1,11 +1,11 @@
 package space.atnibam.auth.factory;
 
-import space.atnibam.auth.strategy.impl.EmailSendCodeStrategy;
-import space.atnibam.auth.strategy.impl.PhoneSendCodeStrategy;
-import space.atnibam.auth.strategy.SendCodeStrategy;
-import space.atnibam.common.core.enums.CertificateMethodEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import space.atnibam.auth.strategy.SendCodeStrategy;
+import space.atnibam.auth.strategy.impl.EmailSendCodeStrategy;
+import space.atnibam.auth.strategy.impl.PhoneSendCodeStrategy;
+import space.atnibam.common.core.enums.CertificateMethodEnum;
 
 /**
  * 证书策略工厂
@@ -35,10 +35,12 @@ public class SendCodeStrategyFactory {
      */
     private SendCodeStrategy createCodeHandlerStrategy(CertificateMethodEnum certificateMethodEnum) {
         switch (certificateMethodEnum) {
-            case EMAIL_CODE:
-                return emailCertificateStrategy;
             case PHONE_CODE:
+            case BINDING_PHONE_CODE:
                 return phoneCertificateStrategy;
+            case EMAIL_CODE:
+            case BINDING_EMAIL_CODE:
+                return emailCertificateStrategy;
             default:
                 throw new IllegalArgumentException("不支持的认证类型: " + certificateMethodEnum);
         }

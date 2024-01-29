@@ -1,14 +1,14 @@
 package space.atnibam.auth.strategy.impl;
 
-import space.atnibam.auth.model.dto.AccountVerificationDTO;
-import space.atnibam.auth.strategy.SendCodeStrategy;
-import space.atnibam.auth.utils.EmailUtil;
-import space.atnibam.common.redis.utils.CacheClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
+import space.atnibam.auth.model.dto.AccountVerificationDTO;
+import space.atnibam.auth.strategy.SendCodeStrategy;
+import space.atnibam.auth.utils.EmailUtil;
+import space.atnibam.common.redis.utils.CacheClient;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 import static space.atnibam.auth.constant.AuthConstants.CODE_TTL;
 import static space.atnibam.auth.constant.AuthConstants.LOGIN_EMAIL_CODE_KEY;
+import static space.atnibam.common.redis.constant.CacheConstants.BINDING_CODE_KEY;
+import static space.atnibam.common.redis.constant.CacheConstants.EMAIL_KEY;
 
 /**
  * 邮箱证书策略类
@@ -69,11 +71,18 @@ public class EmailSendCodeStrategy implements SendCodeStrategy {
      * @param code  验证码
      */
     @Override
-    public void saveVerificationCodeToRedis(String email, String code, String appId) {
+    public void saveVerificationCodeToRedis(String email, String code, Integer codeType, String appId) {
+        String codeCacheKey = null;
         Map<String, String> verificationData = new HashMap<>();
         verificationData.put("appId", appId);
         verificationData.put("code", code);
-        redisCache.setWithLogicalExpire(LOGIN_EMAIL_CODE_KEY + email, verificationData, CODE_TTL, TimeUnit.MINUTES);
+        //  判断codeType是2还是4，如果是2，则缓存的前缀为LOGIN_EMAIL_CODE_KEY，如果是4，则缓存的前缀为BINDING_CODE_KEY+EMAIL_KEY
+        if (codeType == 2) {
+            codeCacheKey = LOGIN_EMAIL_CODE_KEY;
+        } else if (codeType == 4) {
+            codeCacheKey = BINDING_CODE_KEY + EMAIL_KEY;
+        }
+        redisCache.setWithLogicalExpire(codeCacheKey + email, verificationData, CODE_TTL, TimeUnit.MINUTES);
     }
 
     /**

@@ -1,12 +1,12 @@
 package space.atnibam.auth.strategy.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import space.atnibam.auth.model.dto.AccountVerificationDTO;
 import space.atnibam.auth.service.AuthCredentialsService;
 import space.atnibam.auth.strategy.SendCodeStrategy;
 import space.atnibam.auth.utils.SmsUtil;
 import space.atnibam.common.redis.utils.CacheClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -47,7 +47,7 @@ public class PhoneSendCodeStrategy implements SendCodeStrategy {
      * @param code        验证码
      */
     @Override
-    public void saveVerificationCodeToRedis(String phoneNumber, String code, String appId) {
+    public void saveVerificationCodeToRedis(String phoneNumber, String code, Integer codeType, String appId) {
         Map<String, String> verificationData = new HashMap<>();
         verificationData.put("appId", appId);
         verificationData.put("code", code);

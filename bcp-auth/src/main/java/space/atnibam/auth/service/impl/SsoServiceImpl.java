@@ -1,5 +1,10 @@
 package space.atnibam.auth.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.util.RandomUtil;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import space.atnibam.api.ums.RemoteUserInfoService;
 import space.atnibam.auth.factory.CertificateStrategyFactory;
 import space.atnibam.auth.factory.SendCodeStrategyFactory;
@@ -16,11 +21,6 @@ import space.atnibam.common.core.enums.CertificateMethodEnum;
 import space.atnibam.common.core.enums.ResultCode;
 import space.atnibam.common.core.exception.SystemServiceException;
 import space.atnibam.common.core.exception.UserOperateException;
-import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.util.RandomUtil;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -54,12 +54,12 @@ public class SsoServiceImpl implements SsoService {
         String code = RandomUtil.randomNumbers(RANDOM_LENGTH);
         // TODO:临时强制设定验证码为123456，生产环境注意删除此段代码
         code = "123456";
-        // 根据登录方式决定策略
+        // 根据验证码类型决定策略
         SendCodeStrategy strategy = sendCodeStrategyFactory.getStrategy(CertificateMethodEnum.fromCode(accountVerificationDTO.getCodeType()));
         // 发送验证码
         strategy.sendCodeHandler(accountVerificationDTO, code);
         // 把验证码加入到缓存中
-        strategy.saveVerificationCodeToRedis(accountVerificationDTO.getAccountNumber(), code, accountVerificationDTO.getAppId());
+        strategy.saveVerificationCodeToRedis(accountVerificationDTO.getAccountNumber(), code, accountVerificationDTO.getCodeType(), accountVerificationDTO.getAppId());
         return R.ok();
     }
 

@@ -16,7 +16,6 @@ spring:
       max-file-size: 5MB
       max-request-size: 5MB
 
-
   cloud:
     nacos:
       server-addr: 39.108.67.16:8848
