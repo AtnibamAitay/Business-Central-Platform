@@ -11,6 +11,7 @@
     <modules>
         <module>modules-ums</module>
         <module>modules-ims</module>
+        <module>modules-pms</module>
         <module>modules-cms</module>
         <module>modules-system</module>
         <module>modules-transaction</module>

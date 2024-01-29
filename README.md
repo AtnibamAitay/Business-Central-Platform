@@ -29,7 +29,7 @@ Business-Central-Platform
 │   ├── common-core         - 核心公共功能，如工具类、基础代码
 │   ├── common-datasource   - 数据源配置和数据库交互
 │   ├── common-log          - 日志处理的公共配置和实现
-│   ├── common-Minio        - 公共的MinIO对象存储模块
+│   ├── common-minio        - 公共的MinIO对象存储模块
 │   ├── common-rabbitmq     - RabbitMQ消息队列的集成和配置
 │   ├── common-redis        - Redis缓存的集成和配置
 │   ├── common-rocketmq     - RocketMQ消息队列的集成和配置
@@ -42,6 +42,7 @@ Business-Central-Platform
 ├── bcp-modules             - 应用程序核心业务模块
 │   ├── modules-cms         - 内容管理系统，包括评论模块
 │   ├── modules-ims         - 即时通讯管理系统，包括即时通讯模块、用户好友关系管理模块
+│   ├── modules-pms         - 商品管理系统，包括商品管理操作模块
 │   ├── modules-system      - 系统核心业务逻辑模块
 │   ├── modules-transaction - 交易处理业务逻辑模块，包括支付模块
 │   └── modules-ums         - 用户管理系统，包括用户信息管理模块
