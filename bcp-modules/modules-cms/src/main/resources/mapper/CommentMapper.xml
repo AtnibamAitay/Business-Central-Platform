@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="atnibam.space.cms.mapper.CommentMapper">
+<mapper namespace="space.atnibam.cms.mapper.CommentMapper">
 
-    <resultMap id="BaseResultMap" type="atnibam.space.cms.model.entity.Comment">
+    <resultMap id="BaseResultMap" type="space.atnibam.cms.model.entity.Comment">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="userId" column="user_id" jdbcType="INTEGER"/>
             <result property="objectId" column="object_id" jdbcType="INTEGER"/>

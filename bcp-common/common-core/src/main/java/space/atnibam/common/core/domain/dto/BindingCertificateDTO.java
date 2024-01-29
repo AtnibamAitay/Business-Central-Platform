@@ -17,6 +17,7 @@ public class BindingCertificateDTO {
     @NotBlank(message = "验证码不能为空")
     private String verifyCode;
 
+    // FIXME: 不太对，因为账号是各个应用通用的，验证应用ID的意义是什么呢？
     @NotNull(message = "应用ID不能为空")
     @ApiModelProperty("应用ID")
     private String appId;

@@ -1,19 +1,20 @@
 server:
   port: 8090
+
 spring:
+  profiles:
+    active: dev
   application:
     name: modules-ims
-  profiles:
-    # 环境配置
-    active: dev
   main:
     banner-mode: "off"
+
   cloud:
     nacos:
-      server-addr: 39.108.67.16:8848
+      server-addr: dev-bcp.com:8848
       config:
         # 配置中心地址
-        server-addr: 39.108.67.16:8848
+        server-addr: dev-bcp.com:8848
         # 配置文件格式
         file-extension: yml
         extension-configs:

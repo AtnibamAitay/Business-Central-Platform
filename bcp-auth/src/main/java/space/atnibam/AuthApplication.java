@@ -1,8 +1,8 @@
 package space.atnibam;
 
-import atnibam.space.common.security.config.SecurityRedisConfig;
-import atnibam.space.common.security.handler.GlobalExceptionHandler;
-import atnibam.space.common.swagger.annotation.EnableCustomSwagger;
+import space.atnibam.common.security.config.SecurityRedisConfig;
+import space.atnibam.common.security.handler.GlobalExceptionHandler;
+import space.atnibam.common.swagger.annotation.EnableCustomSwagger;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

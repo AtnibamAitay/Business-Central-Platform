@@ -1,6 +1,6 @@
 package space.atnibam.ums.controller;
 
-//import atnibam.space.api.system.RemoteMsgRecordService;
+//import system.api.space.atnibam.RemoteMsgRecordService;
 //import constant.space.atnibam.common.core.Constants;
 //import domain.space.atnibam.common.core.LocalMessageRecord;
 //import atnibam.space.common.rocketmq.constant.RocketMQConstants;

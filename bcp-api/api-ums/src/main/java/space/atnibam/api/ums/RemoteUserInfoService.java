@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * 用户信息远程调用接口
  */
-@FeignClient(value = "modules-ums", contextId = "userInfo", url = "http://local.atnibam.space:8085")
+@FeignClient(value = "modules-ums", contextId = "userInfo", url = "http://local.atnibam.space:9030")
 public interface RemoteUserInfoService {
 
     /**

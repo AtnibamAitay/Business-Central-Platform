@@ -1,6 +1,6 @@
 package space.atnibam.ums.service.impl;
 
-//import atnibam.space.api.system.RemoteMsgRecordService;
+//import system.api.space.atnibam.RemoteMsgRecordService;
 //import constant.space.atnibam.common.core.Constants;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

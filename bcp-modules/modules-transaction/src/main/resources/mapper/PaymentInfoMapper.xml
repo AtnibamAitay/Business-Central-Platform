@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="atnibam.space.transaction.mapper.PaymentInfoMapper">
+<mapper namespace="space.atnibam.transaction.mapper.PaymentInfoMapper">
 
-    <resultMap id="BaseResultMap" type="atnibam.space.transaction.model.entity.PaymentInfo">
+    <resultMap id="BaseResultMap" type="space.atnibam.transaction.model.entity.PaymentInfo">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
             <result property="transactionId" column="transaction_id" jdbcType="VARCHAR"/>

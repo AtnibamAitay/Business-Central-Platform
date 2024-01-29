@@ -1,2 +1,2 @@
-atnibam.space.common.security.config.SecurityConfigure
-atnibam.space.common.security.handler.GlobalExceptionHandler
+space.atnibam.common.security.config.SecurityConfigure
+space.atnibam.common.security.handler.GlobalExceptionHandler

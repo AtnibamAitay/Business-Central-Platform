@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="atnibam.space.system.mapper.LocalMessageRecordMapper">
+<mapper namespace="space.atnibam.system.mapper.LocalMessageRecordMapper">
 
     <resultMap id="BaseResultMap" type="space.atnibam.common.core.domain.LocalMessageRecord">
             <id property="id" column="id" jdbcType="BIGINT"/>
