@@ -27,11 +27,11 @@ Business-Central-Platform
 ├── bcp-gateway             - API网关，管理请求路由、负载均衡等
 │   └── pom.xml             - Maven项目管理配置文件，用于bcp-gateway模块
 ├── bcp-modules             - 应用程序核心业务模块
-│   ├── modules-cms         - 内容管理系统
-│   ├── modules-ims         - 即时通讯管理系统
+│   ├── modules-cms         - 内容管理系统，包括评论模块
+│   ├── modules-ims         - 即时通讯管理系统，包括即时通讯模块、用户好友关系管理模块
 │   ├── modules-system      - 系统核心业务逻辑模块
-│   ├── modules-transaction - 交易处理业务逻辑模块
-│   └── modules-ums         - 用户管理系统
+│   ├── modules-transaction - 交易处理业务逻辑模块，包括支付模块
+│   └── modules-ums         - 用户管理系统，包括用户信息管理模块
 │   └── pom.xml             - Maven项目管理配置文件，用于bcp-modules模块
 ├── .gitignore              - Git忽略文件列表，指示Git跳过版本控制的文件和目录
 ├── pom.xml                 - Maven父项目管理配置文件，用于整个项目
