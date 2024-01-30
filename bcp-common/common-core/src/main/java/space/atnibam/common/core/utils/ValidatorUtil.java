@@ -3,7 +3,7 @@ package space.atnibam.common.core.utils;
 import java.util.regex.Pattern;
 
 /**
- * @description: 校验工具类
+ * 校验工具类
  **/
 public class ValidatorUtil {
     /**

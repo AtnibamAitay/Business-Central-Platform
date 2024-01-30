@@ -1,12 +1,12 @@
 package space.atnibam.common.core.constant;
 
 /**
- * @ClassName: ConfigConstant
+ * @ClassName: ConfigConstants
  * @Description: Swagger配置常量类
  * @Author: AtnibamAitay
  * @CreateTime: 2023-11-12 19:25
  **/
-public class ConfigConstant {
+public class ConfigConstants {
 
     //=============================跨域请求配置常量=============================
 

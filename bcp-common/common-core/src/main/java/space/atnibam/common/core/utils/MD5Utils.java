@@ -6,11 +6,9 @@ import org.slf4j.LoggerFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * @author gjj
- */
 public class MD5Utils {
     private static final Logger log = LoggerFactory.getLogger(MD5Utils.class);
+
     /**
      * 对输入的密码进行MD5加密，并返回加密后的字符串
      *
@@ -40,7 +38,7 @@ public class MD5Utils {
     /**
      * 检查密码是否匹配
      *
-     * @param password      用户输入的密码
+     * @param password       用户输入的密码
      * @param hashedPassword 存储在数据库中的已加密密码
      * @return 如果密码匹配，则返回true；否则返回false。
      */

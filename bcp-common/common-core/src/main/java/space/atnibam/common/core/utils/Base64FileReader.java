@@ -36,7 +36,8 @@ public class Base64FileReader {
             return stringBuilder.toString();
         } catch (IOException e) {
             e.printStackTrace();
-            return null; // 读取失败时返回 null
+            // 读取失败时返回 null
+            return null;
         }
     }
 }

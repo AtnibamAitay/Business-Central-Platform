@@ -1,6 +1,7 @@
 package space.atnibam.common.core.utils;
 
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -12,8 +13,8 @@ public class Base64ToMultipartFileUtils implements MultipartFile {
 
 
     /**
-     * @param base64
-     * @param dataUri     格式类似于: data:image/png;base64
+     * @param base64 base64
+     * @param dataUri 格式类似于: data:image/png;base64
      */
     public Base64ToMultipartFileUtils(String base64, String dataUri) {
         this.fileContent = Base64.getDecoder().decode(base64.getBytes(StandardCharsets.UTF_8));

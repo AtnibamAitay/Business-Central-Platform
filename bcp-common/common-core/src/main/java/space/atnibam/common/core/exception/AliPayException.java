@@ -6,7 +6,7 @@ import space.atnibam.common.core.exception.base.BaseException;
 /**
  * @ClassName: AliPayException
  * @Description: 支付宝支付异常类，继承自BaseException
- * @Author: atnibamaitay
+ * @Author: AtnibamAitay
  * @CreateTime: 2023-09-11 15:16
  **/
 public class AliPayException extends BaseException {

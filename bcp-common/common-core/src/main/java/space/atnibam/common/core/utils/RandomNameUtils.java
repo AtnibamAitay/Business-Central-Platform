@@ -3,8 +3,15 @@ package space.atnibam.common.core.utils;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
+/**
+ * 随机名称工具类
+ */
 public class RandomNameUtils {
 
+    /**
+     * 获取随机中文字符
+     * @return 随机中文字符
+     */
     public static String getRandomChineseCharacters() {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < 6; i++) {
@@ -27,6 +34,10 @@ public class RandomNameUtils {
         return ret.toString(); // Convert StringBuilder to String
     }
 
+    /**
+     * 获取随机字符
+     * @return 随机字符
+     */
     public static String getRandomCharacters() {
         StringBuilder val = new StringBuilder();
         Random random = new Random();

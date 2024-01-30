@@ -6,7 +6,7 @@ import org.apache.http.HttpResponse;
 /**
  * @ClassName: UnexpectedHttpStatusException
  * @Description: 当HTTP响应状态出现意外时抛出的异常类，它继承自IOException。
- * @Author: atnibamaitay
+ * @Author: AtnibamAitay
  * @CreateTime: 2023-09-04 00:00
  */
 public class UnexpectedHttpStatusException extends IOException {
