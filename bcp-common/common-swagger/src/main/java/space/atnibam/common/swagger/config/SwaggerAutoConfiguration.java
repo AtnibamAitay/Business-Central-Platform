@@ -1,30 +1,37 @@
 package space.atnibam.common.swagger.config;
 
-import space.atnibam.common.swagger.constant.SwaggerConstants;
 import io.swagger.annotations.Api;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import space.atnibam.common.swagger.constant.SwaggerConstants;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-@EnableOpenApi
+/**
+ * 启用OpenAPI注解
+ */
 @Configuration
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
 public class SwaggerAutoConfiguration {
 
+    /**
+     * 生成SwaggerProperties的Bean
+     *
+     * @return SwaggerProperties的Bean
+     */
     @Bean
     @ConditionalOnMissingBean
     public SwaggerProperties swaggerProperties() {
@@ -33,6 +40,9 @@ public class SwaggerAutoConfiguration {
 
     /**
      * 默认的排除路径，排除Spring Boot默认的错误处理路径和端点
+     *
+     * @param swaggerProperties SwaggerProperties对象
+     * @return Docket对象
      */
     @Bean
     public Docket api(SwaggerProperties swaggerProperties) {
@@ -81,6 +91,8 @@ public class SwaggerAutoConfiguration {
 
     /**
      * 安全模式，这里指定token通过Authorization头请求头传递
+     *
+     * @return List<SecurityScheme>对象
      */
     private List<SecurityScheme> securitySchemes() {
         SecurityScheme scheme = new ApiKey(SwaggerConstants.ACCESS_TOKEN_KEY, SwaggerConstants.ACCESS_TOKEN_KEY, "header");
@@ -89,6 +101,8 @@ public class SwaggerAutoConfiguration {
 
     /**
      * 配置默认的全局鉴权策略的开关，通过正则表达式进行匹配；默认匹配所有URL
+     *
+     * @return List<SecurityContext>对象
      */
     private List<SecurityContext> securityContexts() {
         SecurityContext context = SecurityContext.builder()
@@ -101,7 +115,7 @@ public class SwaggerAutoConfiguration {
     /**
      * 默认的全局鉴权策略
      *
-     * @return
+     * @return List<SecurityReference>对象
      */
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
@@ -114,7 +128,8 @@ public class SwaggerAutoConfiguration {
     /**
      * api文档的详细信息函数,注意这里的注解引用的是哪个
      *
-     * @return
+     * @param swaggerProperties SwaggerProperties对象
+     * @return ApiInfo对象
      */
     private ApiInfo apiInfo(SwaggerProperties swaggerProperties) {
         return new ApiInfoBuilder()

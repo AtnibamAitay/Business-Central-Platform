@@ -1,7 +1,8 @@
 package space.atnibam.common.swagger.annotation;
 
-import space.atnibam.common.swagger.config.SwaggerAutoConfiguration;
 import org.springframework.context.annotation.Import;
+import space.atnibam.common.swagger.config.SwaggerAutoConfiguration;
+
 import java.lang.annotation.*;
 
 @Target({ElementType.TYPE})
@@ -10,5 +11,4 @@ import java.lang.annotation.*;
 @Inherited
 @Import({SwaggerAutoConfiguration.class})
 public @interface EnableCustomSwagger {
-
 }

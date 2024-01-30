@@ -23,6 +23,11 @@ public class SwaggerBeanPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
+    /**
+     * 自定义 springfox 的 HandlerMapping 列表
+     *
+     * @param mappings HandlerMapping 列表
+     */
     private <T extends RequestMappingInfoHandlerMapping> void customizeSpringfoxHandlerMappings(List<T> mappings) {
         List<T> copy = mappings.stream().filter(mapping -> mapping.getPatternParser() == null)
                 .collect(Collectors.toList());
@@ -30,6 +35,12 @@ public class SwaggerBeanPostProcessor implements BeanPostProcessor {
         mappings.addAll(copy);
     }
 
+    /**
+     * 获取 HandlerMapping 列表
+     *
+     * @param bean 要获取 HandlerMapping 列表的 bean 对象
+     * @return HandlerMapping 列表
+     */
     @SuppressWarnings("unchecked")
     private List<RequestMappingInfoHandlerMapping> getHandlerMappings(Object bean) {
         try {
