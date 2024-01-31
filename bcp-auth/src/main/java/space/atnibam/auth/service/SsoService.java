@@ -2,8 +2,8 @@ package space.atnibam.auth.service;
 
 import space.atnibam.auth.model.dto.AccountVerificationDTO;
 import space.atnibam.auth.model.dto.LoginDTO;
+import space.atnibam.auth.model.vo.UserInfoVO;
 import space.atnibam.common.core.domain.R;
-import space.atnibam.common.core.domain.vo.UserInfoVO;
 import space.atnibam.common.core.exception.SystemServiceException;
 
 import java.io.IOException;
