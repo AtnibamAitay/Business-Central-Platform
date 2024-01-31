@@ -2,137 +2,113 @@ package space.atnibam.common.core.domain.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @Author: gaojianjie
- * @Description 获取的用户信息封装
- * @date 2023/9/15 14:07
- */
 @ApiModel("用户信息展示类")
 public class UserInfoVO implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 用户ID-主键
      */
     @ApiModelProperty("用户信息ID")
     private Integer userId;
-
     /**
      * 用户名-默认值(应该是随机生成)
      */
     @ApiModelProperty("用户名")
     private String userName;
-
     /**
      * 用户角色-0:平台管理员;1:机构管理员;2:老师;3:学生;(默认为0)
      */
     @ApiModelProperty("用户角色-0:平台管理员;1:机构管理员;2:老师;3:学生;(默认为0)")
     private Integer userRole;
-
     /**
      * 头像-默认（固定默认头像）
      */
     @ApiModelProperty("头像")
     private String userAvatar;
-
     /**
      * 用户简介
      */
     @ApiModelProperty("用户简介")
     private String userIntroduction;
-
     /**
      * 省份
      */
     @ApiModelProperty("省份")
     private String userLocationProvince;
-
     /**
      * 城市
      */
     @ApiModelProperty("城市")
     private String userLocationCity;
-
     /**
      * 区域
      */
     @ApiModelProperty("区域")
     private String userLocationRegion;
-
     /**
      * 经度
      */
     @ApiModelProperty("经度")
     private Double longitude;
-
     /**
      * 纬度
      */
     @ApiModelProperty("纬度")
     private Double latitude;
-
     /**
      * wx_openID
      */
     @ApiModelProperty("wx_openID")
     private String wxOpenid;
-
     /**
      * qq_openID
      */
     @ApiModelProperty("qq_openID")
     private String qqOpenid;
-
     /**
      * 最后一次上线时间
      */
     @ApiModelProperty("最后一次上线时间")
     private Date loginLastTime;
-
     /**
      * 最后一次下线时间
      */
     @ApiModelProperty("最后一次下线时间")
     private Date offLineLastTime;
-
     /**
      * 最后一次登录ip
      */
     @ApiModelProperty("最后一次登录ip")
     private String loginLastTimeIp;
-
     /**
      * 微信unionid
      */
     @ApiModelProperty("微信unionid")
     private String wxUnionid;
-
     /**
      * QQunionid
      */
     @ApiModelProperty("QQunionid")
     private String qqUnionid;
-
     /**
      * 账号注册时间-非空
      */
     @ApiModelProperty("账号注册时间-非空")
     private Date userRegistTime;
-
     /**
      * 更新日期
      */
     @ApiModelProperty("更新日期")
     private Date updateTime;
-
     /**
      * 用户表外键
      */
     @ApiModelProperty("用户表外键")
     private Integer credentialsId;
-
-    private static final long serialVersionUID = 1L;
 
     public UserInfoVO() {
     }

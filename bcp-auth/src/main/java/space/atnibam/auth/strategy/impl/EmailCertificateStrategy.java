@@ -1,19 +1,19 @@
 package space.atnibam.auth.strategy.impl;
 
-import space.atnibam.api.ums.RemoteUserCredentialsService;
-import space.atnibam.api.ums.RemoteUserInfoService;
-import space.atnibam.auth.strategy.CertificateStrategy;
-import space.atnibam.auth.utils.EmailUtil;
-import space.atnibam.common.core.domain.AuthCredentials;
-import space.atnibam.common.core.domain.UserInfo;
-import space.atnibam.common.core.domain.dto.LoginRequestDTO;
-import space.atnibam.common.core.exception.UserOperateException;
-import space.atnibam.common.core.utils.StringUtils;
-import space.atnibam.common.redis.service.RedisCache;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import space.atnibam.api.ums.RemoteUserCredentialsService;
+import space.atnibam.api.ums.RemoteUserInfoService;
+import space.atnibam.auth.model.dto.LoginDTO;
+import space.atnibam.auth.strategy.CertificateStrategy;
+import space.atnibam.auth.utils.EmailUtil;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.UserInfo;
+import space.atnibam.common.core.exception.UserOperateException;
+import space.atnibam.common.core.utils.StringUtils;
+import space.atnibam.common.redis.service.RedisCache;
 
 import javax.annotation.Resource;
 
@@ -98,14 +98,14 @@ public class EmailCertificateStrategy implements CertificateStrategy {
     /**
      * 根据证书获取用户信息
      *
-     * @param loginRequestDTO 登录请求数据
+     * @param loginDTO 登录请求数据
      * @return 用户信息
      */
     @Override
-    public UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO) {
+    public UserInfo getUserInfoByCertificate(LoginDTO loginDTO) {
         // 检查邮箱是否合法
-        emailUtil.isValidEmailFormat(loginRequestDTO.getAccountNumber());
-        return remoteUserInfoService.getUserInfoByEmail(loginRequestDTO.getAccountNumber(), loginRequestDTO.getAppId()).getData();
+        emailUtil.isValidEmailFormat(loginDTO.getAccountNumber());
+        return remoteUserInfoService.getUserInfoByEmail(loginDTO.getAccountNumber(), loginDTO.getAppId()).getData();
     }
 
     /**

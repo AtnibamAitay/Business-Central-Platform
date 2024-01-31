@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import space.atnibam.common.core.domain.AuthCredentials;
-import space.atnibam.common.core.domain.dto.BindingCertificateDTO;
 import space.atnibam.common.core.exception.UserOperateException;
 import space.atnibam.common.redis.service.RedisCache;
 import space.atnibam.ums.mapper.AuthCredentialsMapper;
+import space.atnibam.ums.model.dto.BindingCertificateDTO;
 import space.atnibam.ums.service.AuthCredentialsService;
 
 import javax.annotation.Resource;

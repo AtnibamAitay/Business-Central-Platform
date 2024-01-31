@@ -4,98 +4,79 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @TableName local_message_record
- */
-@TableName(value ="local_message_record")
+@TableName(value = "local_message_record")
 public class LocalMessageRecord implements Serializable {
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
     /**
      * 主键id
      */
     @TableId(type = IdType.AUTO)
     private Long id;
-
     /**
      * 服务名称 eg:订单服务
      */
     private String service;
-
     /**
      * 业务名称 eg:创建订单
      */
     private String business;
-
     /**
      * 消息模式：SYNC，ASYNC，ONEWAY
      */
     private String model;
-
     /**
      * topic
      */
     private String topic;
-
     /**
      * tag
      */
     private String tags;
-
     /**
      * 消息id
      */
     private String msgId;
-
     /**
      * 消息key
      */
     private String msgKey;
-
     /**
      * 消息体
      */
     private String body;
-
     /**
      * 发送状态  0:发送中  1:重试中  2:发送失败  3:发送成功
      */
     private Integer status;
-
     /**
      * 最大重试次数
      */
     private Integer maxRetryTimes;
-
     /**
      * 当前重试次数
      */
     private Integer currentRetryTimes;
-
     /**
      * 发送成功时间
      */
     private Date sendSuccessTime;
-
     /**
      * 创建时间
      */
     private Date createTime;
-
     /**
      * 修改时间
      */
     private Date updateTime;
-
     /**
      * 消息触发时间
      */
     private Date scheduledTime;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 
     /**
      * 主键id

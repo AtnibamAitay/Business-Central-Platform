@@ -1,4 +1,4 @@
-package space.atnibam.common.core.domain.dto;
+package space.atnibam.ums.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

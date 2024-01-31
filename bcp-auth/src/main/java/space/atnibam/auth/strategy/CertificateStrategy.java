@@ -1,8 +1,8 @@
 package space.atnibam.auth.strategy;
 
+import space.atnibam.auth.model.dto.LoginDTO;
 import space.atnibam.common.core.domain.AuthCredentials;
 import space.atnibam.common.core.domain.UserInfo;
-import space.atnibam.common.core.domain.dto.LoginRequestDTO;
 
 /**
  * 证书策略接口
@@ -26,10 +26,10 @@ public interface CertificateStrategy {
     /**
      * 根据账号信息获取用户信息
      *
-     * @param loginRequestDTO 登录请求数据
+     * @param loginDTO 登录请求数据
      * @return 用户信息
      */
-    UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO);
+    UserInfo getUserInfoByCertificate(LoginDTO loginDTO);
 
     /**
      * 根据账号获取认证凭证

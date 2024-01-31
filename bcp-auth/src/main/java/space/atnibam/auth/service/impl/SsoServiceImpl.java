@@ -9,13 +9,13 @@ import space.atnibam.api.ums.RemoteUserInfoService;
 import space.atnibam.auth.factory.CertificateStrategyFactory;
 import space.atnibam.auth.factory.SendCodeStrategyFactory;
 import space.atnibam.auth.model.dto.AccountVerificationDTO;
+import space.atnibam.auth.model.dto.LoginDTO;
 import space.atnibam.auth.service.SsoService;
 import space.atnibam.auth.strategy.CertificateStrategy;
 import space.atnibam.auth.strategy.SendCodeStrategy;
 import space.atnibam.common.core.domain.AuthCredentials;
 import space.atnibam.common.core.domain.R;
 import space.atnibam.common.core.domain.UserInfo;
-import space.atnibam.common.core.domain.dto.LoginRequestDTO;
 import space.atnibam.common.core.domain.vo.UserInfoVO;
 import space.atnibam.common.core.enums.CertificateMethodEnum;
 import space.atnibam.common.core.enums.ResultCode;
@@ -66,27 +66,27 @@ public class SsoServiceImpl implements SsoService {
     /**
      * 通过邮箱/手机号、验证码和应用ID进行单点登录
      *
-     * @param loginRequestDTO 登录请求数据传输对象
+     * @param loginDTO 登录请求数据传输对象
      * @throws IOException 输入输出异常
      */
     @Override
-    public void ssoLoginByCodeHandler(LoginRequestDTO loginRequestDTO) throws IOException {
+    public void ssoLoginByCodeHandler(LoginDTO loginDTO) throws IOException {
         // 根据登录请求DTO中的登录方法创建策略
-        CertificateStrategy certificateStrategy = certificateStrategyFactory.getLoginStrategy(CertificateMethodEnum.fromCode(loginRequestDTO.getLoginMethod()));
+        CertificateStrategy certificateStrategy = certificateStrategyFactory.getLoginStrategy(CertificateMethodEnum.fromCode(loginDTO.getLoginMethod()));
 
         // 从Redis中获取验证码，并与登录请求中的验证码进行比较
-        String code = certificateStrategy.getCodeFromRedis(loginRequestDTO.getAccountNumber(), loginRequestDTO.getAppId());
-        if (!loginRequestDTO.getVerifyCode().equals(code)) {
+        String code = certificateStrategy.getCodeFromRedis(loginDTO.getAccountNumber(), loginDTO.getAppId());
+        if (!loginDTO.getVerifyCode().equals(code)) {
             // 验证码校验失败
             throw new UserOperateException(USER_VERIFY_ERROR);
         }
         // 删除缓存中的验证码
-        certificateStrategy.deleteCodeFromRedis(loginRequestDTO.getAccountNumber());
+        certificateStrategy.deleteCodeFromRedis(loginDTO.getAccountNumber());
         // 1.如未注册进行注册 2.如注销状态取消注销
-        checkUserLogoutStatus(registrationHandler(certificateStrategy, loginRequestDTO));
+        checkUserLogoutStatus(registrationHandler(certificateStrategy, loginDTO));
 
         // 使用证书策略根据登录请求获取用户信息
-        UserInfo userInfo = certificateStrategy.getUserInfoByCertificate(loginRequestDTO);
+        UserInfo userInfo = certificateStrategy.getUserInfoByCertificate(loginDTO);
         if (Objects.isNull(userInfo)) {
             // 用户信息为空，抛出系统服务异常
             throw new SystemServiceException(ResultCode.USER_NOT_EXIST_BY_CODE);
@@ -100,25 +100,25 @@ public class SsoServiceImpl implements SsoService {
      * 如账户存在而对应应用信息不存在则进行应用信息的默认初始化
      *
      * @param certificateStrategy 凭证策略
-     * @param loginRequestDTO     登录请求数据传输对象
+     * @param loginDTO            登录请求数据传输对象
      * @return 用户信息
      * @throws IOException 输入输出异常
      */
-    private UserInfo registrationHandler(CertificateStrategy certificateStrategy, LoginRequestDTO loginRequestDTO) throws IOException {
+    private UserInfo registrationHandler(CertificateStrategy certificateStrategy, LoginDTO loginDTO) throws IOException {
         // 根据证书获取认证凭证
-        AuthCredentials credentials = certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getAccountNumber());
+        AuthCredentials credentials = certificateStrategy.getAuthCredentialsByCertificate(loginDTO.getAccountNumber());
         // 如果认证凭证为空
         if (Objects.isNull(credentials)) {
             // 根据证书创建认证凭证
-            certificateStrategy.createCredentialsByCertificate(loginRequestDTO.getAccountNumber());
+            certificateStrategy.createCredentialsByCertificate(loginDTO.getAccountNumber());
             // 创建用户信息对象
             UserInfo userInfo = new UserInfo();
             // 设置用户信息的凭证ID为刚刚创建的认证凭证的凭证ID
             // TODO:这一步可以改为，在根据账号创建用户的时候，就返回这个CredentialsId
-            userInfo.setCredentialsId(certificateStrategy.getAuthCredentialsByCertificate(loginRequestDTO.getAccountNumber()).getCredentialsId());
+            userInfo.setCredentialsId(certificateStrategy.getAuthCredentialsByCertificate(loginDTO.getAccountNumber()).getCredentialsId());
             // 设置用户信息的应用代码
             // TODO:对应中台来说，一个账号应该需要能够登录所有前台应用，因此可以考虑去掉为用户信息绑定APPID
-            userInfo.setAppCode(loginRequestDTO.getAppId());
+            userInfo.setAppCode(loginDTO.getAppId());
             // 注册用户信息
             remoteUserInfoService.registration(userInfo);
             // 返回空值
@@ -126,7 +126,7 @@ public class SsoServiceImpl implements SsoService {
             return null;
         }
         // 根据证书获取用户信息
-        UserInfo userInfo = certificateStrategy.getUserInfoByCertificate(loginRequestDTO);
+        UserInfo userInfo = certificateStrategy.getUserInfoByCertificate(loginDTO);
         // 如果用户信息为空
         if (Objects.isNull(userInfo)) {
             // 创建用户信息对象
@@ -134,7 +134,7 @@ public class SsoServiceImpl implements SsoService {
             // 设置用户信息的凭证ID为刚刚获取的认证凭证的凭证ID
             userInfo.setCredentialsId(credentials.getCredentialsId());
             // 设置用户信息的应用代码
-            userInfo.setAppCode(loginRequestDTO.getAppId());
+            userInfo.setAppCode(loginDTO.getAppId());
             // 注册用户信息
             remoteUserInfoService.registration(userInfo);
             // 返回空值

@@ -1,8 +1,8 @@
 package space.atnibam.ums.service;
 
-import space.atnibam.common.core.domain.AuthCredentials;
-import space.atnibam.common.core.domain.dto.BindingCertificateDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.ums.model.dto.BindingCertificateDTO;
 
 /**
  * 针对表【auth_credentials】的数据库操作Service

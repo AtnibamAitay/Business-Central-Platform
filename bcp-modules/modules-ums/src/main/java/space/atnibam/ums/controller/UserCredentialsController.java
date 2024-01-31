@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import space.atnibam.api.ums.RemoteUserCredentialsService;
 import space.atnibam.common.core.domain.AuthCredentials;
 import space.atnibam.common.core.domain.R;
-import space.atnibam.common.core.domain.dto.BindingCertificateDTO;
+import space.atnibam.ums.model.dto.BindingCertificateDTO;
 import space.atnibam.ums.service.AuthCredentialsService;
 
 /**

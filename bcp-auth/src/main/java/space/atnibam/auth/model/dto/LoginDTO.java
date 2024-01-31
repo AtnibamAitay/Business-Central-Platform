@@ -1,4 +1,4 @@
-package space.atnibam.common.core.domain.dto;
+package space.atnibam.auth.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 @ApiModel("登陆注册请求类")
 @Data
 @NoArgsConstructor
-public class LoginRequestDTO implements Serializable {
+public class LoginDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

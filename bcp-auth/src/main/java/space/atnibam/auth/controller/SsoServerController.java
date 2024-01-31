@@ -11,9 +11,9 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import space.atnibam.auth.model.dto.AccountVerificationDTO;
+import space.atnibam.auth.model.dto.LoginDTO;
 import space.atnibam.auth.service.SsoService;
 import space.atnibam.common.core.domain.R;
-import space.atnibam.common.core.domain.dto.LoginRequestDTO;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
@@ -55,13 +55,13 @@ public class SsoServerController {
     /**
      * 单点登陆接口
      *
-     * @param loginRequestDTO 登录请求DTO
+     * @param loginDTO 登录请求DTO
      * @return 认证结果
      */
     @ApiOperation("单点登陆")
     @PostMapping("/login")
-    public SaResult ssoLogin(@Validated @RequestBody LoginRequestDTO loginRequestDTO) throws IOException {
-        ssoService.ssoLoginByCodeHandler(loginRequestDTO);
+    public SaResult ssoLogin(@Validated @RequestBody LoginDTO loginDTO) throws IOException {
+        ssoService.ssoLoginByCodeHandler(loginDTO);
         return SaResult.ok().setData(StpUtil.getTokenValue());
     }
 
