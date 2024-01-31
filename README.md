@@ -8,8 +8,8 @@
 请按照以下格式添加或修改内容：
 ```
 127.0.0.1 local.atnibam.space
-{NacosIP} dev-bcp.com
-{RedisIP} dev-redis.com
+{NacosIP} nacos.bcp-dev.com
+{RedisIP} redis.bcp-dev.com
 ```
 请注意将 `{NacosIP}` 和 `{RedisIP}` 替换为实际的 Nacos 服务器和 Redis 服务器的 IP 地址。
 

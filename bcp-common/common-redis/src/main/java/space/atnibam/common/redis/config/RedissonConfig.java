@@ -19,7 +19,7 @@ public class RedissonConfig {
 
         Config config = new Config();
         SingleServerConfig singleServerConfig = config.useSingleServer();
-        singleServerConfig.setAddress("redis://dev-redis.com:6379");
+        singleServerConfig.setAddress("redis://redis.bcp-dev.com:6379");
         singleServerConfig.setPassword("nfsn-redis-6379");
         singleServerConfig.setTimeout(3000);
         return Redisson.create(config);

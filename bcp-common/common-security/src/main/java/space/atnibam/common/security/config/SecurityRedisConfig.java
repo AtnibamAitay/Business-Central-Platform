@@ -11,7 +11,7 @@ public class SecurityRedisConfig {
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
-        lettuceConnectionFactory.setHostName("dev-redis.com");
+        lettuceConnectionFactory.setHostName("redis.bcp-dev.com");
         lettuceConnectionFactory.setPort(6379);
         lettuceConnectionFactory.setPassword("nfsn-redis-6379");
         lettuceConnectionFactory.setDatabase(0);
