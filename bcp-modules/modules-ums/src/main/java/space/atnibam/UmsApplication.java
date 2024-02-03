@@ -1,8 +1,5 @@
 package space.atnibam;
 
-import space.atnibam.common.security.config.SecurityRedisConfig;
-import space.atnibam.common.security.handler.GlobalExceptionHandler;
-import space.atnibam.common.swagger.annotation.EnableCustomSwagger;
 import cn.dev33.satoken.SaManager;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -10,11 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import space.atnibam.common.security.config.SecurityRedisConfig;
+import space.atnibam.common.security.handler.GlobalExceptionHandler;
+import space.atnibam.common.swagger.annotation.EnableCustomSwagger;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
+@SpringBootApplication
 @ComponentScan(basePackages = {"space.atnibam.**"})
 @MapperScan("space.atnibam.**.mapper")
-@SpringBootApplication
 @EnableOpenApi
 @EnableFeignClients
 @EnableCustomSwagger
