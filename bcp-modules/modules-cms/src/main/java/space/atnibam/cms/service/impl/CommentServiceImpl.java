@@ -1,5 +1,11 @@
 package space.atnibam.cms.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
 import space.atnibam.cms.constant.CommonCacheContant;
 import space.atnibam.cms.mapper.CommentMapper;
 import space.atnibam.cms.model.dto.CommentNodeDTO;
@@ -8,11 +14,6 @@ import space.atnibam.cms.service.CommentService;
 import space.atnibam.common.core.domain.R;
 import space.atnibam.common.redis.constant.CacheConstants;
 import space.atnibam.common.redis.utils.CacheClient;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static space.atnibam.cms.constant.CommonCacheContant.COMMENT_CACHE_PREFIX;
+import static space.atnibam.common.redis.constant.CacheConstants.REDIS_SEPARATOR;
 
 /**
  * @ClassName: CommentServiceImpl
@@ -57,14 +61,23 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
 
         // 构造缓存键
         // TODO:这里需要改成一个更合理的缓存键
-        String cacheKey = CommonCacheContant.COMMENT_CACHE_PREFIX + pageNum + CacheConstants.REDIS_SEPARATOR + pageSize + CacheConstants.REDIS_SEPARATOR + objectId;
+        String cacheKey = COMMENT_CACHE_PREFIX + pageNum + REDIS_SEPARATOR + pageSize + REDIS_SEPARATOR + objectId;
 
         // 尝试从缓存中查询评论
         String cacheJson = stringRedisTemplate.opsForValue().get(cacheKey);
 
         // 缓存中存在评论
         if (StrUtil.isNotBlank(cacheJson)) {
-            return JSONUtil.toBean(cacheJson, R.class);
+            ObjectMapper mapper = new ObjectMapper();
+            // 使用ObjectMapper反序列化JSONArray为R类型的List
+            List<CommentNodeDTO> result;
+            try {
+                result = mapper.readValue(cacheJson, mapper.getTypeFactory().constructCollectionType(List.class, CommentNodeDTO.class));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
+            return R.ok(result);
         }
 
         // 判断是否命中空值

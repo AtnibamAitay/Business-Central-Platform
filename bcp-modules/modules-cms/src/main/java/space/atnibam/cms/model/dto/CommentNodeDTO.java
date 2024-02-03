@@ -3,6 +3,7 @@ package space.atnibam.cms.model.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import space.atnibam.cms.model.entity.Comment;
 
@@ -17,6 +18,7 @@ import java.util.List;
  **/
 @Getter
 @Setter
+@NoArgsConstructor
 public class CommentNodeDTO {
     /**
      * 评论
