@@ -5,19 +5,20 @@
 <mapper namespace="space.atnibam.cms.mapper.CommentMapper">
 
     <resultMap id="BaseResultMap" type="space.atnibam.cms.model.entity.Comment">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="userId" column="user_id" jdbcType="INTEGER"/>
-            <result property="objectId" column="object_id" jdbcType="INTEGER"/>
-            <result property="objectType" column="object_type" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="objectId" column="object_id" jdbcType="INTEGER"/>
+        <result property="objectType" column="object_type" jdbcType="VARCHAR"/>
+        <result property="grade" column="grade" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,user_id,object_id,
-        object_type,content,type,
-        deleted,create_time
+        object_type,grade,content,
+        type,deleted,create_time
     </sql>
 </mapper>

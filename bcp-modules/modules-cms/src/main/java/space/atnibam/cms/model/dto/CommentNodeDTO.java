@@ -1,9 +1,10 @@
 package space.atnibam.cms.model.dto;
 
-import space.atnibam.cms.model.entity.Comment;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import space.atnibam.cms.model.entity.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class CommentNodeDTO {
      * 子评论列表
      */
     @ApiModelProperty("子评论列表")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<CommentNodeDTO> children = new ArrayList<>();
 
     /**

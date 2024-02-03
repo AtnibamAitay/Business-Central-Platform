@@ -1,9 +1,10 @@
 package space.atnibam.common.core.domain;
 
-import space.atnibam.common.core.constant.Constants;
-import space.atnibam.common.core.enums.ResultCode;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import space.atnibam.common.core.constant.Constants;
+import space.atnibam.common.core.enums.ResultCode;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @CreateTime: 2024-01-10 09:04
  **/
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class R<T> implements Serializable {
     /**
      * 成功的状态码，来自于常量类Constants
