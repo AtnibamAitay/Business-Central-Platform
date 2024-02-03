@@ -29,3 +29,10 @@ spring:
             group: DEFAULT_GROUP
         # 命名空间
         namespace: 09b73c2d-c1c4-441f-96da-ca528338c42a
+
+sa-token:
+  is-print: false
+
+mybatis-plus:
+  global-config:
+    banner: false
