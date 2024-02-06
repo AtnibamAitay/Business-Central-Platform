@@ -12,6 +12,7 @@
     <artifactId>bcp-api</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>api-auth</module>
         <module>api-ums</module>
         <module>api-cms</module>
         <module>api-ims</module>
