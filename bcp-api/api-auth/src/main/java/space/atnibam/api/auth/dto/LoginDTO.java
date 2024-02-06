@@ -2,6 +2,8 @@ package space.atnibam.api.auth.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,8 @@ import java.io.Serializable;
 
 @ApiModel("登陆注册请求类")
 @Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class LoginDTO implements Serializable {
     private static final long serialVersionUID = 1L;

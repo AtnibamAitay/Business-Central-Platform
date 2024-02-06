@@ -2,12 +2,14 @@ package space.atnibam.api.auth.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
+@Builder
 @ApiModel("接收发送验证码的对象以及类型")
 public class AccountVerificationDTO {
 
