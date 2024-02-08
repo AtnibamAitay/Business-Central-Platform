@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.atnibam.pms.mapper.SpecNameMapper">
+
+    <resultMap id="BaseResultMap" type="space.atnibam.pms.model.entity.SpecName">
+        <id property="specNameId" column="spec_name_id" jdbcType="INTEGER"/>
+        <result property="spuId" column="spu_id" jdbcType="INTEGER"/>
+        <result property="specName" column="spec_name" jdbcType="VARCHAR"/>
+        <result property="displayOrder" column="display_order" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        spec_name_id,spu_id,spec_name,
+        display_order
+    </sql>
+</mapper>
