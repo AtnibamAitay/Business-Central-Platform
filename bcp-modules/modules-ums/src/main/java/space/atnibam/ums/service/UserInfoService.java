@@ -1,9 +1,10 @@
 package space.atnibam.ums.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import space.atnibam.common.core.domain.UserInfo;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
-import space.atnibam.common.core.domain.UserInfo;
-import com.baomidou.mybatisplus.extension.service.IService;
+import space.atnibam.ums.model.dto.UserInfoDTO;
 
 import java.io.IOException;
 
@@ -81,5 +82,12 @@ public interface UserInfoService extends IService<UserInfo> {
      * @return 用户信息
      */
     UserInfo queryUserInfoByCredentialsId(String credentialsId, String appCode);
-}
 
+    /**
+     * 根据用户id查出用户名、用户头像、用户简介
+     *
+     * @param userId 用户ID
+     * @return 用户信息DTO
+     */
+    UserInfoDTO getUserInfoById(Integer userId);
+}

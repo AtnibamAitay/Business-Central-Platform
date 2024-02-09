@@ -1,10 +1,11 @@
 package space.atnibam.api.ums;
 
-import space.atnibam.common.core.domain.R;
-import space.atnibam.common.core.domain.UserInfo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import space.atnibam.common.core.domain.R;
+import space.atnibam.common.core.domain.UserInfo;
 
 import java.io.IOException;
 
@@ -20,8 +21,8 @@ public interface RemoteUserInfoService {
      * @param userId 用户ID
      * @return 用户信息实体类
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/api/userInfo/{userId}")
-    R<UserInfo> queryUserInfo(@PathVariable(value = "userId") String userId);
+    @GetMapping("/api/userInfo/full/{userId}")
+    R<UserInfo> getUserFullInfo(@PathVariable(value = "userId") String userId);
 
     /**
      * 注销用户
@@ -89,4 +90,14 @@ public interface RemoteUserInfoService {
      */
     @RequestMapping(method = RequestMethod.GET, value = ("/api/userInfo/credentialsId/{credentialsId}/appcode/{appCode}"))
     R<UserInfo> getUserInfoByCredentialsId(@PathVariable(value = "appCode") String appCode, @PathVariable(value = "credentialsId") String credentialsId);
+
+    /**
+     * 根据用户id查出用户名、用户头像、用户简介
+     *
+     * @param userId 用户ID
+     * @return 用户信息DTO
+     */
+    @ApiOperation(value = "根据用户id查出用户名、用户头像、用户简介", notes = "根据用户ID查询用户信息")
+    @GetMapping("/api/userInfo/{userId}")
+    R queryUserInfo(@PathVariable(value = "userId") Integer userId);
 }

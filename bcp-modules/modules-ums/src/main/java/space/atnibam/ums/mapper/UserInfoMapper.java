@@ -1,9 +1,11 @@
 package space.atnibam.ums.mapper;
 
-import space.atnibam.common.core.domain.UserInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import space.atnibam.common.core.domain.UserInfo;
+import space.atnibam.ums.model.dto.UserInfoDTO;
 
 /**
  * 针对表【user_info】的数据库操作Mapper
@@ -44,4 +46,13 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
      */
     @Update("UPDATE user_info SET user_avatar = #{avatarUrl} WHERE credentials_id = #{userId}")
     int updateAvatarById(int userId, String avatarUrl);
+
+    /**
+     * 根据用户id查出用户名、用户头像、用户简介
+     *
+     * @param userId 用户ID
+     * @return 用户信息
+     */
+    @Select("SELECT user_id, user_name, user_avatar, user_introduction FROM user_info WHERE user_id = #{userId}")
+    UserInfoDTO selectUserInfoById(int userId);
 }

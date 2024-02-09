@@ -26,6 +26,7 @@ import space.atnibam.ums.constant.UserInfoConstants;
 import space.atnibam.ums.mapper.UserInfoMapper;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
+import space.atnibam.ums.model.dto.UserInfoDTO;
 import space.atnibam.ums.service.UserInfoService;
 
 import java.io.IOException;
@@ -326,6 +327,17 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
     public UserInfo queryUserInfoByCredentialsId(String credentialsId, String appCode) {
         LambdaQueryWrapper<UserInfo> queryWrapper = new LambdaQueryWrapper<UserInfo>().eq(UserInfo::getCredentialsId, credentialsId).eq(UserInfo::getAppCode, appCode);
         return this.getOne(queryWrapper);
+    }
+
+    /**
+     * 根据用户id查出用户名、用户头像、用户简介
+     *
+     * @param userId 用户ID
+     * @return 用户信息DTO
+     */
+    @Override
+    public UserInfoDTO getUserInfoById(Integer userId) {
+        return userInfoMapper.selectUserInfoById(userId);
     }
 
 }

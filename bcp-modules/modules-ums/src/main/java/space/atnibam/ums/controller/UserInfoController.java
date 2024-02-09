@@ -14,6 +14,7 @@ import space.atnibam.common.core.exception.UserOperateException;
 import space.atnibam.common.core.utils.StringUtils;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
+import space.atnibam.ums.model.dto.UserInfoDTO;
 import space.atnibam.ums.service.AuthCredentialsService;
 import space.atnibam.ums.service.UserInfoService;
 
@@ -43,9 +44,23 @@ public class UserInfoController implements RemoteUserInfoService {
      */
     @ApiOperation(value = "查询用户信息")
     @Override
-    @GetMapping(value = "/{userId}")
-    public R<UserInfo> queryUserInfo(@PathVariable(value = "userId") String userId) {
+    @GetMapping("/full/{userId}")
+    public R<UserInfo> getUserFullInfo(@PathVariable(value = "userId") String userId) {
         return R.ok(userInfoService.queryUserInfo(userId));
+    }
+
+    /**
+     * 根据用户id查出用户名、用户头像、用户简介
+     *
+     * @param userId 用户ID
+     * @return 用户信息DTO
+     */
+    @Override
+    @ApiOperation(value = "根据用户id查出用户名、用户头像、用户简介", notes = "根据用户ID查询用户信息")
+    @GetMapping("/{userId}")
+    public R queryUserInfo(@PathVariable(value = "userId") Integer userId) {
+        UserInfoDTO userInfoDTO = userInfoService.getUserInfoById(userId);
+        return R.ok(userInfoDTO);
     }
 
     /**
