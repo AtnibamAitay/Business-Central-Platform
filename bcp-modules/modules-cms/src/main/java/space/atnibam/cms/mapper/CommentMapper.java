@@ -1,9 +1,10 @@
 package space.atnibam.cms.mapper;
 
-import space.atnibam.cms.model.entity.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import space.atnibam.cms.model.dto.CommentDTO;
+import space.atnibam.cms.model.entity.Comment;
 
 import java.util.List;
 
@@ -16,22 +17,22 @@ import java.util.List;
 public interface CommentMapper extends BaseMapper<Comment> {
 
     /**
-     * 根据对象ID获取主评论
+     * 根据对象ID获取未删除的主评论
      *
      * @param objectId 指定查询评论的对象ID
      * @param pageNum  指定查询评论的页码
      * @param pageSize 指定查询评论的每页大小
-     * @return 返回主评论列表
+     * @return 返回未删除的主评论列表
      */
-    @Select("SELECT * FROM comment WHERE object_id = #{objectId} AND object_type in ('0', '1', '2') LIMIT #{pageSize} OFFSET #{pageNum}")
-    List<Comment> findRootCommentByObjectId(@Param("objectId") Integer objectId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    @Select("SELECT * FROM comment WHERE object_id = #{objectId} AND object_type in ('0', '1', '2') AND deleted = 0 LIMIT #{pageSize} OFFSET #{pageNum}")
+    List<CommentDTO> findRootCommentByObjectId(@Param("objectId") Integer objectId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
 
     /**
-     * 根据父评论ID获取子评论
+     * 根据父评论ID获取未删除的子评论
      *
      * @param parentId 指定查询评论的父评论ID
-     * @return 返回子评论列表
+     * @return 返回未删除的子评论列表
      */
-    @Select("SELECT * FROM comment WHERE object_id = #{parentId} AND object_type = '3'")
-    List<Comment> findSubCommentByParentId(@Param("parentId") Integer parentId);
+    @Select("SELECT * FROM comment WHERE object_id = #{parentId} AND object_type = '3' AND deleted = 0")
+    List<CommentDTO> findSubCommentByParentId(@Param("parentId") Integer parentId);
 }

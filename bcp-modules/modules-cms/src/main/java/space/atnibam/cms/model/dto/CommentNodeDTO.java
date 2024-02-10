@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import space.atnibam.cms.model.entity.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class CommentNodeDTO {
      * 评论
      */
     @ApiModelProperty("评论")
-    private Comment comment;
+    private CommentDTO comment;
 
     /**
      * 子评论列表
@@ -38,7 +37,7 @@ public class CommentNodeDTO {
      *
      * @param comment 要包含在新节点中的评论
      */
-    public CommentNodeDTO(Comment comment) {
+    public CommentNodeDTO(CommentDTO comment) {
         this.comment = comment;
     }
 }

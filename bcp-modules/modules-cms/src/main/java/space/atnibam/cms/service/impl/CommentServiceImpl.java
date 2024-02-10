@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import space.atnibam.cms.constant.CommonCacheContant;
 import space.atnibam.cms.mapper.CommentMapper;
+import space.atnibam.cms.model.dto.CommentDTO;
 import space.atnibam.cms.model.dto.CommentNodeDTO;
 import space.atnibam.cms.model.entity.Comment;
 import space.atnibam.cms.service.CommentService;
@@ -46,7 +47,24 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     }
 
     /**
-     * 根据对象ID获取评论
+     * 根据对象ID获取顶级评论
+     *
+     * @param objectId 对象的ID
+     * @param pageNum  页码
+     * @param pageSize 每页的数量
+     * @return R 评论结果
+     */
+    @Override
+    public R getTopLevelCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
+        // 获取objectId对应的所有根评论
+        List<CommentDTO> rootCommentList = getRootCommentByObjectId(objectId, pageNum, pageSize);
+        // TODO:加入缓存
+        // 创建新的方法，传入false以表示不包含子评论
+        return R.ok(rootCommentList);
+    }
+
+    /**
+     * 根据对象ID获取嵌套的评论
      * 使用了互斥锁防止缓存击穿的思路
      *
      * @param objectId 对象的ID
@@ -55,7 +73,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @return R 评论结果
      */
     @Override
-    public R getCommentByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
+    public R getNestedCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
         // 用于存储评论的列表
         List<CommentNodeDTO> commentNodeDTOList;
 
@@ -132,11 +150,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     private List<CommentNodeDTO> buildCommentTree(Integer objectId, Integer pageNum, Integer pageSize) {
 
         // 获取objectId对应的所有根评论
-        List<Comment> rootCommentList = getRootCommentByObjectId(objectId, pageNum, pageSize);
+        List<CommentDTO> rootCommentList = getRootCommentByObjectId(objectId, pageNum, pageSize);
 
         // 初始化一个ArrayList，用于存储根评论的转化结果（由Comment类型转化为CommentNodeDTO类型）
         List<CommentNodeDTO> rootComments = new ArrayList<>();
-        for (Comment comment : rootCommentList) {
+        for (CommentDTO comment : rootCommentList) {
             rootComments.add(new CommentNodeDTO(comment));
         }
 
@@ -147,10 +165,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         for (CommentNodeDTO rootComment : rootComments) {
 
             // 使用父评论ID去查询子评论
-            List<Comment> subCommentList = getSubCommentByParentId(rootComment.getComment().getId());
+            List<CommentDTO> subCommentList = getSubCommentByParentId(rootComment.getComment().getId());
 
             // 遍历子评论，并将其添加到groupedSubComments中
-            for (Comment comment : subCommentList) {
+            for (CommentDTO comment : subCommentList) {
                 groupedSubComments.computeIfAbsent(comment.getObjectId(), k -> new ArrayList<>())
                         .add(new CommentNodeDTO(comment));
             }
@@ -169,7 +187,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @param objectId 对象ID
      * @return 根评论列表
      */
-    private List<Comment> getRootCommentByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
+    private List<CommentDTO> getRootCommentByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
         pageNum = (pageNum - 1) * pageSize;
         return commentMapper.findRootCommentByObjectId(objectId, pageNum, pageSize);
     }
@@ -180,13 +198,13 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @param parentId 父评论ID
      * @return 所有的子评论列表
      */
-    private List<Comment> getSubCommentByParentId(Integer parentId) {
+    private List<CommentDTO> getSubCommentByParentId(Integer parentId) {
 
         // 创建一个结果集合用于存储所有查到的子评论
-        List<Comment> allSubComments = new ArrayList<>();
+        List<CommentDTO> allSubComments = new ArrayList<>();
 
         // 使用parentId查找子评论
-        List<Comment> subComments = commentMapper.findSubCommentByParentId(parentId);
+        List<CommentDTO> subComments = commentMapper.findSubCommentByParentId(parentId);
 
         // 如果查找到了子评论，则继续查找其子评论
         if (!subComments.isEmpty()) {
@@ -195,9 +213,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
             allSubComments.addAll(subComments);
 
             // 对每个子评论进行递归查找其子评论
-            for (Comment comment : subComments) {
+            for (CommentDTO comment : subComments) {
                 // 从当前子评论开始，递归地获取其所有子评论
-                List<Comment> childSubComments = getSubCommentByParentId(comment.getId());
+                List<CommentDTO> childSubComments = getSubCommentByParentId(comment.getId());
                 // 将递归获取的子评论添加到结果集合中
                 allSubComments.addAll(childSubComments);
             }

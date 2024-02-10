@@ -1,8 +1,8 @@
 package space.atnibam.cms.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import space.atnibam.cms.model.entity.Comment;
 import space.atnibam.common.core.domain.R;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * @ClassName: CommentService
@@ -13,13 +13,23 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface CommentService extends IService<Comment> {
 
     /**
-     * 根据对象ID获取评论
+     * 根据对象ID获取顶级评论
      *
      * @param objectId 对象的ID
      * @param pageNum  页码
      * @param pageSize 每页的数量
      * @return R 评论结果
      */
-    R getCommentByObjectId(Integer objectId, Integer pageNum, Integer pageSize);
+    R getTopLevelCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize);
+
+    /**
+     * 根据对象ID获取嵌套的评论
+     *
+     * @param objectId 对象的ID
+     * @param pageNum  页码
+     * @param pageSize 每页的数量
+     * @return R 评论结果
+     */
+    R getNestedCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize);
 
 }
