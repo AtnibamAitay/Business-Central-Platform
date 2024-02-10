@@ -1,7 +1,10 @@
 package space.atnibam.pms.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
 import space.atnibam.pms.model.entity.SpuDetail;
+
+import java.util.List;
 
 /**
  * @author Atnibam Aitay
@@ -10,9 +13,12 @@ import space.atnibam.pms.model.entity.SpuDetail;
  * @Entity space.atnibam.pms.model.entity.SpuDetail
  */
 public interface SpuDetailMapper extends BaseMapper<SpuDetail> {
-
+    /**
+     * 根据商品id获取spu介绍图列表
+     *
+     * @param spuId 商品id
+     * @return spu介绍图列表
+     */
+    @Select("SELECT detail_url FROM spu_detail WHERE spu_id = #{spuId} ORDER BY display_order ASC")
+    List<String> selectDetailUrlsBySpuId(Integer spuId);
 }
-
-
-
-
