@@ -23,8 +23,8 @@ public interface CommentMapper extends BaseMapper<Comment> {
      * @param pageSize 指定查询评论的每页大小
      * @return 返回未删除的主评论列表
      */
-    @Select("SELECT * FROM comment WHERE object_id = #{objectId} AND object_type in ('0', '1', '2') AND deleted = 1 LIMIT #{pageSize} OFFSET #{pageNum}")
-    List<Comment> findRootCommentByObjectId(@Param("objectId") Integer objectId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    @Select("SELECT * FROM comment WHERE object_id = #{objectId} AND object_type in ('0', '1', '2') AND deleted = 1 AND object_type = #{objectType} LIMIT #{pageSize} OFFSET #{pageNum}")
+    List<Comment> findRootCommentByObjectId(@Param("objectId") Integer objectId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("objectType") String objectType);
 
     /**
      * 根据父评论ID获取未删除的子评论

@@ -62,9 +62,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @return R 评论结果
      */
     @Override
-    public R getTopLevelCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
+    public R getTopLevelCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize, String objectType) {
         // 获取objectId对应的所有根评论
-        List<CommentDTO> rootCommentList = getRootCommentByObjectId(objectId, pageNum, pageSize);
+        List<CommentDTO> rootCommentList = getRootCommentByObjectId(objectId, pageNum, pageSize, objectType);
         // TODO:加入缓存
         // 创建新的方法，传入false以表示不包含子评论
         return R.ok(rootCommentList);
@@ -80,7 +80,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @return R 评论结果
      */
     @Override
-    public R getNestedCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
+    public R getNestedCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize, String objectType) {
         // 用于存储评论的列表
         List<CommentNodeDTO> commentNodeDTOList;
 
@@ -122,7 +122,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
                 // 成功获取锁
                 if (isLock) {
                     // 从数据库中获取评论
-                    commentNodeDTOList = buildCommentTree(objectId, pageNum, pageSize);
+                    commentNodeDTOList = buildCommentTree(objectId, pageNum, pageSize, objectType);
 
                     // 增添到缓存
                     cacheClient.set(cacheKey, commentNodeDTOList,
@@ -154,10 +154,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @param pageSize 每页大小
      * @return 评论节点列表
      */
-    private List<CommentNodeDTO> buildCommentTree(Integer objectId, Integer pageNum, Integer pageSize) {
+    private List<CommentNodeDTO> buildCommentTree(Integer objectId, Integer pageNum, Integer pageSize, String objectType) {
 
         // 获取objectId对应的所有根评论
-        List<CommentDTO> rootCommentList = getRootCommentByObjectId(objectId, pageNum, pageSize);
+        List<CommentDTO> rootCommentList = getRootCommentByObjectId(objectId, pageNum, pageSize, objectType);
 
         // 初始化一个ArrayList，用于存储根评论的转化结果（由Comment类型转化为CommentNodeDTO类型）
         List<CommentNodeDTO> rootComments = new ArrayList<>();
@@ -196,9 +196,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @param pageSize 每页数量
      * @return 根评论列表
      */
-    private List<CommentDTO> getRootCommentByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
+    private List<CommentDTO> getRootCommentByObjectId(Integer objectId, Integer pageNum, Integer pageSize, String objectType) {
         pageNum = (pageNum - 1) * pageSize;
-        List<Comment> rootComments = commentMapper.findRootCommentByObjectId(objectId, pageNum, pageSize);
+        List<Comment> rootComments = commentMapper.findRootCommentByObjectId(objectId, pageNum, pageSize, objectType);
 
         return rootComments.stream()
                 .map(this::mapCommentToDTO)

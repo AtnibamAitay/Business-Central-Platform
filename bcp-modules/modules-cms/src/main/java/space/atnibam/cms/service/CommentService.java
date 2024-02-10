@@ -20,7 +20,7 @@ public interface CommentService extends IService<Comment> {
      * @param pageSize 每页的数量
      * @return R 评论结果
      */
-    R getTopLevelCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize);
+    R getTopLevelCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize, String objectType);
 
     /**
      * 根据对象ID获取嵌套的评论
@@ -30,6 +30,6 @@ public interface CommentService extends IService<Comment> {
      * @param pageSize 每页的数量
      * @return R 评论结果
      */
-    R getNestedCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize);
+    R getNestedCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize, String objectType);
 
 }

@@ -18,17 +18,13 @@ public class CommentDTO implements Serializable {
      */
     private Integer id;
     /**
-     * 用户ID
+     * 评论用户的信息
      */
     private CommentUserInfoDTO commentUserInfo;
     /**
      * 对象ID（文章/视频/商品/父评论）
      */
     private Integer objectId;
-    /**
-     * 对象类型（0代表文章评论、1代表视频评论、2代表商品评论、3代表评论的子评论）
-     */
-    private String objectType;
     /**
      * 评分
      */

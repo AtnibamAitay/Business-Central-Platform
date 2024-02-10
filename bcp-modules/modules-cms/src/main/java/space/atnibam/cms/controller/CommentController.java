@@ -37,13 +37,15 @@ public class CommentController implements RemoteCommentService {
     @ApiOperation(value = "通过对象ID获取评论树")
     @GetMapping("/nested/{objectId}")
     public R getNestedCommentsByObjectId(
-            @ApiParam(value = "需要获取评论的对象的ID。", required = true)
+            @ApiParam(value = "需要获取评论的对象的ID", required = true)
             @PathVariable Integer objectId,
-            @ApiParam(value = "需要检索的评论的页数。", defaultValue = "1")
+            @ApiParam(value = "需要检索的评论的页数", defaultValue = "1")
             @RequestParam(defaultValue = "1") Integer pageNum,
-            @ApiParam(value = "要检索的评论每一页的大小。", defaultValue = "10")
-            @RequestParam(defaultValue = "10") Integer pageSize) {
-        return commentService.getNestedCommentsByObjectId(objectId, pageNum, pageSize);
+            @ApiParam(value = "要检索的评论每一页的大小", defaultValue = "10")
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @ApiParam(value = "对象类型")
+            @RequestParam String objectType) {
+        return commentService.getNestedCommentsByObjectId(objectId, pageNum, pageSize, objectType);
     }
 
     /**
@@ -58,12 +60,14 @@ public class CommentController implements RemoteCommentService {
     @ApiOperation(value = "通过对象ID获取评论（不含子评论）")
     @GetMapping("/top/level/{objectId}")
     public R getTopLevelCommentsByObjectId(
-            @ApiParam(value = "需要获取评论的对象的ID。", required = true)
+            @ApiParam(value = "需要获取评论的对象的ID", required = true)
             @PathVariable Integer objectId,
-            @ApiParam(value = "需要检索的评论的页数。", defaultValue = "1")
+            @ApiParam(value = "需要检索的评论的页数", defaultValue = "1")
             @RequestParam(defaultValue = "1") Integer pageNum,
-            @ApiParam(value = "要检索的评论每一页的大小。", defaultValue = "10")
-            @RequestParam(defaultValue = "10") Integer pageSize) {
-        return commentService.getTopLevelCommentsByObjectId(objectId, pageNum, pageSize);
+            @ApiParam(value = "要检索的评论每一页的大小", defaultValue = "10")
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @ApiParam(value = "对象类型")
+            @RequestParam String objectType) {
+        return commentService.getTopLevelCommentsByObjectId(objectId, pageNum, pageSize, objectType);
     }
 }
