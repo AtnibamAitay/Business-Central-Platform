@@ -2,7 +2,9 @@ package space.atnibam.cms.model.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,7 +20,7 @@ public class CommentDTO implements Serializable {
     /**
      * 用户ID
      */
-    private Integer userId;
+    private CommentUserInfoDTO commentUserInfo;
     /**
      * 对象ID（文章/视频/商品/父评论）
      */
@@ -44,4 +46,26 @@ public class CommentDTO implements Serializable {
      * 创建时间
      */
     private Date createTime;
+
+    /**
+     * 评论用户的用户名和头像
+     */
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CommentUserInfoDTO implements Serializable {
+        private static final long serialVersionUID = 1L;
+        /**
+         * 用户ID-主键
+         */
+        private Integer userId;
+        /**
+         * 用户名
+         */
+        private String userName;
+        /**
+         * 头像
+         */
+        private String userAvatar;
+    }
 }

@@ -4,8 +4,10 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import space.atnibam.api.ums.RemoteUserInfoService;
 import space.atnibam.cms.constant.CommonCacheContant;
 import space.atnibam.cms.mapper.CommentMapper;
 import space.atnibam.cms.model.dto.CommentDTO;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static space.atnibam.cms.constant.CommonCacheContant.COMMENT_CACHE_PREFIX;
 import static space.atnibam.common.redis.constant.CacheConstants.REDIS_SEPARATOR;
@@ -41,6 +44,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     private CommentMapper commentMapper;
     @Resource
     private CacheClient cacheClient;
+    @Resource
+    private RemoteUserInfoService remoteUserInfoService;
+    @Resource
+    private ObjectMapper objectMapper;
 
     public CommentServiceImpl(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
@@ -185,11 +192,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * 根据objectId获取所有根评论
      *
      * @param objectId 对象ID
+     * @param pageNum  页码
+     * @param pageSize 每页数量
      * @return 根评论列表
      */
     private List<CommentDTO> getRootCommentByObjectId(Integer objectId, Integer pageNum, Integer pageSize) {
         pageNum = (pageNum - 1) * pageSize;
-        return commentMapper.findRootCommentByObjectId(objectId, pageNum, pageSize);
+        List<Comment> rootComments = commentMapper.findRootCommentByObjectId(objectId, pageNum, pageSize);
+
+        return rootComments.stream()
+                .map(this::mapCommentToDTO)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -204,16 +217,20 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         List<CommentDTO> allSubComments = new ArrayList<>();
 
         // 使用parentId查找子评论
-        List<CommentDTO> subComments = commentMapper.findSubCommentByParentId(parentId);
+        List<Comment> subComments = commentMapper.findSubCommentByParentId(parentId);
+
+        List<CommentDTO> commentDTOList = subComments.stream()
+                .map(this::mapCommentToDTO)
+                .collect(Collectors.toList());
 
         // 如果查找到了子评论，则继续查找其子评论
         if (!subComments.isEmpty()) {
 
             // 将查找到的子评论添加到结果集合中
-            allSubComments.addAll(subComments);
+            allSubComments.addAll(commentDTOList);
 
             // 对每个子评论进行递归查找其子评论
-            for (CommentDTO comment : subComments) {
+            for (Comment comment : subComments) {
                 // 从当前子评论开始，递归地获取其所有子评论
                 List<CommentDTO> childSubComments = getSubCommentByParentId(comment.getId());
                 // 将递归获取的子评论添加到结果集合中
@@ -242,12 +259,31 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
             // 遍历当前节点的所有子节点
             for (CommentNodeDTO child : children) {
                 // 将子节点添加到当前节点的子节点列表中
-                current.getChildren().add(child);
+                current.getSubComment().add(child);
                 // 递归处理该子节点，即对该子节点再次执行dfs方法，查找其子节点
                 dfs(child, groupedComments);
             }
         }
 
+    }
+
+    /**
+     * 将Comment对象转换为CommentDTO对象
+     *
+     * @param comment Comment对象
+     * @return CommentDTO对象
+     */
+    private CommentDTO mapCommentToDTO(Comment comment) {
+        CommentDTO commentDTO = new CommentDTO();
+        BeanUtils.copyProperties(comment, commentDTO);
+        // 查询用户信息
+        Object commentUserInfo = remoteUserInfoService.queryUserInfo(comment.getUserId()).getData();
+        // 将用户信息转换为CommentUserInfoDTO对象
+        Map<String, Object> merchantDataMap = (Map<String, Object>) commentUserInfo;
+        CommentDTO.CommentUserInfoDTO commentUserInfoDTO = objectMapper.convertValue(merchantDataMap, CommentDTO.CommentUserInfoDTO.class);
+        commentDTO.setCommentUserInfo(commentUserInfoDTO);
+
+        return commentDTO;
     }
 
 }

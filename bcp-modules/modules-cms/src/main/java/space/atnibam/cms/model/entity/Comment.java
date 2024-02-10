@@ -46,7 +46,7 @@ public class Comment implements Serializable {
      */
     private Integer type;
     /**
-     * 是否删除（0未删除，1已删除）
+     * 是否删除（0代表已删除，1代表正常）
      */
     private Integer deleted;
     /**

@@ -30,7 +30,7 @@ public class CommentNodeDTO {
      */
     @ApiModelProperty("子评论列表")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<CommentNodeDTO> children = new ArrayList<>();
+    private List<CommentNodeDTO> subComment = new ArrayList<>();
 
     /**
      * 构造函数，用于创建一个新的CommentNode实例
