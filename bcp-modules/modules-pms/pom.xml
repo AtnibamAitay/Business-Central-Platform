@@ -49,6 +49,10 @@
             <groupId>atnibam.space</groupId>
             <artifactId>api-pms</artifactId>
         </dependency>
+        <dependency>
+            <groupId>atnibam.space</groupId>
+            <artifactId>api-ums</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
