@@ -53,6 +53,10 @@
             <groupId>atnibam.space</groupId>
             <artifactId>api-ums</artifactId>
         </dependency>
+        <dependency>
+            <groupId>atnibam.space</groupId>
+            <artifactId>api-cms</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -52,6 +52,10 @@
             <groupId>atnibam.space</groupId>
             <artifactId>common-redis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>atnibam.space</groupId>
+            <artifactId>api-ums</artifactId>
+        </dependency>
 
     </dependencies>
 
