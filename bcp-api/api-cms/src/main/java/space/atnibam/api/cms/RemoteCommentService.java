@@ -1,6 +1,5 @@
 package space.atnibam.api.cms;
 
-import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,7 @@ import space.atnibam.common.core.domain.R;
  * @Author: AtnibamAitay
  * @CreateTime: 2024-02-03 10:53
  **/
-@FeignClient(value = "modules-cms", contextId = "comment")
+@FeignClient(value = "modules-cms", contextId = "comment", url = "http://local.atnibam.space:8080")
 public interface RemoteCommentService {
 
     /**
@@ -26,7 +25,6 @@ public interface RemoteCommentService {
      * @param pageSize 每一页的大小，默认值为10
      * @return 返回构建的评论树
      */
-    @ApiOperation(value = "通过对象ID获取评论树")
     @GetMapping("/api/comments/nested/{objectId}")
     R getNestedCommentsByObjectId(
             @ApiParam(value = "需要获取评论的对象的ID", required = true)
@@ -46,7 +44,6 @@ public interface RemoteCommentService {
      * @param pageSize 每一页的大小，默认值为10
      * @return 返回对象id的顶层评论
      */
-    @ApiOperation(value = "通过对象ID获取评论（不含子评论）")
     @GetMapping("/api/comments/top/level/{objectId}")
     R getTopLevelCommentsByObjectId(
             @ApiParam(value = "需要获取评论的对象的ID。", required = true)
