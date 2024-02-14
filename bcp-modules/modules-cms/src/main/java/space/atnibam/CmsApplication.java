@@ -10,8 +10,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @MapperScan("space.atnibam.**.mapper")
 @EnableFeignClients
-public class CmsPlatformApplication {
+public class CmsApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CmsPlatformApplication.class, args);
+        SpringApplication.run(CmsApplication.class, args);
     }
 }
