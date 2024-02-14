@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import space.atnibam.api.pms.RemoteSpuService;
 import space.atnibam.common.core.domain.R;
-import space.atnibam.pms.model.entity.Products;
-import space.atnibam.pms.service.ProductsService;
+import space.atnibam.pms.model.dto.SpuDTO;
+import space.atnibam.pms.service.SpuService;
 
 import javax.annotation.Resource;
 import java.util.Optional;
@@ -25,7 +25,7 @@ import java.util.Optional;
 @RequestMapping("/api/spu")
 public class SpuController implements RemoteSpuService {
     @Resource
-    private ProductsService productsService;
+    private SpuService spuService;
 
     /**
      * 根据商品ID获取商品信息
@@ -37,8 +37,8 @@ public class SpuController implements RemoteSpuService {
     @ApiOperation("根据商品ID获取商品信息")
     @GetMapping("/{spuId}")
     public R getSpuDetail(@PathVariable("spuId") Integer spuId) {
-        // 调用service层方法查询商品
-        Optional<Products> optionalProduct = productsService.getProductById(spuId);
+        // 查询商品信息
+        Optional<SpuDTO> optionalProduct = spuService.getSpuById(spuId);
         // 返回查询结果
         // TODO:更换为自定义异常
         return R.ok(optionalProduct.orElseThrow(() -> new RuntimeException("商品不存在")));
