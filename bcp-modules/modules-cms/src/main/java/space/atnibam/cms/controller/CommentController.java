@@ -3,7 +3,10 @@ package space.atnibam.cms.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import space.atnibam.api.cms.RemoteCommentService;
 import space.atnibam.cms.service.CommentService;
 import space.atnibam.common.core.domain.R;
@@ -35,10 +38,10 @@ public class CommentController implements RemoteCommentService {
      */
     @Override
     @ApiOperation(value = "通过对象ID获取评论树")
-    @GetMapping("/nested/{objectId}")
+    @GetMapping("/nested")
     public R getNestedCommentsByObjectId(
             @ApiParam(value = "需要获取评论的对象的ID", required = true)
-            @PathVariable Integer objectId,
+            @RequestParam Integer objectId,
             @ApiParam(value = "需要检索的评论的页数", defaultValue = "1")
             @RequestParam(defaultValue = "1") Integer pageNum,
             @ApiParam(value = "要检索的评论每一页的大小", defaultValue = "10")
@@ -58,10 +61,10 @@ public class CommentController implements RemoteCommentService {
      */
     @Override
     @ApiOperation(value = "通过对象ID获取评论（不含子评论）")
-    @GetMapping("/top/level/{objectId}")
+    @GetMapping("/top/level")
     public R getTopLevelCommentsByObjectId(
             @ApiParam(value = "需要获取评论的对象的ID", required = true)
-            @PathVariable Integer objectId,
+            @RequestParam Integer objectId,
             @ApiParam(value = "需要检索的评论的页数", defaultValue = "1")
             @RequestParam(defaultValue = "1") Integer pageNum,
             @ApiParam(value = "要检索的评论每一页的大小", defaultValue = "10")

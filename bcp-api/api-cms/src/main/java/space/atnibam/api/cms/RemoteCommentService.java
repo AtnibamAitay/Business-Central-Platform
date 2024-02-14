@@ -3,7 +3,6 @@ package space.atnibam.api.cms;
 import io.swagger.annotations.ApiParam;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import space.atnibam.common.core.domain.R;
 
@@ -25,10 +24,10 @@ public interface RemoteCommentService {
      * @param pageSize 每一页的大小，默认值为10
      * @return 返回构建的评论树
      */
-    @GetMapping("/api/comments/nested/{objectId}")
+    @GetMapping("/api/comments/nested")
     R getNestedCommentsByObjectId(
             @ApiParam(value = "需要获取评论的对象的ID", required = true)
-            @PathVariable Integer objectId,
+            @RequestParam Integer objectId,
             @ApiParam(value = "需要检索的评论的页数", defaultValue = "1")
             @RequestParam(defaultValue = "1") Integer pageNum,
             @ApiParam(value = "要检索的评论每一页的大小", defaultValue = "10")
@@ -44,10 +43,10 @@ public interface RemoteCommentService {
      * @param pageSize 每一页的大小，默认值为10
      * @return 返回对象id的顶层评论
      */
-    @GetMapping("/api/comments/top/level/{objectId}")
+    @GetMapping("/api/comments/top/level")
     R getTopLevelCommentsByObjectId(
             @ApiParam(value = "需要获取评论的对象的ID。", required = true)
-            @PathVariable Integer objectId,
+            @RequestParam Integer objectId,
             @ApiParam(value = "需要检索的评论的页数。", defaultValue = "1")
             @RequestParam(defaultValue = "1") Integer pageNum,
             @ApiParam(value = "要检索的评论每一页的大小。", defaultValue = "10")
