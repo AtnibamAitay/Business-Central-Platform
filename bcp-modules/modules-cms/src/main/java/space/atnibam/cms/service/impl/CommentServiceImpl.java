@@ -145,6 +145,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         return R.ok(commentNodeDTOList);
     }
 
+    /**
+     * 根据对象ID获取评论的平均评分
+     *
+     * @param objectId 对象的ID
+     * @return R 评论结果
+     */
+    @Override
+    public R getAverageGradeByObjectId(Integer objectId, String objectType) {
+        Double averageGrade = commentMapper.selectAverageGradeByObjectId(objectId, objectType);
+        return R.ok(averageGrade);
+    }
 
     /**
      * 根据objectId、pageNum和pageSize构建评论树
@@ -198,7 +209,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      */
     private List<CommentDTO> getRootCommentByObjectId(Integer objectId, Integer pageNum, Integer pageSize, String objectType) {
         pageNum = (pageNum - 1) * pageSize;
-        List<Comment> rootComments = commentMapper.findRootCommentByObjectId(objectId, pageNum, pageSize, objectType);
+        List<Comment> rootComments = commentMapper.selectRootCommentByObjectId(objectId, pageNum, pageSize, objectType);
 
         return rootComments.stream()
                 .map(this::mapCommentToDTO)
@@ -217,7 +228,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         List<CommentDTO> allSubComments = new ArrayList<>();
 
         // 使用parentId查找子评论
-        List<Comment> subComments = commentMapper.findSubCommentByParentId(parentId);
+        List<Comment> subComments = commentMapper.selectSubCommentByParentId(parentId);
 
         List<CommentDTO> commentDTOList = subComments.stream()
                 .map(this::mapCommentToDTO)
@@ -285,5 +296,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
 
         return commentDTO;
     }
+
 
 }

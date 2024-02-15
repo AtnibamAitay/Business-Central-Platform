@@ -73,4 +73,17 @@ public class CommentController implements RemoteCommentService {
             @RequestParam String objectType) {
         return commentService.getTopLevelCommentsByObjectId(objectId, pageNum, pageSize, objectType);
     }
+
+    /**
+     * 获取指定对象ID关联的未删除评论的平均评分.
+     *
+     * @param objectId 对象ID
+     * @return 包含平均评分的响应，如果没有评分则返回空
+     */
+    @Override
+    @ApiOperation(value = "获取指定对象ID关联的未删除评论的平均评分")
+    @GetMapping("/average-grade")
+    public R getAverageGrade(@RequestParam int objectId, @RequestParam String objectType) {
+        return commentService.getAverageGradeByObjectId(objectId, objectType);
+    }
 }

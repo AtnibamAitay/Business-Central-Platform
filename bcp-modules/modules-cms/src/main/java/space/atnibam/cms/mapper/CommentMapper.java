@@ -24,7 +24,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
      * @return 返回未删除的主评论列表
      */
     @Select("SELECT * FROM comment WHERE object_id = #{objectId} AND object_type in ('0', '1', '2') AND deleted = 1 AND object_type = #{objectType} LIMIT #{pageSize} OFFSET #{pageNum}")
-    List<Comment> findRootCommentByObjectId(@Param("objectId") Integer objectId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("objectType") String objectType);
+    List<Comment> selectRootCommentByObjectId(@Param("objectId") Integer objectId, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("objectType") String objectType);
 
     /**
      * 根据父评论ID获取未删除的子评论
@@ -33,5 +33,14 @@ public interface CommentMapper extends BaseMapper<Comment> {
      * @return 返回未删除的子评论列表
      */
     @Select("SELECT * FROM comment WHERE object_id = #{parentId} AND object_type = '3' AND deleted = 1")
-    List<Comment> findSubCommentByParentId(@Param("parentId") Integer parentId);
+    List<Comment> selectSubCommentByParentId(@Param("parentId") Integer parentId);
+
+    /**
+     * 根据对象id查出所有未删除的评论的评分的平均值
+     *
+     * @param objectId 对象ID
+     * @return 评分的平均值
+     */
+    @Select("SELECT AVG(grade) AS average_grade FROM comment WHERE object_id = #{objectId} AND deleted = 1 AND object_type = #{objectType}")
+    Double selectAverageGradeByObjectId(@Param("objectId") int objectId, @Param("objectType") String objectType);
 }

@@ -53,4 +53,7 @@ public interface RemoteCommentService {
             @RequestParam(defaultValue = "10") Integer pageSize,
             @ApiParam(value = "对象类型")
             @RequestParam String objectType);
+
+    @GetMapping("/api/comments/average-grade")
+    R getAverageGrade(@RequestParam int objectId, @RequestParam String objectType);
 }

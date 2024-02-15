@@ -32,4 +32,11 @@ public interface CommentService extends IService<Comment> {
      */
     R getNestedCommentsByObjectId(Integer objectId, Integer pageNum, Integer pageSize, String objectType);
 
+    /**
+     * 根据对象ID获取评论的平均评分
+     *
+     * @param objectId 对象的ID
+     * @return R 评论结果
+     */
+    R getAverageGradeByObjectId(Integer objectId, String objectType);
 }
