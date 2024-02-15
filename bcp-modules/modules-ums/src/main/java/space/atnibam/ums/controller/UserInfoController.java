@@ -19,6 +19,7 @@ import space.atnibam.ums.service.AuthCredentialsService;
 import space.atnibam.ums.service.UserInfoService;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import static space.atnibam.common.core.enums.ResultCode.USER_AVATAR_UPLOAD_FAILED;
@@ -58,9 +59,22 @@ public class UserInfoController implements RemoteUserInfoService {
     @Override
     @ApiOperation(value = "根据用户id查出用户名、用户头像、用户简介", notes = "根据用户ID查询用户信息")
     @GetMapping("/{userId}")
-    public R queryUserInfo(@PathVariable(value = "userId") Integer userId) {
+    public R getDetailedUserInfo(@PathVariable(value = "userId") Integer userId) {
         UserInfoDTO userInfoDTO = userInfoService.getUserInfoById(userId);
         return R.ok(userInfoDTO);
+    }
+
+    /**
+     * 根据一个或多个用户id查出用户名、用户头像列表
+     *
+     * @param userIds 用户ID列表
+     * @return 用户信息DTO列表
+     */
+    @Override
+    @ApiOperation(value = "根据一个或多个用户id查出用户名、用户头像列表", notes = "根据用户ID查询用户信息")
+    @PostMapping("/basic-info")
+    public R getBasicUserInfo(@RequestBody List<Integer> userIds) {
+        return R.ok(userInfoService.getBasicUserInfoByIds(userIds));
     }
 
     /**

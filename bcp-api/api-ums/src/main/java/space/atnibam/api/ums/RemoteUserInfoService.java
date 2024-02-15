@@ -1,6 +1,5 @@
 package space.atnibam.api.ums;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +7,7 @@ import space.atnibam.common.core.domain.R;
 import space.atnibam.common.core.domain.UserInfo;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 用户信息远程调用接口
@@ -97,7 +97,15 @@ public interface RemoteUserInfoService {
      * @param userId 用户ID
      * @return 用户信息DTO
      */
-    @ApiOperation(value = "根据用户id查出用户名、用户头像、用户简介", notes = "根据用户ID查询用户信息")
     @GetMapping("/api/userInfo/{userId}")
-    R queryUserInfo(@PathVariable(value = "userId") Integer userId);
+    R getDetailedUserInfo(@PathVariable(value = "userId") Integer userId);
+
+    /**
+     * 根据一个或多个用户id查出用户名、用户头像列表
+     *
+     * @param userIds 用户ID列表
+     * @return 用户信息DTO列表
+     */
+    @PostMapping("/api/userInfo/basic-info")
+    R getBasicUserInfo(@RequestBody List<Integer> userIds);
 }

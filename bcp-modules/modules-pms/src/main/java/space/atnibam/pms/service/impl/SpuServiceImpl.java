@@ -57,7 +57,7 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu>
         spuDTO.setDetail(spuDetailService.getSpuDetailListBySpuId(spuId));
 
         // 转换商户信息
-        Object userInfo = remoteUserInfoService.queryUserInfo(spu.getMerchantId()).getData();
+        Object userInfo = remoteUserInfoService.getDetailedUserInfo(spu.getMerchantId()).getData();
         Map<String, Object> merchantDataMap = (Map<String, Object>) userInfo;
         SpuDTO.MerchantDTO merchantDTO = objectMapper.convertValue(merchantDataMap, SpuDTO.MerchantDTO.class);
 

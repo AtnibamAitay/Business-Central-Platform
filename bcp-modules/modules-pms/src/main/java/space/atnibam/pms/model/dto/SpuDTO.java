@@ -25,7 +25,7 @@ public class SpuDTO implements Serializable {
      */
     private Integer spuId;
     /**
-     * 封面
+     * 封面列表
      */
     private List<String> cover;
     /**

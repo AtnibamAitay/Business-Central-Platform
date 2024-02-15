@@ -277,7 +277,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         CommentDTO commentDTO = new CommentDTO();
         BeanUtils.copyProperties(comment, commentDTO);
         // 查询用户信息
-        Object commentUserInfo = remoteUserInfoService.queryUserInfo(comment.getUserId()).getData();
+        Object commentUserInfo = remoteUserInfoService.getDetailedUserInfo(comment.getUserId()).getData();
         // 将用户信息转换为CommentUserInfoDTO对象
         Map<String, Object> merchantDataMap = (Map<String, Object>) commentUserInfo;
         CommentDTO.CommentUserInfoDTO commentUserInfoDTO = objectMapper.convertValue(merchantDataMap, CommentDTO.CommentUserInfoDTO.class);

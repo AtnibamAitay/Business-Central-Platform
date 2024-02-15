@@ -2,11 +2,13 @@ package space.atnibam.ums.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import space.atnibam.common.core.domain.UserInfo;
+import space.atnibam.ums.mapper.UserBasicInfoDTO;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
 import space.atnibam.ums.model.dto.UserInfoDTO;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 针对表【user_info】的数据库操作Service
@@ -90,4 +92,12 @@ public interface UserInfoService extends IService<UserInfo> {
      * @return 用户信息DTO
      */
     UserInfoDTO getUserInfoById(Integer userId);
+
+    /**
+     * 根据用户id查出用户名、用户头像
+     *
+     * @param userIds 用户ID列表
+     * @return 用户基础信息DTO列表
+     */
+    List<UserBasicInfoDTO> getBasicUserInfoByIds(List<Integer> userIds);
 }

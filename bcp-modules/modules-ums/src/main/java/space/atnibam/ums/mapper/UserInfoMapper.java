@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Update;
 import space.atnibam.common.core.domain.UserInfo;
 import space.atnibam.ums.model.dto.UserInfoDTO;
 
+import java.util.List;
+
 /**
  * 针对表【user_info】的数据库操作Mapper
  */
@@ -48,11 +50,21 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     int updateAvatarById(int userId, String avatarUrl);
 
     /**
-     * 根据用户id查出用户名、用户头像、用户简介
+     * 根据用户id列表查出用户名和用户头像（基础信息）
+     *
+     * @param userIds 用户ID列表
+     * @return 用户基础信息列表
+     */
+    @Select("<script>SELECT user_id, user_name, user_avatar FROM user_info WHERE user_id IN " +
+            "<foreach item='item' index='index' collection='userIds' open='(' separator=',' close=')'>#{item}</foreach></script>")
+    List<UserBasicInfoDTO> selectBasicUserInfoByIds(List<Integer> userIds);
+
+    /**
+     * 根据用户id查出用户名、用户头像以及用户简介（详细信息）
      *
      * @param userId 用户ID
-     * @return 用户信息
+     * @return 用户详细信息
      */
     @Select("SELECT user_id, user_name, user_avatar, user_introduction FROM user_info WHERE user_id = #{userId}")
-    UserInfoDTO selectUserInfoById(int userId);
+    UserInfoDTO selectDetailedUserInfoById(int userId);
 }

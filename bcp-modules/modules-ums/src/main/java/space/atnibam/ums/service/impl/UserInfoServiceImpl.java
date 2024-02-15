@@ -23,6 +23,7 @@ import space.atnibam.common.core.utils.DateUtils;
 import space.atnibam.common.core.utils.RandomNameUtils;
 import space.atnibam.common.minio.utils.MinioUtil;
 import space.atnibam.ums.constant.UserInfoConstants;
+import space.atnibam.ums.mapper.UserBasicInfoDTO;
 import space.atnibam.ums.mapper.UserInfoMapper;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
 import space.atnibam.ums.model.dto.UpdateUserNameDTO;
@@ -30,6 +31,7 @@ import space.atnibam.ums.model.dto.UserInfoDTO;
 import space.atnibam.ums.service.UserInfoService;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import static space.atnibam.common.core.constant.UserConstants.DEFAULT_HEAD_PICTURE;
@@ -337,7 +339,18 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
      */
     @Override
     public UserInfoDTO getUserInfoById(Integer userId) {
-        return userInfoMapper.selectUserInfoById(userId);
+        return userInfoMapper.selectDetailedUserInfoById(userId);
+    }
+
+    /**
+     * 根据用户id查出用户名、用户头像
+     *
+     * @param userIds 用户ID列表
+     * @return 用户基础信息DTO列表
+     */
+    @Override
+    public List<UserBasicInfoDTO> getBasicUserInfoByIds(List<Integer> userIds) {
+        return userInfoMapper.selectBasicUserInfoByIds(userIds);
     }
 
 }
