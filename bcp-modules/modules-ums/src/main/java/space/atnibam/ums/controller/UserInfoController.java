@@ -46,7 +46,7 @@ public class UserInfoController implements RemoteUserInfoService {
     @ApiOperation(value = "查询用户信息")
     @Override
     @GetMapping("/full/{userId}")
-    public R<UserInfo> getUserFullInfo(@PathVariable(value = "userId") String userId) {
+    public R getUserInfo(@PathVariable(value = "userId") String userId) {
         return R.ok(userInfoService.queryUserInfo(userId));
     }
 

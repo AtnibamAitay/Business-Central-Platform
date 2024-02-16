@@ -22,7 +22,7 @@ public interface RemoteUserInfoService {
      * @return 用户信息实体类
      */
     @GetMapping("/api/userInfo/full/{userId}")
-    R<UserInfo> getUserFullInfo(@PathVariable(value = "userId") String userId);
+    R getUserInfo(@PathVariable(value = "userId") String userId);
 
     /**
      * 注销用户
