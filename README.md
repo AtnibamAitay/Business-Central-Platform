@@ -43,6 +43,7 @@ Business-Central-Platform
 │   ├── modules-cms         - 内容管理系统，包括评论模块
 │   ├── modules-ims         - 即时通讯管理系统，包括即时通讯模块、用户好友关系管理模块
 │   ├── modules-pms         - 商品管理系统，包括商品管理操作模块
+│   ├── modules-sms         - 营销管理系统，包括优惠券模块、广告模块
 │   ├── modules-system      - 系统核心业务逻辑模块
 │   ├── modules-transaction - 交易处理业务逻辑模块，包括支付模块
 │   └── modules-ums         - 用户管理系统，包括用户信息管理模块
