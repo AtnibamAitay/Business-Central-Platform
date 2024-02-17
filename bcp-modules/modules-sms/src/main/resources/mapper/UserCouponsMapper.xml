@@ -8,12 +8,13 @@
         <id property="couponId" column="coupon_id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="acquireTime" column="acquire_time" jdbcType="TIMESTAMP"/>
+        <result property="expireDate" column="expire_date" jdbcType="DATE"/>
         <result property="status" column="status" jdbcType="TINYINT"/>
         <result property="useTime" column="use_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         coupon_id,user_id,acquire_time,
-        status,use_time
+        expire_date,status,use_time
     </sql>
 </mapper>

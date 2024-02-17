@@ -33,6 +33,10 @@ public class UserCoupons implements Serializable {
      */
     private Date acquireTime;
     /**
+     * 失效日期
+     */
+    private Date expireDate;
+    /**
      * 使用情况（0代表已使用、1代表未使用、2代表已过期）
      */
     private Integer status;

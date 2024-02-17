@@ -37,10 +37,6 @@ public class Coupons implements Serializable {
      */
     private Date startDate;
     /**
-     * 失效日期
-     */
-    private Date expireDate;
-    /**
      * 优惠券类型（1满减券、2直减券、3折扣券）
      */
     private Integer couponType;

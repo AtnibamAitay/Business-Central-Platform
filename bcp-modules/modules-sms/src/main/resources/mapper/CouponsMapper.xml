@@ -9,7 +9,6 @@
         <result property="couponName" column="coupon_name" jdbcType="VARCHAR"/>
         <result property="redeemCode" column="redeem_code" jdbcType="VARCHAR"/>
         <result property="startDate" column="start_date" jdbcType="DATE"/>
-        <result property="expireDate" column="expire_date" jdbcType="DATE"/>
         <result property="couponType" column="coupon_type" jdbcType="TINYINT"/>
         <result property="issuerId" column="issuer_id" jdbcType="INTEGER"/>
         <result property="issueQuantity" column="issue_quantity" jdbcType="INTEGER"/>
@@ -19,7 +18,7 @@
 
     <sql id="Base_Column_List">
         coupon_id,coupon_name,redeem_code,
-        start_date,expire_date,coupon_type,
+        start_date,coupon_type,
         issuer_id,issue_quantity,app_id,
         status
     </sql>
