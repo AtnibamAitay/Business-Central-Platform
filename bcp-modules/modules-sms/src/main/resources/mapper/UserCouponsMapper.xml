@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.atnibam.sms.mapper.UserCouponsMapper">
+
+    <resultMap id="BaseResultMap" type="space.atnibam.sms.model.entity.UserCoupons">
+        <id property="couponId" column="coupon_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="acquireTime" column="acquire_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="useTime" column="use_time" jdbcType="TIMESTAMP"/>
+        <result property="orderNumber" column="order_number" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        coupon_id,user_id,acquire_time,
+        status,use_time,order_number
+    </sql>
+</mapper>
