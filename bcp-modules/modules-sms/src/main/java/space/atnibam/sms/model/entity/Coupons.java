@@ -45,7 +45,7 @@ public class Coupons implements Serializable {
      */
     private Integer issuerId;
     /**
-     * 发行量（-1代表无限制）
+     * 发行量（0代表无限制）
      */
     private Integer issueQuantity;
     /**
