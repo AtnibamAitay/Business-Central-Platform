@@ -1,5 +1,6 @@
 package space.atnibam.sms.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,11 +32,13 @@ public class UserCouponDetailDTO implements Serializable {
     /**
      * 开始日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date startDate;
     /**
      * 失效日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date expireDate;
     /**
      * 满减券门槛
