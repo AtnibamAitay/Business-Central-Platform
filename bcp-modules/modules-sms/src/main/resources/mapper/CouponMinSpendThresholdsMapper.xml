@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.atnibam.sms.mapper.CouponMinSpendThresholdsMapper">
+
+    <resultMap id="BaseResultMap" type="space.atnibam.sms.model.entity.CouponMinSpendThresholds">
+        <id property="thresholdId" column="threshold_id" jdbcType="INTEGER"/>
+        <result property="couponId" column="coupon_id" jdbcType="INTEGER"/>
+        <result property="minOrderAmount" column="min_order_amount" jdbcType="DECIMAL"/>
+        <result property="discountAmount" column="discount_amount" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        threshold_id,coupon_id,min_order_amount,
+        discount_amount
+    </sql>
+</mapper>
