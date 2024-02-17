@@ -10,11 +10,10 @@
         <result property="acquireTime" column="acquire_time" jdbcType="TIMESTAMP"/>
         <result property="status" column="status" jdbcType="TINYINT"/>
         <result property="useTime" column="use_time" jdbcType="TIMESTAMP"/>
-        <result property="orderNumber" column="order_number" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         coupon_id,user_id,acquire_time,
-        status,use_time,order_number
+        status,use_time
     </sql>
 </mapper>

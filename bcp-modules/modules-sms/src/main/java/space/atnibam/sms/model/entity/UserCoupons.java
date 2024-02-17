@@ -40,8 +40,4 @@ public class UserCoupons implements Serializable {
      * 使用时间
      */
     private Date useTime;
-    /**
-     * 订单号
-     */
-    private String orderNumber;
 }
