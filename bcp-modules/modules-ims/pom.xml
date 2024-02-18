@@ -24,6 +24,10 @@
         </dependency>
         <dependency>
             <groupId>atnibam.space</groupId>
+            <artifactId>common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>atnibam.space</groupId>
             <artifactId>common-security</artifactId>
         </dependency>
         <dependency>
@@ -42,6 +46,10 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>atnibam.space</groupId>
+            <artifactId>api-ums</artifactId>
         </dependency>
     </dependencies>
 
