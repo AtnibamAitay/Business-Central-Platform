@@ -35,3 +35,6 @@ spring:
 mybatis-plus:
   global-config:
     banner: false
+
+sa-token:
+  is-print: false

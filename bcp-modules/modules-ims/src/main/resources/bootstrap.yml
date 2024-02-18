@@ -8,6 +8,9 @@ spring:
     name: modules-ims
   main:
     banner-mode: "off"
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
   cloud:
     nacos:
