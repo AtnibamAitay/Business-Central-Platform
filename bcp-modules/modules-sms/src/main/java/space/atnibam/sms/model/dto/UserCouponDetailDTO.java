@@ -49,7 +49,7 @@ public class UserCouponDetailDTO implements Serializable {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    private static class MinSpendThresholdsDTO {
+    public static class MinSpendThresholdsDTO {
         /**
          * 最低订单金额
          */

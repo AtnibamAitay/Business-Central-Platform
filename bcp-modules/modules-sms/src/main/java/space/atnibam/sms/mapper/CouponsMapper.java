@@ -1,10 +1,15 @@
 package space.atnibam.sms.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.type.JdbcType;
 import space.atnibam.sms.model.dto.UserCouponDetailDTO;
 import space.atnibam.sms.model.entity.Coupons;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +26,6 @@ public interface CouponsMapper extends BaseMapper<Coupons> {
      * @param userId 用户ID
      * @return 未过期的优惠券列表
      */
-    // FIXME:返回的列表中MinSpendThresholdsDTO无数据，需要解决
     @Select("""
                 SELECT
                     c.coupon_id,
@@ -42,5 +46,18 @@ public interface CouponsMapper extends BaseMapper<Coupons> {
                       OR uc.expire_date > NOW()
                   )
             """)
+    @Results({
+            @Result(property = "couponId", column = "coupon_id"),
+            @Result(property = "couponName", column = "coupon_name"),
+            @Result(property = "startDate", column = "start_date",
+                    javaType = Date.class,
+                    jdbcType = JdbcType.TIMESTAMP),
+            @Result(property = "expireDate", column = "expire_date",
+                    javaType = Date.class,
+                    jdbcType = JdbcType.TIMESTAMP),
+            @Result(property = "minSpendThresholds",
+                    column = "coupon_id",
+                    one = @One(select = "space.atnibam.sms.mapper.CouponMinSpendThresholdsMapper.getMinSpendThresholdsById")),
+    })
     List<UserCouponDetailDTO> getUserUnexpiredCoupons(int appId, int userId);
 }
