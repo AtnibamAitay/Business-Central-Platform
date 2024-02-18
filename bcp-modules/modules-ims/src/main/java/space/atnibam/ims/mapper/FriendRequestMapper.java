@@ -1,7 +1,11 @@
 package space.atnibam.ims.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+import space.atnibam.ims.model.dto.FriendRequestQueryResultDTO;
 import space.atnibam.ims.model.entity.FriendRequest;
+
+import java.util.List;
 
 /**
  * @author Atnibam Aitay
@@ -10,9 +14,7 @@ import space.atnibam.ims.model.entity.FriendRequest;
  * @Entity space.atnibam.ims.model.entity.FriendRequest
  */
 public interface FriendRequestMapper extends BaseMapper<FriendRequest> {
-
+    @Select("SELECT request_id AS requestId, user_id_adding AS requesterId, message, status_code AS statusCode " +
+            "FROM friend_request WHERE user_id_added = #{userId}")
+    List<FriendRequestQueryResultDTO> getFriendRequestsByUserId(int userId);
 }
-
-
-
-
