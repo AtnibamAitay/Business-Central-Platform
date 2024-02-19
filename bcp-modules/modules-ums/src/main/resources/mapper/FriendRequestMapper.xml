@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="space.atnibam.ims.mapper.FriendRequestMapper">
+<mapper namespace="space.atnibam.ums.mapper.FriendRequestMapper">
 
-    <resultMap id="BaseResultMap" type="space.atnibam.ims.model.entity.FriendRequest">
+    <resultMap id="BaseResultMap" type="space.atnibam.ums.model.entity.FriendRequest">
         <id property="requestId" column="request_id" jdbcType="INTEGER"/>
         <result property="userIdAdding" column="user_id_adding" jdbcType="INTEGER"/>
         <result property="userIdAdded" column="user_id_added" jdbcType="INTEGER"/>

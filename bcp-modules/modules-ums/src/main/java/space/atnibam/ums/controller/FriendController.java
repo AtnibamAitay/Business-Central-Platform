@@ -1,4 +1,4 @@
-package space.atnibam.ims.controller;
+package space.atnibam.ums.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import space.atnibam.common.core.domain.R;
-import space.atnibam.ims.model.dto.FriendRequestDTO;
-import space.atnibam.ims.model.dto.UserBaseInfoDTO;
-import space.atnibam.ims.service.FriendRelationService;
-import space.atnibam.ims.service.FriendRequestService;
+import space.atnibam.ums.model.dto.FriendRequestDTO;
+import space.atnibam.ums.model.dto.UserBaseInfoDTO;
+import space.atnibam.ums.service.FriendRelationService;
+import space.atnibam.ums.service.FriendRequestService;
 
 import javax.annotation.Resource;
 import java.util.List;

@@ -1,8 +1,8 @@
-package space.atnibam.ims.mapper;
+package space.atnibam.ums.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Select;
-import space.atnibam.ims.model.entity.FriendRelation;
+import space.atnibam.ums.model.entity.FriendRelation;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author Atnibam Aitay
  * @description 针对表【friend_relation(好友表)】的数据库操作Mapper
  * @createDate 2024-02-18 17:48:12
- * @Entity space.atnibam.ims.model.entity.FriendRelation
+ * @Entity space.atnibam.ums.model.entity.FriendRelation
  */
 public interface FriendRelationMapper extends BaseMapper<FriendRelation> {
     /**

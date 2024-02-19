@@ -1,8 +1,8 @@
-package space.atnibam.ims.service;
+package space.atnibam.ums.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import space.atnibam.ims.model.dto.FriendRequestDTO;
-import space.atnibam.ims.model.entity.FriendRequest;
+import space.atnibam.ums.model.dto.FriendRequestDTO;
+import space.atnibam.ums.model.entity.FriendRequest;
 
 import java.util.List;
 

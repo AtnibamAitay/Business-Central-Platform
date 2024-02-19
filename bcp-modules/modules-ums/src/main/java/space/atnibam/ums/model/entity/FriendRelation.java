@@ -1,4 +1,4 @@
-package space.atnibam.ims.model.entity;
+package space.atnibam.ums.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -1,4 +1,4 @@
-package space.atnibam.ims.model.dto;
+package space.atnibam.ums.model.dto;
 
 import lombok.Data;
 

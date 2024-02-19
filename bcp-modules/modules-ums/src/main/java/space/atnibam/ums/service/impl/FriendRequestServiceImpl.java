@@ -1,16 +1,16 @@
-package space.atnibam.ims.service.impl;
+package space.atnibam.ums.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import space.atnibam.api.ums.RemoteUserInfoService;
-import space.atnibam.ims.mapper.FriendRequestMapper;
-import space.atnibam.ims.model.dto.FriendRequestDTO;
-import space.atnibam.ims.model.dto.FriendRequestQueryResultDTO;
-import space.atnibam.ims.model.dto.UserBaseInfoDTO;
-import space.atnibam.ims.model.entity.FriendRequest;
-import space.atnibam.ims.service.FriendRequestService;
+import space.atnibam.ums.mapper.FriendRequestMapper;
+import space.atnibam.ums.model.dto.FriendRequestDTO;
+import space.atnibam.ums.model.dto.FriendRequestQueryResultDTO;
+import space.atnibam.ums.model.dto.UserBaseInfoDTO;
+import space.atnibam.ums.model.entity.FriendRequest;
+import space.atnibam.ums.service.FriendRequestService;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
