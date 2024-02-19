@@ -1,7 +1,10 @@
 package space.atnibam.ims.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
 import space.atnibam.ims.model.entity.FriendRelation;
+
+import java.util.List;
 
 /**
  * @author Atnibam Aitay
@@ -10,9 +13,12 @@ import space.atnibam.ims.model.entity.FriendRelation;
  * @Entity space.atnibam.ims.model.entity.FriendRelation
  */
 public interface FriendRelationMapper extends BaseMapper<FriendRelation> {
-
+    /**
+     * 根据用户ID查询该用户的好友关系列表
+     *
+     * @param ownId 用户ID
+     * @return 好友id列表
+     */
+    @Select("SELECT friend_id FROM friend_relation WHERE own_id = #{ownId}")
+    List<Integer> getFriendRelationsByOwnId(int ownId);
 }
-
-
-
-

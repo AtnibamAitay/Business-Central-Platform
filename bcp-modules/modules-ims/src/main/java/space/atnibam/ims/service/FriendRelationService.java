@@ -1,7 +1,10 @@
 package space.atnibam.ims.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import space.atnibam.ims.model.dto.UserBaseInfoDTO;
 import space.atnibam.ims.model.entity.FriendRelation;
+
+import java.util.List;
 
 /**
  * @author Atnibam Aitay
@@ -9,5 +12,11 @@ import space.atnibam.ims.model.entity.FriendRelation;
  * @createDate 2024-02-18 17:48:12
  */
 public interface FriendRelationService extends IService<FriendRelation> {
-
+    /**
+     * 根据用户ID获取该用户的好友列表
+     *
+     * @param ownId 用户ID
+     * @return 好友列表
+     */
+    List<UserBaseInfoDTO> getFriendListByUserId(int ownId);
 }
