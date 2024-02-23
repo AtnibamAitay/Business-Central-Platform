@@ -16,6 +16,7 @@
         <module>api-ums</module>
         <module>api-cms</module>
         <module>api-ims</module>
+        <module>api-oms</module>
         <module>api-pms</module>
         <module>api-sms</module>
         <module>api-system</module>
