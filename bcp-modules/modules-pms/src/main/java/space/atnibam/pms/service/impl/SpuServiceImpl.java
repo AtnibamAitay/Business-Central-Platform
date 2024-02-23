@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import space.atnibam.api.ums.RemoteUserInfoService;
 import space.atnibam.pms.mapper.SpuMapper;
+import space.atnibam.pms.model.dto.SpuBaseInfoDTO;
 import space.atnibam.pms.model.dto.SpuDTO;
 import space.atnibam.pms.model.entity.Spu;
 import space.atnibam.pms.service.SpuCoverService;
@@ -13,6 +14,8 @@ import space.atnibam.pms.service.SpuDetailService;
 import space.atnibam.pms.service.SpuService;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -65,5 +68,29 @@ public class SpuServiceImpl extends ServiceImpl<SpuMapper, Spu>
         spuDTO.setMerchant(merchantDTO);
 
         return Optional.ofNullable(spuDTO);
+    }
+
+    /**
+     * 根据一个或多个商品ID获取商品基本的信息列表
+     *
+     * @param spuIdList 商品ID列表
+     * @return 商品基本的信息列表
+     */
+    @Override
+    public List<SpuBaseInfoDTO> getSpuBaseInfoList(List<Integer> spuIdList) {
+        List<Spu> spuList = spuMapper.selectSpuBaseInfoListBySpuIds(spuIdList);
+        List<SpuBaseInfoDTO> spuBaseInfoDTOList = new ArrayList<>();
+        for (Spu Spu : spuList) {
+            SpuBaseInfoDTO spuBaseInfoDTO = new SpuBaseInfoDTO();
+            BeanUtils.copyProperties(Spu, spuBaseInfoDTO);
+            // 转换商户信息
+            Object userInfo = remoteUserInfoService.getDetailedUserInfo(Spu.getMerchantId()).getData();
+            Map<String, Object> merchantDataMap = (Map<String, Object>) userInfo;
+            SpuBaseInfoDTO.MerchantBaseInfoDTO merchantBaseInfoDTO = objectMapper.convertValue(merchantDataMap, SpuBaseInfoDTO.MerchantBaseInfoDTO.class);
+            spuBaseInfoDTO.setMerchant(merchantBaseInfoDTO);
+
+            spuBaseInfoDTOList.add(spuBaseInfoDTO);
+        }
+        return spuBaseInfoDTOList;
     }
 }

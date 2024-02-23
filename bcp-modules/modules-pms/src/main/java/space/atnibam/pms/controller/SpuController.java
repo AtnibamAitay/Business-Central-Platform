@@ -2,16 +2,14 @@ package space.atnibam.pms.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import space.atnibam.api.pms.RemoteSpuService;
 import space.atnibam.common.core.domain.R;
 import space.atnibam.pms.model.dto.SpuDTO;
 import space.atnibam.pms.service.SpuService;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -42,5 +40,17 @@ public class SpuController implements RemoteSpuService {
         // 返回查询结果
         // TODO:更换为自定义异常
         return R.ok(optionalProduct.orElseThrow(() -> new RuntimeException("商品不存在")));
+    }
+
+    /**
+     * 根据一个或多个商品ID获取商品基本的信息列表
+     *
+     * @param spuIdList 商品ID列表
+     * @return 商品信息列表
+     */
+    @ApiOperation("根据一个或多个商品ID获取商品基本的信息列表")
+    @PostMapping("/baseInfo/list")
+    public R getSpuDetailList(@RequestBody List<Integer> spuIdList) {
+        return R.ok(spuService.getSpuBaseInfoList(spuIdList));
     }
 }
