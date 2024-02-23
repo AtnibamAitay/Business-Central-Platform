@@ -1,5 +1,5 @@
 server:
-  port: 9041
+  port: 9025
 
 spring:
   profiles:

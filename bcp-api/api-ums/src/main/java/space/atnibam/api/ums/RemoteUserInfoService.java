@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 用户信息远程调用接口
  */
-@FeignClient(value = "modules-ums", contextId = "userInfo", url = "http://local.atnibam.space:9030")
+@FeignClient(value = "modules-ums", contextId = "userInfo", url = "http://local.atnibam.space:9028")
 public interface RemoteUserInfoService {
 
     /**

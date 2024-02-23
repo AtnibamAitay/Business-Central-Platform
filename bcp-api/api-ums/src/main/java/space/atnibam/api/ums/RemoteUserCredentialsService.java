@@ -1,17 +1,17 @@
 package space.atnibam.api.ums;
 
-import space.atnibam.common.core.domain.AuthCredentials;
-import space.atnibam.common.core.domain.R;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import space.atnibam.common.core.domain.AuthCredentials;
+import space.atnibam.common.core.domain.R;
 
 /**
  * 用户凭证远程服务接口
  */
-@FeignClient(value = "modules-ums", contextId = "userCredentials", url = "http://local.atnibam.space:9030")
+@FeignClient(value = "modules-ums", contextId = "userCredentials", url = "http://local.atnibam.space:9028")
 public interface RemoteUserCredentialsService {
 
     /**

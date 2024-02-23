@@ -12,7 +12,7 @@ import space.atnibam.common.core.domain.R;
  * @Author: AtnibamAitay
  * @CreateTime: 2024-02-03 10:53
  **/
-@FeignClient(value = "modules-cms", contextId = "comment", url = "http://local.atnibam.space:8080")
+@FeignClient(value = "modules-cms", contextId = "comment", url = "http://local.atnibam.space:9021")
 public interface RemoteCommentService {
 
     /**
