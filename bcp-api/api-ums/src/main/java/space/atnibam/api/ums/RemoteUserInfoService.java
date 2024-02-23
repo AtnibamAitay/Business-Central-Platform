@@ -3,6 +3,7 @@ package space.atnibam.api.ums;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import space.atnibam.api.ums.model.dto.UpdateUserNameDTO;
 import space.atnibam.common.core.domain.R;
 import space.atnibam.common.core.domain.UserInfo;
 
@@ -108,4 +109,13 @@ public interface RemoteUserInfoService {
      */
     @PostMapping("/api/userInfo/basic-info")
     R getBasicUserInfo(@RequestBody List<Integer> userIds);
+
+    /**
+     * 设置用户的用户名
+     *
+     * @param updateUserNameDTO 包含账号ID、用户名的传输实体
+     * @return 设置用户名的结果
+     */
+    @PostMapping("/api/userInfo/username")
+    R updateUserName(@RequestBody UpdateUserNameDTO updateUserNameDTO);
 }

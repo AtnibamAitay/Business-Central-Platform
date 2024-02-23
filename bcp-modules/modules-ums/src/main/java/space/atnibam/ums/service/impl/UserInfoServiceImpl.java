@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import space.atnibam.api.ums.model.dto.UpdateUserNameDTO;
 import space.atnibam.common.core.constant.UserConstants;
 import space.atnibam.common.core.domain.UserInfo;
 import space.atnibam.common.core.enums.ResultCode;
@@ -26,7 +27,6 @@ import space.atnibam.ums.constant.UserInfoConstants;
 import space.atnibam.ums.mapper.UserBasicInfoDTO;
 import space.atnibam.ums.mapper.UserInfoMapper;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
-import space.atnibam.ums.model.dto.UpdateUserNameDTO;
 import space.atnibam.ums.model.dto.UserInfoDTO;
 import space.atnibam.ums.service.UserInfoService;
 

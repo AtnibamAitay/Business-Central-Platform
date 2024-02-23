@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import space.atnibam.api.ums.RemoteUserInfoService;
+import space.atnibam.api.ums.model.dto.UpdateUserNameDTO;
 import space.atnibam.common.core.domain.AuthCredentials;
 import space.atnibam.common.core.domain.R;
 import space.atnibam.common.core.domain.UserInfo;
@@ -13,7 +14,6 @@ import space.atnibam.common.core.enums.ResultCode;
 import space.atnibam.common.core.exception.UserOperateException;
 import space.atnibam.common.core.utils.StringUtils;
 import space.atnibam.ums.model.dto.UpdateAvatarDTO;
-import space.atnibam.ums.model.dto.UpdateUserNameDTO;
 import space.atnibam.ums.model.dto.UserInfoDTO;
 import space.atnibam.ums.service.AuthCredentialsService;
 import space.atnibam.ums.service.UserInfoService;
@@ -195,6 +195,7 @@ public class UserInfoController implements RemoteUserInfoService {
      * @param updateUserNameDTO 包含账号ID、用户名的传输实体
      * @return 设置用户名的结果
      */
+    @Override
     @ApiOperation(value = "设置用户的用户名", notes = "根据提供的UpdateUserNameDTO对象更新用户用户名")
     @PostMapping("/username")
     public R updateUserName(@RequestBody UpdateUserNameDTO updateUserNameDTO) {
