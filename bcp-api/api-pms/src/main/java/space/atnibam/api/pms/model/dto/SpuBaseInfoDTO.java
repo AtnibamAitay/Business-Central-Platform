@@ -1,4 +1,4 @@
-package space.atnibam.pms.model.dto;
+package space.atnibam.api.pms.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

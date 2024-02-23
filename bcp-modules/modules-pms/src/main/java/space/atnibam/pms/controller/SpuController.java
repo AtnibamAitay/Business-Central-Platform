@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import space.atnibam.api.pms.RemoteSpuService;
+import space.atnibam.api.pms.model.dto.SpuBaseInfoDTO;
 import space.atnibam.common.core.domain.R;
 import space.atnibam.pms.model.dto.SpuDTO;
 import space.atnibam.pms.service.SpuService;
@@ -48,9 +49,10 @@ public class SpuController implements RemoteSpuService {
      * @param spuIdList 商品ID列表
      * @return 商品信息列表
      */
+    @Override
     @ApiOperation("根据一个或多个商品ID获取商品基本的信息列表")
     @PostMapping("/baseInfo/list")
-    public R getSpuDetailList(@RequestBody List<Integer> spuIdList) {
-        return R.ok(spuService.getSpuBaseInfoList(spuIdList));
+    public List<SpuBaseInfoDTO> getSpuDetailList(@RequestBody List<Integer> spuIdList) {
+        return spuService.getSpuBaseInfoList(spuIdList);
     }
 }

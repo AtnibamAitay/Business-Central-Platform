@@ -1,7 +1,7 @@
 package space.atnibam.pms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import space.atnibam.pms.model.dto.SpuBaseInfoDTO;
+import space.atnibam.api.pms.model.dto.SpuBaseInfoDTO;
 import space.atnibam.pms.model.dto.SpuDTO;
 import space.atnibam.pms.model.entity.Spu;
 
