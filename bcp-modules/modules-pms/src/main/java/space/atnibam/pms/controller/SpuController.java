@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import space.atnibam.api.pms.RemoteSpuService;
 import space.atnibam.api.pms.model.dto.SpuBaseInfoDTO;
+import space.atnibam.api.pms.model.dto.SpuDTO;
 import space.atnibam.common.core.domain.R;
-import space.atnibam.pms.model.dto.SpuDTO;
 import space.atnibam.pms.service.SpuService;
 
 import javax.annotation.Resource;
