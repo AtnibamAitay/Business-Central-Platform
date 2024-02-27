@@ -2,15 +2,16 @@ package space.atnibam.api.oms;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import space.atnibam.api.oms.model.dto.ShoppingCartDTO;
 
 import java.util.List;
 
 /**
- * @InterfaceName: RemoteSpuService
- * @Description: 远程调用商品服务
+ * @InterfaceName: RemoteCartService
+ * @Description: 远程调用购物车服务
  * @Author: AtnibamAitay
- * @CreateTime: 2024-02-03 10:53
+ * @CreateTime: 2024-02-27 14:47
  **/
 @FeignClient(value = "modules-oms", contextId = "cart")
 public interface RemoteCartService {
@@ -21,6 +22,6 @@ public interface RemoteCartService {
      * @param appId  应用ID
      * @return 购物车列表
      */
-    @GetMapping("")
-    List<ShoppingCartDTO> getShoppingCartByUserId(Integer userId, Integer appId);
+    @GetMapping("/api/carts")
+    List<ShoppingCartDTO> getShoppingCartByUserId(@RequestParam Integer userId, @RequestParam Integer appId);
 }
