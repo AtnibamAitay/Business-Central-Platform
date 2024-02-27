@@ -23,6 +23,10 @@ public class ShoppingCart implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer cartId;
     /**
+     * 用户ID
+     */
+    private Integer userId;
+    /**
      * SPU ID
      */
     private Integer spuId;

@@ -6,6 +6,7 @@
 
     <resultMap id="BaseResultMap" type="space.atnibam.oms.model.entity.ShoppingCart">
         <id property="cartId" column="cart_id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="spuId" column="spu_id" jdbcType="INTEGER"/>
         <result property="skuId" column="sku_id" jdbcType="INTEGER"/>
         <result property="quantity" column="quantity" jdbcType="INTEGER"/>
@@ -13,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        cart_id,spu_id,sku_id,
+        cart_id,user_id,spu_id,sku_id,
         quantity,price_at_addition
     </sql>
 </mapper>
