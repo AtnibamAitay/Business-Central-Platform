@@ -20,9 +20,13 @@ public class UserCoupons implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
     /**
-     * 优惠券id
+     * 主键
      */
     @TableId(type = IdType.AUTO)
+    private Integer id;
+    /**
+     * 优惠券id
+     */
     private Integer couponId;
     /**
      * 用户id

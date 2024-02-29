@@ -5,7 +5,8 @@
 <mapper namespace="space.atnibam.sms.mapper.UserCouponsMapper">
 
     <resultMap id="BaseResultMap" type="space.atnibam.sms.model.entity.UserCoupons">
-        <id property="couponId" column="coupon_id" jdbcType="INTEGER"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="couponId" column="coupon_id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="acquireTime" column="acquire_time" jdbcType="TIMESTAMP"/>
         <result property="expireDate" column="expire_date" jdbcType="DATE"/>
@@ -14,7 +15,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        coupon_id,user_id,acquire_time,
+        id,coupon_id,user_id,acquire_time,
         expire_date,status,use_time
     </sql>
 </mapper>
