@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import space.atnibam.api.auth.dto.AccountVerificationDTO;
-import space.atnibam.api.auth.dto.LoginDTO;
+import space.atnibam.api.auth.dto.LoginRequestDTO;
 import space.atnibam.common.core.domain.R;
 
 import java.io.IOException;
@@ -33,10 +33,10 @@ public interface RemoteAuthService {
     /**
      * 单点登陆接口
      *
-     * @param loginDTO 登录请求DTO
+     * @param loginRequestDTO 登录请求DTO
      * @return 认证结果
      */
     @ApiOperation("单点登陆")
     @PostMapping("/api/auth/login")
-    SaResult ssoLogin(@Validated @RequestBody LoginDTO loginDTO) throws IOException;
+    SaResult ssoLogin(@Validated @RequestBody LoginRequestDTO loginRequestDTO) throws IOException;
 }

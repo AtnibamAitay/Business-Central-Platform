@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginDTO implements Serializable {
+public class LoginRequestDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
