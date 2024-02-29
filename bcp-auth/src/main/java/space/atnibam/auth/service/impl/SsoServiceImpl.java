@@ -5,6 +5,7 @@ import cn.hutool.core.util.RandomUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import space.atnibam.api.auth.dto.SessionUserInfoDTO;
 import space.atnibam.api.ums.RemoteUserInfoService;
 import space.atnibam.auth.factory.CertificateStrategyFactory;
 import space.atnibam.auth.factory.SendCodeStrategyFactory;
@@ -25,6 +26,7 @@ import space.atnibam.common.core.exception.UserOperateException;
 import java.io.IOException;
 import java.util.Objects;
 
+import static space.atnibam.api.auth.constants.AuthConstants.USER_INFO;
 import static space.atnibam.common.core.constant.Constants.RANDOM_LENGTH;
 import static space.atnibam.common.core.constant.UserConstants.CANCEL_LOGOUT;
 import static space.atnibam.common.core.constant.UserConstants.LOGOUT;
@@ -71,6 +73,7 @@ public class SsoServiceImpl implements SsoService {
      */
     @Override
     public void ssoLoginByCodeHandler(LoginDTO loginDTO) throws IOException {
+        SessionUserInfoDTO sessionUserInfoDTO = new SessionUserInfoDTO();
         // 根据登录请求DTO中的登录方法创建策略
         CertificateStrategy certificateStrategy = certificateStrategyFactory.getLoginStrategy(CertificateMethodEnum.fromCode(loginDTO.getLoginMethod()));
 
@@ -93,6 +96,9 @@ public class SsoServiceImpl implements SsoService {
         }
         // 登录用户
         StpUtil.login(userInfo.getCredentialsId());
+        // 设置Session
+        sessionUserInfoDTO.setUserId(userInfo.getCredentialsId());
+        StpUtil.getSession().set(USER_INFO, sessionUserInfoDTO);
     }
 
     /**

@@ -83,5 +83,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        <dependency>
+            <groupId>atnibam.space</groupId>
+            <artifactId>api-auth</artifactId>
+        </dependency>
     </dependencies>
 </project>
