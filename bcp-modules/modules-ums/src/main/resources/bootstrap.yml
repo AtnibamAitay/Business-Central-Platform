@@ -15,8 +15,6 @@ spring:
   cloud:
     nacos:
       server-addr: nacos.bcp-dev.com:8848
-      discovery:
-        namespace: 09b73c2d-c1c4-441f-96da-ca528338c42a
       config:
         # 配置中心地址
         server-addr: nacos.bcp-dev.com:8848
@@ -40,7 +38,7 @@ sa-token:
     # SSO-Server端 ticket校验地址
     check-ticket-url: http://localhost:9030/sso/checkTicket
     # SSO-Server端 统一认证地址
-    auth-url: http://localhost:9030/sso/auth
+    auth-url: http://localhost:9020/api/auth/auth
     get-data-url: http://localhost:9030/sso/getData     # sso-server 端拉取数据地址
     slo-url: http://localhost:9030/sso/signout  # 单点注销地址
     server-url: http://localhost:9030
