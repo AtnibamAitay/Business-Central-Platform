@@ -18,8 +18,12 @@
 ```
 Business-Central-Platform
 ├── bcp-api                 - API服务接口层，定义与外界交互的端点
+│   ├── api-auth            - 认证相关API定义
 │   ├── api-cms             - 内容相关API定义
 │   ├── api-ims             - 即时通讯相关API定义
+│   ├── api-oms             - 订单相关API定义
+│   ├── api-pms             - 商品相关API定义
+│   ├── api-sms             - 营销相关API定义
 │   ├── api-system          - 系统相关API定义
 │   ├── api-transaction     - 交易相关API定义
 │   └── api-ums             - 用户相关API定义
@@ -41,12 +45,13 @@ Business-Central-Platform
 │   └── pom.xml             - Maven项目管理配置文件，用于bcp-gateway模块
 ├── bcp-modules             - 应用程序核心业务模块
 │   ├── modules-cms         - 内容管理系统，包括评论模块
-│   ├── modules-ims         - 即时通讯管理系统，包括即时通讯模块、用户好友关系管理模块
-│   ├── modules-pms         - 商品管理系统，包括商品管理操作模块
+│   ├── modules-ims         - 即时通讯管理系统，包括即时通讯模块
+│   ├── modules-oms         - 订单管理系统
+│   ├── modules-pms         - 商品管理系统，包括spu、sku管理操作模块
 │   ├── modules-sms         - 营销管理系统，包括优惠券模块、广告模块
 │   ├── modules-system      - 系统核心业务逻辑模块
-│   ├── modules-transaction - 交易处理业务逻辑模块，包括支付模块
-│   └── modules-ums         - 用户管理系统，包括用户信息管理模块
+│   ├── modules-transaction - 交易处理业务逻辑模块，包括支付模块（将要并入oms中）
+│   └── modules-ums         - 用户管理系统，包括用户信息管理模块、用户好友关系管理模块
 │   └── pom.xml             - Maven项目管理配置文件，用于bcp-modules模块
 ├── .gitignore              - Git忽略文件列表，指示Git跳过版本控制的文件和目录
 ├── pom.xml                 - Maven父项目管理配置文件，用于整个项目
