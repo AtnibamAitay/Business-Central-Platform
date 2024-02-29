@@ -3,9 +3,9 @@ package space.atnibam.auth.strategy.impl;
 import com.alibaba.fastjson2.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import space.atnibam.api.auth.dto.LoginRequestDTO;
 import space.atnibam.api.ums.RemoteUserCredentialsService;
 import space.atnibam.api.ums.RemoteUserInfoService;
-import space.atnibam.auth.model.dto.LoginDTO;
 import space.atnibam.auth.strategy.CertificateStrategy;
 import space.atnibam.auth.utils.SmsUtil;
 import space.atnibam.common.core.domain.AuthCredentials;
@@ -47,14 +47,14 @@ public class PhoneCertificateStrategy implements CertificateStrategy {
     /**
      * 根据手机号和登录请求获取用户信息
      *
-     * @param loginDTO 登录请求
+     * @param loginRequestDTO 登录请求
      * @return 用户信息
      */
     @Override
-    public UserInfo getUserInfoByCertificate(LoginDTO loginDTO) {
+    public UserInfo getUserInfoByCertificate(LoginRequestDTO loginRequestDTO) {
         // 判断手机号格式是否正确
-        smsUtil.isValidPhoneNumberFormat(loginDTO.getAccountNumber());
-        return remoteUserInfoService.getUserInfoByPhone(loginDTO.getAccountNumber(), loginDTO.getAppId()).getData();
+        smsUtil.isValidPhoneNumberFormat(loginRequestDTO.getAccountNumber());
+        return remoteUserInfoService.getUserInfoByPhone(loginRequestDTO.getAccountNumber(), loginRequestDTO.getAppId()).getData();
     }
 
     /**

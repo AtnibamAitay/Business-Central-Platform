@@ -1,7 +1,7 @@
 package space.atnibam.auth.service;
 
+import space.atnibam.api.auth.dto.LoginRequestDTO;
 import space.atnibam.auth.model.dto.AccountVerificationDTO;
-import space.atnibam.auth.model.dto.LoginDTO;
 import space.atnibam.auth.model.vo.UserInfoVO;
 import space.atnibam.common.core.domain.R;
 import space.atnibam.common.core.exception.SystemServiceException;
@@ -23,10 +23,10 @@ public interface SsoService {
     /**
      * 通过邮箱/手机号、验证码和应用ID进行单点登录
      *
-     * @param loginDTO 登录请求数据传输对象
+     * @param loginRequestDTO 登录请求数据传输对象
      * @throws IOException 输入输出异常
      */
-    void ssoLoginByCodeHandler(LoginDTO loginDTO) throws IOException;
+    void ssoLoginByCodeHandler(LoginRequestDTO loginRequestDTO) throws IOException;
 
     /**
      * 根据凭据ID和应用代码查询用户信息
