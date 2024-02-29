@@ -3,6 +3,7 @@ package space.atnibam.api.ums;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import space.atnibam.api.ums.interceptor.FeignInterceptor;
 import space.atnibam.common.core.domain.R;
 
 /**
@@ -11,7 +12,7 @@ import space.atnibam.common.core.domain.R;
  * @Author: AtnibamAitay
  * @CreateTime: 2024-02-19 09:23
  **/
-@FeignClient(value = "modules-ums", contextId = "friend")
+@FeignClient(value = "modules-ums", contextId = "friend", url = "http://local.atnibam.space:9028", configuration = FeignInterceptor.class)
 public interface RemoteFriendService {
     /**
      * 根据用户id获取收到的好友请求列表
