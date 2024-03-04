@@ -154,6 +154,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     @Override
     public R getAverageGradeByObjectId(Integer objectId, String objectType) {
         Double averageGrade = commentMapper.selectAverageGradeByObjectId(objectId, objectType);
+        if (averageGrade == null) {
+            // TODO:一个默认分，待考虑默认综合分应该设置为多少
+            averageGrade = 5.0;
+        }
         return R.ok(averageGrade);
     }
 
