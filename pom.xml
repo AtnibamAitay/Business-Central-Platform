@@ -264,6 +264,11 @@
             </dependency>
             <dependency>
                 <groupId>atnibam.space</groupId>
+                <artifactId>api-ai</artifactId>
+                <version>${BCP.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>atnibam.space</groupId>
                 <artifactId>api-auth</artifactId>
                 <version>${BCP.version}</version>
             </dependency>

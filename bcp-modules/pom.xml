@@ -9,6 +9,7 @@
         <version>0.0.1</version>
     </parent>
     <modules>
+        <module>modules-ai</module>
         <module>modules-ums</module>
         <module>modules-ims</module>
         <module>modules-oms</module>
