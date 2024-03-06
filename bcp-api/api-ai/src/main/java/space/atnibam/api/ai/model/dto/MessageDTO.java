@@ -1,4 +1,4 @@
-package space.atnibam.ai.model.dto;
+package space.atnibam.api.ai.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

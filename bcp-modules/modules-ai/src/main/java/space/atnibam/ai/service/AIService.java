@@ -1,6 +1,6 @@
 package space.atnibam.ai.service;
 
-import space.atnibam.ai.model.dto.MessageDTO;
+import space.atnibam.api.ai.model.dto.MessageDTO;
 
 import java.io.IOException;
 import java.util.List;

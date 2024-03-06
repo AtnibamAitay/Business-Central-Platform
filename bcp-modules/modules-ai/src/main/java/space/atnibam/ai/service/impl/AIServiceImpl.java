@@ -16,8 +16,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import space.atnibam.ai.config.OpenAIConfig;
 import space.atnibam.ai.enums.OpenAiApiType;
-import space.atnibam.ai.model.dto.MessageDTO;
 import space.atnibam.ai.service.AIService;
+import space.atnibam.api.ai.model.dto.MessageDTO;
 
 import javax.annotation.Resource;
 import java.io.IOException;

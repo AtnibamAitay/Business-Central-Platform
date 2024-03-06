@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import space.atnibam.ai.model.dto.MessageDTO;
 import space.atnibam.ai.service.AIService;
+import space.atnibam.api.ai.model.dto.MessageDTO;
 
 import javax.annotation.Resource;
 import java.io.IOException;
