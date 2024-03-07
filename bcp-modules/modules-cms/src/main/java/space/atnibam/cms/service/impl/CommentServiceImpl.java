@@ -19,10 +19,10 @@ import space.atnibam.common.redis.constant.CacheConstants;
 import space.atnibam.common.redis.utils.CacheClient;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -154,6 +154,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     @Override
     public R getAverageGradeByObjectId(Integer objectId, String objectType) {
         Double averageGrade = commentMapper.selectAverageGradeByObjectId(objectId, objectType);
+        // 保留两位小数
+        averageGrade = Double.valueOf(NumberFormat.getNumberInstance(Locale.getDefault()).format(averageGrade));
+        // 或者使用 BigDecimal 进行精确计算和格式化
+        averageGrade = BigDecimal.valueOf(averageGrade).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
         if (averageGrade == null) {
             // TODO:一个默认分，待考虑默认综合分应该设置为多少
             averageGrade = 5.0;
