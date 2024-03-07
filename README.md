@@ -8,10 +8,15 @@
 请按照以下格式添加或修改内容：
 ```
 127.0.0.1 local.atnibam.space
+{MySQLIP} mysql.bcp-dev.com
 {NacosIP} nacos.bcp-dev.com
 {RedisIP} redis.bcp-dev.com
+{MinIOIP} minio.bcp-dev.com
+{RabbitMQIP} rabbitmq.bcp-dev.com
 ```
-请注意将 `{NacosIP}` 和 `{RedisIP}` 替换为实际的 Nacos 服务器和 Redis 服务器的 IP 地址。
+
+请注意将 `{MySQLIP}`、`{NacosIP}`、`{RedisIP}`、`{MinIOIP}`和`{RabbitMQIP}` 替换为实际的 Nacos 服务器和 Redis 服务器的 IP
+地址。
 
 ## 2. 项目结构
 
