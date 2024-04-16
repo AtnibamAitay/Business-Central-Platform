@@ -1,4 +1,4 @@
-package space.atnibam.api.ai.interceptor;
+package space.atnibam.api.system.interceptor;
 
 import cn.dev33.satoken.same.SaSameUtil;
 import feign.RequestInterceptor;
@@ -6,13 +6,13 @@ import feign.RequestTemplate;
 import org.springframework.stereotype.Component;
 
 /**
- * @InterfaceName: FeignInterceptor
+ * @InterfaceName: SystemFeignInterceptor
  * @Description: feign拦截器, 在feign请求发出之前，加入一些操作
  * @Author: AtnibamAitay
- * @CreateTime: 2024-02-03 10:53
+ * @CreateTime: 2024-02-17 22:43
  **/
 @Component
-public class FeignInterceptor implements RequestInterceptor {
+public class SystemFeignInterceptor implements RequestInterceptor {
     /**
      * 在请求发出之前，加入一些操作，为 Feign 的 RCP调用 添加请求头Same-Token
      *
