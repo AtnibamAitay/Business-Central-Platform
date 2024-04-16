@@ -13,11 +13,11 @@ import java.util.List;
 @FeignClient(value = "modules-system",configuration = SystemFeignInterceptor.class)
 public interface RemoteMsgRecordService {
     @PostMapping("/msg-record")
-    public R saveMsgRecord(@RequestBody LocalMessageRecord localMessageRecord);
+    R saveMsgRecord(@RequestBody LocalMessageRecord localMessageRecord);
 
     @PutMapping("/msg-record")
-    public R updateMsgRecord(@RequestBody LocalMessageRecord localMessageRecord);
+    R updateMsgRecord(@RequestBody LocalMessageRecord localMessageRecord);
 
     @GetMapping("/msg-record/fail-record")
-    public R<List<LocalMessageRecord>> queryFileStateMsgRecord();
+    R<List<LocalMessageRecord>> queryFileStateMsgRecord();
 }
