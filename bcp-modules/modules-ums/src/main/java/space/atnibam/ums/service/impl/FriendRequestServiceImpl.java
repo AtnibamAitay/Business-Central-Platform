@@ -40,6 +40,7 @@ public class FriendRequestServiceImpl extends ServiceImpl<FriendRequestMapper, F
      */
     @Override
     public List<FriendRequestDTO> getReceivedFriendRequests(Integer userId) {
+        // TODO: 需要做空值判断和处理
         List<FriendRequestQueryResultDTO> dbFriendRequests = fetchFriendRequestsFromDB(userId);
         return convertToFriendRequestDTOs(dbFriendRequests);
     }

@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 
 /**
  * @ClassName: CommentController
- * @Description: 处理与评论相关动作的控制器。
+ * @Description: 处理与评论相关的控制器。
  * @Author: AtnibamAitay
  * @CreateTime: 2023-10-20 13:54
  **/
