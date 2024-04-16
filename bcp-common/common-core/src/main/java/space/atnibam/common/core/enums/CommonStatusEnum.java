@@ -16,13 +16,13 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum CommonStatusEnum implements IntArrayValuable {
     /**
-     * 开启状态
-     */
-    ENABLE(0, "开启"),
-    /**
      * 关闭状态
      */
-    DISABLE(1, "关闭");
+    DISABLE(0, "关闭"),
+    /**
+     * 开启状态
+     */
+    ENABLE(1, "开启");
     /**
      * 状态数组
      */
